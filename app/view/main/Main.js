@@ -29,7 +29,7 @@ Ext.define('D7C.view.main.Main', {
             region: 'north',
             height: 100,
             itemId: 'headerPanel',
-            //title: 'System',
+            title: 'System',
             //collapsible:true
         },
         {
