@@ -27,10 +27,35 @@ Ext.define('D7C.view.main.Main', {
         {
             xtype: 'panel',
             region: 'north',
-            height: 100,
+            //height: 100,
             itemId: 'headerPanel',
-            title: 'System',
-            //collapsible:true
+            //title: 'System',
+            //collapsible:true,
+            dockedItems: [
+                {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    items: [
+                        {
+                            xtype: 'label',
+                            style: 'font-size:15px;',
+                            text: 'System D7C'
+                        },
+                        {
+                            xtype: 'tbfill'
+                        },
+                        {
+                            xtype: 'combobox',
+                            fieldLabel: '',
+                            blankText: 'Select language'
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Logout'
+                        }
+                    ]
+                }
+            ]
         },
         {
             xtype: 'panel',

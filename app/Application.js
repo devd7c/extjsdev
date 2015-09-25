@@ -12,11 +12,12 @@ Ext.define('D7C.Application', {
         // TODO: add global / shared stores here
     ],
     views: [
-        'D7C.view.login.Login',
+        'D7C.view.login.Login'
         //'D7C.view.main.Main'
     ],
     launch: function () {
         //Ext.widget(loggedIn ? 'app-main' : 'login');
+        var me = this;
         Ext.widget('login');
     }
 });

@@ -2,6 +2,8 @@ $app-name:   'D7C' !default;
 $image-search-path: 'D:/xampp/htdocs/unionextjs/build/development/D7C/resources';
 $theme-name:   'ext-theme-neptune' !default;
 $include-d7c-application: true;
+$include-d7c-view-login-login: true;
+$include-d7c-view-login-logincontroller: true;
 $include-d7c-view-main-main: true;
 $include-d7c-view-main-maincontroller: true;
 $include-d7c-view-main-mainmodel: true;
@@ -940,6 +942,14 @@ $current-package: 'ext-theme-neptune';
 $current-resource-root: $ext-theme-neptune-resource-root;
 $relative-image-path-for-uis: $ext-theme-neptune-resource-path;
 @import '../../../../../ext/packages/ext-theme-neptune/sass/etc/all';
+
+/* including package D7C */
+$D7C-resource-root: '' !default;
+$D7C-resource-path: 'images' !default;
+$current-package: false;
+$current-resource-root: $D7C-resource-root;
+$relative-image-path-for-uis: $D7C-resource-path;
+@import '../../../../../sass/etc/all';
 
 
 /* ======================== VAR ======================== */

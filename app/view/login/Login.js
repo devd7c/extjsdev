@@ -5,7 +5,7 @@ Ext.define('D7C.view.login.Login', {
     extend: 'Ext.window.Window',
     alias: 'widget.login',
 
-    controller: 'login',
+
     
     requires: [
         'D7C.view.login.LoginController',
@@ -15,40 +15,40 @@ Ext.define('D7C.view.login.Login', {
         'Ext.toolbar.Fill',
         'Ext.button.Button'
     ],
-
+    controller: 'login',
     //viewModel: {
     //    type: 'mywindow'
     //},
     autoShow: true,
     width: 400,
     title: 'Login',
+    resizable: false,
+    draggable: false,
 
     items: [
         {
             xtype: 'form',
             bodyPadding: 10,
+            reference: 'form',
             title: '',
-            layout: {
-                type: 'vbox',
-                align: 'center'
-            },
             defaults:{
-                xtype: 'textfield'
+                xtype       : 'textfield',
+                anchor      : '100%',
+                labelWidth  : 60,
+                minLength   : 3,
+                vtype       : 'alphanum',
+                allowBlank  : false
             },
             items: [
                 {
-                    flex: 1,
                     fieldLabel: 'Usuario',
                     name: 'user',
-                    minLength: 3,
                     maxLength: 25
                 },
                 {
-                    flex: 1,
                     fieldLabel: 'Password',
                     inputType: 'password',
                     name: 'password',
-                    minLength: 3,
                     maxLength: 15
                 }
             ]
@@ -58,23 +58,30 @@ Ext.define('D7C.view.login.Login', {
         {
             xtype: 'toolbar',
             dock: 'bottom',
+            ui: 'footer',
             items: [
-                {
+                /*{
                     xtype: 'combobox'
-                },
+                },*/
                 {
                     xtype: 'tbfill'
                 },
                 {
                     xtype: 'button',
                     text: 'Aceptar',
+                    formBind: true,
+                    iconCls: 'fa fa-sign-in fa-lg',
                     listeners: {
-                        click: 'onLogin'
+                        click: 'onClickSubmit'
                     }
                 },
                 {
                     xtype: 'button',
-                    text: 'Cancelar'
+                    text: 'Cancelar',
+                    iconCls: 'fa fa-times fa-lg',
+                    listeners:{
+                        click:'onClickCancel'
+                    }
                 }
             ]
         }
