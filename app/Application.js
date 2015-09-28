@@ -15,6 +15,9 @@ Ext.define('D7C.Application', {
         'D7C.view.login.Login'
         //'D7C.view.main.Main'
     ],
+    requires: [
+        'D7C.view.operadores.RegistroOperadorController'
+    ],
     launch: function () {
         //Ext.widget(loggedIn ? 'app-main' : 'login');
         var me = this;

@@ -1,0 +1,5 @@
+#content-panel-body {background-image: url(images/square.gif);}
+#app-header {border-bottom: 1px solid rgb(94, 148, 5);background-image: url(images/header-bg.png);}
+#app-header-logo {width: 40px;height: 25px;background: url(images/logo.png) no-repeat center 4px;}
+#app-header-title {padding: 15px 0 10px 0;color: #fff;font-size: 18px;font-weight: bold;}
+.x-btn-default-small {margin-bottom: 1px;}

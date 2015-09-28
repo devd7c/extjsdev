@@ -14,181 +14,35 @@ Ext.define('D7C.view.main.Main', {
     requires: [
         'D7C.view.main.MainController',
         'D7C.view.main.MainModel',
-        'Ext.menu.Menu',
-        'Ext.menu.Item'
+        'D7C.view.Header',
+        'D7C.view.ContentPanel',
+        'D7C.view.menu.Accordion',
+        'Ext.tab.Panel',
+        'Ext.layout.container.Border'
     ],
+	xtype: 'app-main',
     controller: 'main',
     viewModel: {
         type: 'main'
     },
     layout: 'border',
 
-    items: [
-        {
-            xtype: 'panel',
-            region: 'north',
-            //height: 100,
-            itemId: 'headerPanel',
-            //title: 'System',
-            //collapsible:true,
-            dockedItems: [
-                {
-                    xtype: 'toolbar',
-                    dock: 'top',
-                    items: [
-                        {
-                            xtype: 'label',
-                            style: 'font-size:15px;',
-                            text: 'System D7C'
-                        },
-                        {
-                            xtype: 'tbfill'
-                        },
-                        {
-                            xtype: 'combobox',
-                            fieldLabel: '',
-                            blankText: 'Select language'
-                        },
-                        {
-                            xtype: 'button',
-                            text: 'Logout'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            xtype: 'panel',
-            region: 'west',
-            split: true,
+    items: [{
+		    region: 'north',
+            xtype: 'appHeader'
+		},{
+            xtype: 'mainmenu',
+            width: 250,
             collapsible: true,
-            itemId: 'menuPanel',
-            //width: 250,
-            layout: 'accordion',
-            collapseDirection: 'left',
-            title: 'Main Menu',
-            items: [
-                {
-                    xtype: 'panel',
-                    title: 'Registros',
-                    items: [
-                        {
-                            xtype: 'menu',
-                            floating: false,
-                            itemId: 'menu1',
-                            style:'border:none;',
-                            items: [
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Registro de Operaciones',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Propietarios',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Unidades de Propietarios',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Registro de Infracciones',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Registro de Tarjeta de Operaci&oacute;n',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Operadores',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Resoluci&oacute;n Administrativa',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Registro para Ampliaci&oacute;n de Unidades',
-                                    focusable: true
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    title: 'Reportes',
-                    items: [
-                        {
-                            xtype: 'menu',
-                            floating: false,
-                            itemId: 'menu2',
-                            style:'border:none;',
-                            items: [
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Menu Item',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Menu Item',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Menu Item',
-                                    focusable: true
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    title: 'Configuraciones',
-                    items: [
-                        {
-                            xtype: 'menu',
-                            floating: false,
-                            itemId: 'menu3',
-                            style:'border:none;',
-                            items: [
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Usuarios',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Roles',
-                                    focusable: true
-                                },
-                                {
-                                    xtype: 'menuitem',
-                                    text: 'Otros',
-                                    focusable: true
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            xtype: 'panel',
-            flex: 1,
-            region: 'center',
-            itemId: 'contentPanel',
-            title: 'Home'
-        }
-    ]
-
+            region: 'west'
+		},{
+			region: 'center',
+			xtype: 'contentPanel',
+			reference: 'contentPanel'
+		},{
+			xtype: 'container',
+			region: 'south',
+			height: 5,
+			style: 'border-top: 1px solid #4c72a4;'
+		}]
 });
