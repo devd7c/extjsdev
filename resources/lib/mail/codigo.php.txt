@@ -1,0 +1,25 @@
+//Incluimos la función
+require_once('../phpmailer/class.phpmailer.php');
+//Creamos la instancia de la clase PHPMailer y configuramos la cuenta
+$mail=new PHPMailer();
+$mail->Mailer="smtp";
+$mail->Helo = "www.eldominioqueusas.com.mx"; //Muy importante para que llegue a hotmail y otros
+$mail->SMTPAuth=true;
+$mail->Host="eldominioqueusas.com.mx";
+$mail->Port=26; //depende de lo que te indique tu ISP. El default es 25, pero nuestro ISP lo tiene puesto al 26
+$mail->Username="bandeja@eldominioqueusas.com.mx";
+$mail->Password="******";
+$mail->From="bandeja@eldominioqueusas.com.mx";
+$mail->FromName="El Nombre del Remitente";
+$mail->Timeout=60;
+$mail->IsHTML(true);
+//Enviamos el correo
+$mail->AddAddress('bandeja@destinatario.com'); //Puede ser Hotmail
+$mail->Subject='Tu asunto';
+$mail->Body="<p>Texto lo suficientemente largo y con pocos links para que no sea interpretado como SPAM</p><p>Es importante que el texto sea lo suficientemente largo, ya que si sólo tienes por ejemplo, una frase y un link, asume tanto Outlook como la mayoría de los destinatarios, que se trata de SPAM</p><p>Pero si tu texto es largo y tienes un link a <a href\"http://www.forosdelweb.com\">Foros del web</a> por ejemplo, funcionará perfectamente bien.</p>";
+$mail->AltBody="Texto que debe decir lo mismo que el Body, pero sin etiquetas HTML";
+$exito = $mail->Send();
+if($exito){
+     $mail->ClearAddresses();
+     echo "Mensaje enviado exitosamente";
+}  
