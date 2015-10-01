@@ -7,18 +7,30 @@ Ext.define('D7C.store.operadores.Operador', {
     autoSync: false,    // Make sure that autosync is disabled to avoid posting invalid vendorName.
     proxy: {
         type: 'ajax',
-        url: 'resources/classes/sis_union_operators.php',
-        api: {
-            create: 'resources/classes/sis_union_operators.php?action=create',
-            read: 'resources/classes/sis_union_operators.php?action=read',
-            update: 'resources/classes/sis_union_operators.php?action=update',
-            destroy: 'resources/classes/sis_union_operators.php?action=destroy'
+        url: 'data/sis_union_operators.php',
+        extraParams:{action:'read'},
+        actionMethods: {
+            read: 'POST'
         },
+        //api: {
+        //    read    : 'data/sis_union_operators.php',
+        //    create  : 'data/sis_union_operators.php',
+        //    update  : 'data/sis_union_operators.php',
+        //    destroy : 'data/sis_union_operators.php'
+        //},
         reader: {
             type: 'json',
             rootProperty: 'modelCars'
+        },
+        writer: {
+            type: 'json',
+            writeAllFields: true,
+            encode: true,
+            rootProperty: 'data',
+            allowSingle: false
         }
     }
+
     /*pageSize: 25,
     remoteFilter: true,
     proxy:{

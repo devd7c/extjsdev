@@ -43,13 +43,17 @@ Ext.define('D7C.view.operadores.OperadorController', {
 		//var row = grid.getSelectionModel().getSelection()[0];
 		//console.log(row.get('operatorid'));
 		//var rowid = row.get();
-		
-		ctx.record.set();
-        ctx.grid.getStore().sync();  // Force a post with the updated data.
-        this.isNewRecord = false;
-        this.newRecordId = null;
-        this.lookupReference('newRecordButton').setDisabled(false);
-        this.lookupReference('deleteRecordButton').setDisabled(true);
+
+		console.log(ctx);
+        ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
+        ctx.grid.getStore().sync();
+        ctx.grid.getStore().getProxy().setExtraParams({action:'read'});
+        //ctx.record.set();
+        //ctx.grid.getStore().sync();  // Force a post with the updated data.
+        //this.isNewRecord = false;
+        //this.newRecordId = null;
+        //this.lookupReference('newRecordButton').setDisabled(false);
+        //this.lookupReference('deleteRecordButton').setDisabled(true);
     },
 	onAddOperatorClick: function(button, evt) {
         var newCar = Ext.create('D7C.model.operadores.Operador', {
