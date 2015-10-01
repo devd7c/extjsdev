@@ -43,12 +43,14 @@ Ext.define('D7C.view.login.Login', {
                 {
                     fieldLabel: 'Usuario',
                     name: 'user',
+					value: 'demo',
                     maxLength: 25
                 },
                 {
                     fieldLabel: 'Password',
                     inputType: 'password',
                     name: 'password',
+					value: 'demo',
                     maxLength: 15
                 }
             ]

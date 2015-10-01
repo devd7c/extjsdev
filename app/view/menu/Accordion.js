@@ -20,10 +20,27 @@ Ext.define('D7C.view.menu.Accordion', {
             items: [{
 				title:'Modulo de Registro',
 				items:[{
-					xtype: 'button',
-					width:220,
+					xtype: 'splitbutton',
 					text: 'Operadores',
-					option: 'registrooperador'
+					width:220,
+					menuAlign:'tr',
+					menu: {
+						xtype: 'menu',
+						width: 220,
+						items:
+						[
+							{
+								xtype: 'menuitem',
+								text: 'Registrar Nombre Operador',
+								option:'btnListaOperadores'
+							},
+							{
+								xtype: 'menuitem',
+								text: 'Registro de Operadores',
+								option:'btnListaRegistroOperadores'
+							}
+						]
+					}
 				},
 				{
 					xtype: 'button',
@@ -150,7 +167,14 @@ Ext.define('D7C.view.menu.Accordion', {
 				]
             }, {
                 title: 'Sistema',
-                html: 'Empty'
+				items:[
+					{
+						xtype: 'button',
+						text: 'Usuarios',
+						width: 220,
+						option: 'btnlistausuarios'
+					}
+				]
             }]
         });
         this.callParent();

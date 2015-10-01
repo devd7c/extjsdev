@@ -16,8 +16,9 @@ Ext.define('D7C.view.main.MainController', {
     ],
     views: [
 		'Accordion',
-        'RegistroOperador'/*,
-        'TestGrid'*/
+        'Operador',
+		'OperadorGrid',
+        'Usuario'
     ],
 	
 	init: function() {
@@ -38,7 +39,62 @@ Ext.define('D7C.view.main.MainController', {
 	var fp=Ext.getCmp('content-panel');
 
 		switch(button.option){
-			case 'registrooperador':
+			case 'btnlistausuarios':
+
+				var listUsers =Ext.getCmp('win-usuario');
+
+                if(typeof listUsers=="undefined"){
+                    var storeUser=Ext.create('D7C.store.sistema.Usuario',{autoLoad: true,start: 0, limit: 25, pageSize: 400});
+                    var GridUser=Ext.create('D7C.view.sistema.UsuarioGrid',{store: storeUser});
+                    GridUser.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeUser,
+                        dock        : 'bottom',
+                        displayInfo : true,
+                        plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var videoview=Ext.create('D7C.view.sistema.Usuario',{id:'win-usuario'});
+
+                    videoview.add(GridUser);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listUsers.show();
+                }
+
+			break;
+			case 'btnListaOperadores':
+
+				var listMageSoap =Ext.getCmp('win-operador');
+
+                if(typeof listMageSoap=="undefined"){
+                    var storeMage=Ext.create('D7C.store.operadores.Operador',{autoLoad: true,/*start: 0, limit: 25, pageSize: 400*/});
+					var storeMage=Ext.create('D7C.store.operadores.Operador');
+                    var GridTest=Ext.create('D7C.view.operadores.OperadorGrid',{store: storeMage});
+                    GridTest.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeMage,
+                        dock        : 'bottom',
+                        displayInfo : true,
+                        plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var videoview=Ext.create('D7C.view.operadores.Operador',{id:'win-operador'});
+
+                    videoview.add(GridTest);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listMageSoap.show();
+                }
+
+			break;
+			/*case 'btnListaRegistroOperadores':
 
 				var listMageSoap =Ext.getCmp('win-registrooperador');
 
@@ -64,7 +120,7 @@ Ext.define('D7C.view.main.MainController', {
                     listMageSoap.show();
                 }
 
-			break;
+			break;*/
 		}
 	},
 	
