@@ -20,7 +20,7 @@ Ext.define('D7C.store.operadores.Operador', {
         //},
         reader: {
             type: 'json',
-            rootProperty: 'modelCars'
+            rootProperty: 'modelOperators'
         },
         writer: {
             type: 'json',

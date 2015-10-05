@@ -44,8 +44,11 @@ Ext.define('D7C.view.operadores.OperadorController', {
 		//console.log(row.get('operatorid'));
 		//var rowid = row.get();
 
-		console.log(ctx);
-        ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
+        if(this.isNewRecord){
+            ctx.grid.getStore().getProxy().setExtraParams({action:'insert'});
+        }else{
+            ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
+        }
         ctx.grid.getStore().sync();
         ctx.grid.getStore().getProxy().setExtraParams({action:'read'});
 		
