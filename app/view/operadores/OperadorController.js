@@ -48,14 +48,15 @@ Ext.define('D7C.view.operadores.OperadorController', {
         ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
         ctx.grid.getStore().sync();
         ctx.grid.getStore().getProxy().setExtraParams({action:'read'});
+		
         //ctx.record.set();
         //ctx.grid.getStore().sync();  // Force a post with the updated data.
         //this.isNewRecord = false;
         //this.newRecordId = null;
-        //this.lookupReference('newRecordButton').setDisabled(false);
-        //this.lookupReference('deleteRecordButton').setDisabled(true);
+        this.lookupReference('newRecordButton').setDisabled(false);
+        this.lookupReference('deleteRecordButton').setDisabled(true);
     },
-	onAddOperatorClick: function(button, evt) {
+	onAddOperatorClick: function(button, ctx, evt) {
         var newCar = Ext.create('D7C.model.operadores.Operador', {
             operatorid: 0,
 			operatorcode: '',
@@ -65,14 +66,23 @@ Ext.define('D7C.view.operadores.OperadorController', {
         this.newRecordId = newCar.get('operatorid');
         var grid = this.lookupReference('modelCarsGrid');
         grid.getStore().insert(0, newCar);
-        grid.getPlugin('modelOperatorRowEditingPlugin').startEdit(newCar);
+		grid.getPlugin('modelOperatorRowEditingPlugin').startEdit(newCar);
+		
+		grid.getStore().getProxy().setExtraParams({action:'insert'});
+		grid.getStore().sync();
+        //grid.getPlugin('modelOperatorRowEditingPlugin').startEdit(newCar);
+		grid.getStore().getProxy().setExtraParams({action:'read'});
 	},
 	onRemoveOperatorClick: function (button, evt) {
         var grid = this.lookupReference('modelCarsGrid'),
             selectedRecords = grid.getSelection(),
-            store = grid.getStore();
+            store = grid.getStore('operatorid');
         store.remove(selectedRecords);
-        store.sync(); this.lookupReference('deleteRecordButton').setDisabled(true);
+		
+		store.getProxy().setExtraParams({action:'destroy'});
+		store.sync();		
+		store.getProxy().setExtraParams({action:'read'});
+		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(false);

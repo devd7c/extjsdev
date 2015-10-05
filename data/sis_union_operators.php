@@ -28,13 +28,21 @@ switch($action){
 
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelCars" => $result
+			"modelOperators" => $result
 		));
 
 		/* close connection */
 		$mysqli->close();
 		break;
-
+	case 'insert':
+		$data=json_decode($_POST['data'])[0];
+		
+		$query = "INSERT INTO operator (operatorid, syndicatename, operatorcode) ";
+		$query .= "VALUES (NULL,'".$data->syndicatename."', '".$data->operatorcode."')";
+		if ($resultDb = $mysqli->query($query)) {
+			$operatorid = $mysqli->insert_id;
+		}
+	break;
 	case 'update':
 		$data=json_decode($_POST['data'])[0];
 		$query = "UPDATE operator SET  syndicatename='".$data->syndicatename."',operatorcode='".$data->operatorcode.
@@ -42,7 +50,14 @@ switch($action){
 		if ($resultDb = $mysqli->query($query)) {
 			$operatorid = $mysqli->insert_id;
 		}
-		break;
+	break;
+	case 'destroy':
+		$data=json_decode($_POST['data'])[0];
+		$query = "DELETE FROM operator WHERE operatorid=".$data->operatorid;
+		if ($resultDb = $mysqli->query($query)) {
+			$operatorid = $mysqli->insert_id;
+		}
+	break;
 
 }
 
