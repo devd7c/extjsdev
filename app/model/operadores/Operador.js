@@ -5,5 +5,9 @@ Ext.define('D7C.model.operadores.Operador', {
         {name: 'operatorid', type: 'int' },
         {name: 'syndicatename', type: 'string'},
         {name: 'operatorcode', type: 'string'}
-    ]
+    ],
+    validators: {
+        syndicatename: { type: 'presence', allowEmpty: false },
+        operatorcode: { type: 'presence', allowEmpty: false }
+    }
 });

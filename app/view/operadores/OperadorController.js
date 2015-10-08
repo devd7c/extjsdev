@@ -46,6 +46,7 @@ Ext.define('D7C.view.operadores.OperadorController', {
 
         if(this.isNewRecord){
             ctx.grid.getStore().getProxy().setExtraParams({action:'insert'});
+			this.isNewRecord = false;
         }else{
             ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
         }
@@ -73,7 +74,6 @@ Ext.define('D7C.view.operadores.OperadorController', {
 		
 		grid.getStore().getProxy().setExtraParams({action:'insert'});
 		grid.getStore().sync();
-        //grid.getPlugin('modelOperatorRowEditingPlugin').startEdit(newCar);
 		grid.getStore().getProxy().setExtraParams({action:'read'});
 	},
 	onRemoveOperatorClick: function (button, evt) {

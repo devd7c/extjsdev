@@ -17,7 +17,11 @@ Ext.define('D7C.Application', {
     ],
     requires: [
         'D7C.view.operadores.OperadorController',
-		'D7C.view.sistema.UsuarioController'
+		'D7C.view.sistema.UsuarioController',
+		'D7C.view.infracciones.InfraccionController',
+		'D7C.view.resoluciones.ResolucionAdministrativaController',
+		'D7C.view.propietarios.PropietarioController',
+		'D7C.view.propietarios.UnidadPropietarioController'
     ],
     launch: function () {
         //Ext.widget(loggedIn ? 'app-main' : 'login');

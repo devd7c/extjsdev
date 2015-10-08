@@ -46,7 +46,7 @@ Ext.define('D7C.view.menu.Accordion', {
 					xtype: 'button',
 					width:220,
 					text: 'Propietarios',
-					option: 'registropropietario'
+					option: 'btnListaPropietarios'
 					
 				},{
 					xtype: 'splitbutton',
@@ -61,7 +61,7 @@ Ext.define('D7C.view.menu.Accordion', {
 							{
 								xtype: 'menuitem',
 								text: 'Añadir/Modificar',
-								option:'registrounidadtransporte'
+								option:'btnListaUnidadTransportes'
 							},
 							{
 								xtype: 'menuitem',
@@ -84,7 +84,7 @@ Ext.define('D7C.view.menu.Accordion', {
 							{
 								xtype: 'menuitem',
 								text: 'Añadir/Modificar',
-								option:'registroinfraccion'
+								option:'btnListaInfracciones'
 							},
 							{
 								xtype: 'menuitem',
@@ -110,27 +110,10 @@ Ext.define('D7C.view.menu.Accordion', {
 					
 				},
 				{
-					xtype: 'splitbutton',
+					xtype: 'button',
 					width:220,
 					text: 'Resoluciones Administrativas',
-					menuAlign:'tr',
-					menu: {
-						xtype: 'menu',
-						width: 250,
-						items:
-						[
-							{
-								xtype: 'menuitem',
-								text: 'Añadir/Modificar',
-								option:'registroresolucionadministrativa'
-							},
-							{
-								xtype: 'menuitem',
-								text: 'Fecha Resolucion Administrativa',
-								option:'fecharesolucionadministrativa'
-							}
-						]
-					}
+					option:'btnListaResolucionesAdministrativas'
 					
 				}]
             }, {

@@ -1,27 +1,27 @@
-Ext.define('D7C.view.operadores.OperadorGrid',{
+Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
     extend: 'Ext.grid.Panel',
-    alias: 'widget.operadorgrid',
+    alias: 'widget.unidadpropietariogrid',
 
     requires: ['Ext.toolbar.Paging'],
 
     stateful: true,
     multiSelect: true,
     //stateId: 'stateGrid',
-	reference: 'modelCarsGrid',
+	reference: 'vehiclePropietaryGrid',
     height: 350,
     /*viewConfig: {
         stripeRows: true
     },*/
     tbar: [{
 		xtype: 'button',
-        text: 'Añadir Operador',
+        text: 'Añadir Unidad de Transporte',
 		reference: 'newRecordButton',
-        handler: 'onAddOperatorClick'
+        handler: 'onAddVehiclePropietaryClick'
     }, {
 		xtype: 'button',
-        text: 'Eliminar Operador',
+        text: 'Eliminar Unidad de Transporte',
 		reference: 'deleteRecordButton',
-        handler: 'onRemoveOperatorClick',
+        handler: 'onRemoveVehiclePropietaryClick',
 		disabled:true
     }],
 	listeners: {
@@ -29,22 +29,28 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
-        {text: 'ID',  dataIndex: 'operatorid', width:55, hidden:false, filter:false},
-        {text: 'Nombre del Operador', dataIndex: 'syndicatename', flex: 1,filter:true,
+        {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false,
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
-		},
-        {text: 'Codigo', dataIndex: 'operatorcode', flex: 1, sortable: true,
+		}/*,
+        {text: 'Operador C.I.', dataIndex: 'propietaryCI', flex: 1,filter:true,
 			editor: {
-				xtype: 'textfield', allowBlank: false
+				xtype: 'combobox', 
+				displayField: 'propietaryci',
+				valueField: 'propietaryci',
+				editable: false,
+				queryMode: 'local',
+				forceSelection: true,
+				triggerAction: 'all',
+				allowBlank: false
 			}
-		}
+		}*/
     ],
 	selType: 'rowmodel',
     plugins: [{
 		ptype: 'rowediting',
-		pluginId: 'modelOperatorRowEditingPlugin',
+		pluginId: 'vehiclePropietaryRowEditingPlugin',
 		clicksToEdit: 2,
 		listeners: {
 		   beforeedit: 'onGridEditorBeforeEdit',

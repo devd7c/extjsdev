@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2015 at 03:35 PM
+-- Generation Time: Oct 07, 2015 at 03:33 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -23,42 +23,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `operator`
+-- Table structure for table `infraction`
 --
 
-CREATE TABLE IF NOT EXISTS `operator` (
-  `operatorid` int(11) NOT NULL,
-  `syndicatename` varchar(195) DEFAULT NULL,
-  `operatorcode` varchar(85) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `operator`
---
-
-INSERT INTO `operator` (`operatorid`, `syndicatename`, `operatorcode`) VALUES
-(3, '25 de Mayo', '25MY2015'),
-(10, '16 de Julio', '16JL2015');
+CREATE TABLE IF NOT EXISTS `infraction` (
+  `infractionid` int(11) NOT NULL,
+  `descriptioninfraction` varchar(155) DEFAULT NULL,
+  `amountinfraction` varchar(155) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `operator`
+-- Indexes for table `infraction`
 --
-ALTER TABLE `operator`
-  ADD PRIMARY KEY (`operatorid`);
+ALTER TABLE `infraction`
+  ADD PRIMARY KEY (`infractionid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `operator`
+-- AUTO_INCREMENT for table `infraction`
 --
-ALTER TABLE `operator`
-  MODIFY `operatorid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+ALTER TABLE `infraction`
+  MODIFY `infractionid` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
