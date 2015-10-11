@@ -1,17 +1,11 @@
 Ext.define('D7C.view.operadores.OperadorGrid',{
     extend: 'Ext.grid.Panel',
     alias: 'widget.operadorgrid',
-
     requires: ['Ext.toolbar.Paging'],
-
     stateful: true,
     multiSelect: true,
-    //stateId: 'stateGrid',
-	reference: 'modelCarsGrid',
+	reference: 'operatorGrid',
     height: 350,
-    /*viewConfig: {
-        stripeRows: true
-    },*/
     tbar: [{
 		xtype: 'button',
         text: 'Añadir Operador',
@@ -23,7 +17,21 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 		reference: 'deleteRecordButton',
         handler: 'onRemoveOperatorClick',
 		disabled:true
-    }],
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
 	listeners: {
 	   select: 'onGridSelect',
 	   deselect: 'onGridDeselect'

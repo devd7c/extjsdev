@@ -12,7 +12,9 @@ Ext.define('D7C.view.main.MainController', {
 		'Ext.util.*',
         'Ext.window.MessageBox',
 		'Ext.toolbar.Paging',
-        'Ext.ux.ProgressBarPager'
+        'Ext.ux.ProgressBarPager',
+		'D7C.util.Util',
+		'D7C.ux.grid.Printer'
     ],
     views: [
 		'Accordion',
@@ -27,7 +29,8 @@ Ext.define('D7C.view.main.MainController', {
 		'Propietario',
 		'PropietarioGrid',
 		'UnidadPropietario',
-		'UnidadPropietarioGrid'
+		'UnidadPropietarioGrid',
+		'PropietarioPdf'
     ],
 	
 	init: function() {

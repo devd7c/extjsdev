@@ -1,9 +1,7 @@
 Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
     extend: 'Ext.grid.Panel',
     alias: 'widget.registrooperadorgrid',
-
     requires: ['Ext.toolbar.Paging'],
-
     stateful: true,
     multiSelect: true,
     stateId: 'stateGrid',
@@ -20,8 +18,21 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
         bind: {
             disabled: '{!customerGrid.selection}'
         }
-    }],
-
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
     buttons: [{
         text: 'Visualizar Cambios',
         handler: 'onSessionChangeClick'

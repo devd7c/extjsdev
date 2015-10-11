@@ -4,31 +4,14 @@ Ext.define('D7C.view.operadores.OperadorController', {
 	stores: ['Operador'],
 	models: ['Operador'],
 	views: ['Operador', 'OperadorGrid'],
-
 	requires: [
 		'D7C.view.operadores.Operador',
         'D7C.view.operadores.OperadorGrid'
 	],
 	newRecordId: '',
     isNewRecord: false,
-    //init: function() {
-        // RowEditing not appropriate for touch devices
-        /*if (!Ext.supports.Touch) {
-            // Plugins are instantiated at this time, we must add an instantiated Plugin, not a config
-            this.getView().getPlugins().push(Ext.create({
-                xclass: 'Ext.grid.plugin.RowEditing',
-                clicksToMoveEditor: 1,
-                autoCancel: false
-            }));
-        }*/
-    //},
 	onGridEditorBeforeEdit: function (editor, ctx, eOpts) {
         this.lookupReference('newRecordButton').setDisabled(true);
-        //var vendorColIdx = 2;
-        //var combo = ctx.grid.columns[vendorColIdx].getEditor(ctx.record);
-        //if (ctx.record.get('vendorId') === -1) {
-        //    combo.emptyText = 'Select a vendor...';
-        //}
     },
     onGridEditorCancelEdit: function (editor, ctx, eOpts) {
         if (this.newRecordId && ctx.record.get('operatorid') === this.newRecordId && this.isNewRecord) {
@@ -36,28 +19,25 @@ Ext.define('D7C.view.operadores.OperadorController', {
             this.isNewRecord = false;
             this.newRecordId = null;
         }
+		this.isNewRecord = false;		
+        var grid = this.lookupReference('operatorGrid'),
+            selectedRecords = grid.getSelection(),
+            store = grid.getStore('operatorid');
+        store.remove(selectedRecords);
         this.lookupReference('newRecordButton').setDisabled(false);
     },
     onGridEditorEdit: function (editor, ctx, eOpts) {
-		//var grid = this.lookupReference('modelCarsGrid');
-		//var row = grid.getSelectionModel().getSelection()[0];
-		//console.log(row.get('operatorid'));
-		//var rowid = row.get();
-
         if(this.isNewRecord){
             ctx.grid.getStore().getProxy().setExtraParams({action:'insert'});
-			this.isNewRecord = false;
+			D7C.util.Util.showToast('Los datos fueron ingresados correctamente!');
         }else{
             ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
+			D7C.util.Util.showToast('Los datos fueron modificados correctamente!');
         }
         ctx.grid.getStore().sync();
         ctx.grid.getStore().getProxy().setExtraParams({action:'read'});
-		
-        //ctx.record.set();
-        //ctx.grid.getStore().sync();  // Force a post with the updated data.
-        //this.isNewRecord = false;
-        //this.newRecordId = null;
-        this.lookupReference('newRecordButton').setDisabled(false);
+		this.isNewRecord = false;
+		this.lookupReference('newRecordButton').setDisabled(false);
         this.lookupReference('deleteRecordButton').setDisabled(true);
     },
 	onAddOperatorClick: function(button, ctx, evt) {
@@ -68,23 +48,29 @@ Ext.define('D7C.view.operadores.OperadorController', {
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('operatorid');
-        var grid = this.lookupReference('modelCarsGrid');
+        var grid = this.lookupReference('operatorGrid');
         grid.getStore().insert(0, newCar);
 		grid.getPlugin('modelOperatorRowEditingPlugin').startEdit(newCar);
-		
-		grid.getStore().getProxy().setExtraParams({action:'insert'});
-		grid.getStore().sync();
-		grid.getStore().getProxy().setExtraParams({action:'read'});
 	},
 	onRemoveOperatorClick: function (button, evt) {
-        var grid = this.lookupReference('modelCarsGrid'),
+        var grid = this.lookupReference('operatorGrid'),
             selectedRecords = grid.getSelection(),
             store = grid.getStore('operatorid');
-        store.remove(selectedRecords);
-		
-		store.getProxy().setExtraParams({action:'destroy'});
-		store.sync();		
-		store.getProxy().setExtraParams({action:'read'});
+		Ext.Msg.show({ 
+			title: 'Eliminar Datos',
+			msg: 'Esta seguro que desea eliminar los datos?',
+			buttons: Ext.Msg.YESNO,
+			icon: Ext.Msg.QUESTION,
+			fn: function (buttonId) {
+				if (buttonId == 'yes') {
+					store.remove(selectedRecords);
+					store.getProxy().setExtraParams({action:'destroy'});
+					store.sync();
+					store.getProxy().setExtraParams({action:'read'});
+					D7C.util.Util.showToast('Eliminacion Satisfactoria! Los datos fueron eliminados');
+				}
+			}
+		});
 		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
@@ -92,5 +78,30 @@ Ext.define('D7C.view.operadores.OperadorController', {
     },
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
+    },
+    onPrint: function(button, e, options) {
+        var printer = D7C.ux.grid.Printer;
+        printer.printAutomatically = false;
+        printer.print(this.lookupReference('operatorGrid'));
+    },
+    onExportPDF: function(button, e, options) {
+		var fp=Ext.getCmp('content-panel');
+		var pdfGrid =Ext.getCmp('win-pdf');
+		
+		if(typeof pdfGrid=="undefined"){	
+			var pdfGrid=Ext.create('D7C.view.Pdf',{
+				id:'win-pdf',
+				items: [{
+						xtype: 'uxiframe',
+						src: 'data/pdf/propietariesPdf.php'
+					}]
+				}
+			);
+			fp.add(pdfGrid);
+			pdfGrid.show();
+
+		}else{
+			pdfGrid.show();
+		}
     }
 });

@@ -1,17 +1,10 @@
 Ext.define('D7C.view.infracciones.InfraccionGrid',{
     extend: 'Ext.grid.Panel',
     alias: 'widget.infracciongrid',
-
     requires: ['Ext.toolbar.Paging'],
-
     stateful: true,
-    multiSelect: true,
-    //stateId: 'stateGrid',
 	reference: 'infractionGrid',
     height: 350,
-    /*viewConfig: {
-        stripeRows: true
-    },*/
     tbar: [{
 		xtype: 'button',
         text: 'Añadir Infraccion',
@@ -23,7 +16,21 @@ Ext.define('D7C.view.infracciones.InfraccionGrid',{
 		reference: 'deleteRecordButton',
         handler: 'onRemoveInfractionClick',
 		disabled:true
-    }],
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
 	listeners: {
 	   select: 'onGridSelect',
 	   deselect: 'onGridDeselect'

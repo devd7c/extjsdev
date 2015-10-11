@@ -1,9 +1,7 @@
 Ext.define('D7C.view.propietarios.PropietarioGrid',{
     extend: 'Ext.grid.Panel',
     alias: 'widget.propietariogrid',
-
     requires: ['Ext.toolbar.Paging'],
-
     stateful: true,
     multiSelect: true,
     //stateId: 'stateGrid',
@@ -23,7 +21,21 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 		reference: 'deleteRecordButton',
         handler: 'onRemovePropietaryClick',
 		disabled:true
-    }],
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
 	listeners: {
 	   select: 'onGridSelect',
 	   deselect: 'onGridDeselect'

@@ -28,7 +28,7 @@ switch($action){
 
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelProprietors" => $result
+			"modelVehicleProprietors" => $result
 		));
 
 		/* close connection */

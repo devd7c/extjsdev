@@ -23,13 +23,32 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 		reference: 'deleteRecordButton',
         handler: 'onRemoveVehiclePropietaryClick',
 		disabled:true
-    }],
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
 	listeners: {
 	   select: 'onGridSelect',
 	   deselect: 'onGridDeselect'
 	},
     columns: [
         {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false,
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+		{text: 'ID Propietario',  dataIndex: 'propietaryid', width:55, hidden:false, filter:false,
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}

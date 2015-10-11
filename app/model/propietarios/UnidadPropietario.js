@@ -3,6 +3,7 @@ Ext.define('D7C.model.propietarios.UnidadPropietario', {
     idProperty: 'vehicleid',
     fields: [
         {name: 'vehicleid', type: 'int' },
+		{name: 'propietaryid', type: 'int' },
         {name: 'propietaryID', type: 'int'},
 		{name: 'propietaryCI', type: 'string'}/*,
         {name: 'propietarylastname', type: 'string'},

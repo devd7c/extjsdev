@@ -12,12 +12,8 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaGrid',{
 	xtype: 'cell-editing',
     stateful: true,
     multiSelect: true,
-    //stateId: 'stateGrid',
 	reference: 'modelAdministrativeResolutionGrid',
     height: 350,
-    /*viewConfig: {
-        stripeRows: true
-    },*/
     tbar: [{
 		xtype: 'button',
         text: 'Añadir Resolucion Administrativa',
@@ -29,7 +25,21 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaGrid',{
 		reference: 'deleteRecordButton',
         handler: 'onRemoveAdministrativeResolutionClick',
 		disabled:true
-    }],
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
 	listeners: {
 	   select: 'onGridSelect',
 	   deselect: 'onGridDeselect'
