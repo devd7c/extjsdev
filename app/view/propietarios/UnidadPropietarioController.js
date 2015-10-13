@@ -2,7 +2,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 	extend: 'Ext.app.ViewController',
     alias: 'controller.unidadpropietario',
 	stores: ['UnidadPropietario'],
-	models: ['UnidadPropietario'],
+	models: ['UnidadPropietario', 'Propietario'],
 	views: ['UnidadPropietario', 'UnidadPropietarioGrid'],
 
 	requires: [
@@ -13,6 +13,11 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
     isNewRecord: false,
 	onGridEditorBeforeEdit: function (editor, ctx, eOpts) {
         this.lookupReference('newRecordButton').setDisabled(true);
+        /*var propietaryColIdx = 2;
+        var combo = ctx.grid.columns[propietaryColIdx].getEditor(ctx.record);
+        if (ctx.record.get('propietaryID') === -1) {
+            combo.emptyText = 'Seleccionar el CI...';
+        }*/
     },
     onGridEditorCancelEdit: function (editor, ctx, eOpts) {
         if (this.newRecordId && ctx.record.get('vehicleid') === this.newRecordId && this.isNewRecord) {
@@ -29,11 +34,17 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 		
         this.lookupReference('newRecordButton').setDisabled(false);
     },
-    onGridEditorEdit: function (editor, ctx, eOpts) {
+    onGridEditorEdit: function (editor, ctx, eOpts) {		
         if(this.isNewRecord){
             ctx.grid.getStore().getProxy().setExtraParams({action:'insert'});
 			D7C.util.Util.showToast('Los datos fueron ingresados correctamente!');
         }else{
+        var propietaryColIdx = 2;
+        var combo = ctx.grid.columns[propietaryColIdx].getEditor(ctx.record);
+        var vendorRecord = combo.findRecord('propietaryci', ctx.record.get('propietaryCI'));
+        ctx.record.set('propietaryID', vendorRecord.get('propietaryid'));
+
+		
             ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
 			D7C.util.Util.showToast('Los datos fueron modificados correctamente!');
         }
@@ -46,8 +57,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 	onAddVehiclePropietaryClick: function(button, ctx, evt) {
         var newVehiclePropietary = Ext.create('D7C.model.propietarios.UnidadPropietario', {
             vehicleid: 0,
-			propietaryID: 0,
-            propietaryCI: ''
+			propietaryID: 0
         });
         this.isNewRecord = true;
         this.newRecordId = newVehiclePropietary.get('vehicleid');

@@ -9,6 +9,7 @@ Ext.define('D7C.Application', {
     name: 'D7C',
 
     stores: [
+		//'D7C.store.propietarios.Propietario'
         // TODO: add global / shared stores here
     ],
     views: [

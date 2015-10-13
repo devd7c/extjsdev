@@ -43,28 +43,20 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
-        {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false,
-			editor: {
-				xtype: 'textfield', allowBlank: false
-			}
-		},
-		{text: 'ID Propietario',  dataIndex: 'propietaryid', width:55, hidden:false, filter:false,
-			editor: {
-				xtype: 'textfield', allowBlank: false
-			}
-		}/*,
+        {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false},
         {text: 'Operador C.I.', dataIndex: 'propietaryCI', flex: 1,filter:true,
 			editor: {
-				xtype: 'combobox', 
+				xtype: 'combobox',
+				store: Ext.create('D7C.store.propietarios.Propietario', {}),
 				displayField: 'propietaryci',
-				valueField: 'propietaryci',
+				valueField: 'propietaryid',
 				editable: false,
 				queryMode: 'local',
 				forceSelection: true,
 				triggerAction: 'all',
 				allowBlank: false
 			}
-		}*/
+		}
     ],
 	selType: 'rowmodel',
     plugins: [{
