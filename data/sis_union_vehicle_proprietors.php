@@ -13,14 +13,10 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
-		$sql = "SELECT v.vehicleid, v.propietaryid AS propietaryID, ";
-		$sql .= "p.propietaryci AS propietaryCI FROM vehicle v ";
-		$sql .= "inner join propietary p on v.propietaryid = p.propietaryid";
-		//$sql .= "inner join language l on f.language_id = l.language_id LIMIT 0,100";
-		//$sql = "SELECT * FROM vehicle";
-/*$sql = "SELECT film_id, title, release_year, rental_duration, rental_rate, ";
-$sql .= "length, rating, f.last_update, l.name FROM Film f ";
-$sql .= "inner join language l on f.language_id = l.language_id LIMIT 0,100";*/
+		//$sql = "SELECT v.vehicleid, v.propietaryid, ";
+		//$sql .= "p.propietaryci FROM vehicle v ";
+		//$sql .= "inner join propietary p on v.propietaryid = p.propietaryid";
+		$sql = "SELECT * FROM vehicle";
 
 		$result = array();
 

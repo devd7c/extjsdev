@@ -13,11 +13,6 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
     isNewRecord: false,
 	onGridEditorBeforeEdit: function (editor, ctx, eOpts) {
         this.lookupReference('newRecordButton').setDisabled(true);
-        /*var propietaryColIdx = 2;
-        var combo = ctx.grid.columns[propietaryColIdx].getEditor(ctx.record);
-        if (ctx.record.get('propietaryID') === -1) {
-            combo.emptyText = 'Seleccionar el CI...';
-        }*/
     },
     onGridEditorCancelEdit: function (editor, ctx, eOpts) {
         if (this.newRecordId && ctx.record.get('vehicleid') === this.newRecordId && this.isNewRecord) {
@@ -38,13 +33,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
         if(this.isNewRecord){
             ctx.grid.getStore().getProxy().setExtraParams({action:'insert'});
 			D7C.util.Util.showToast('Los datos fueron ingresados correctamente!');
-        }else{
-        var propietaryColIdx = 2;
-        var combo = ctx.grid.columns[propietaryColIdx].getEditor(ctx.record);
-        var vendorRecord = combo.findRecord('propietaryci', ctx.record.get('propietaryCI'));
-        ctx.record.set('propietaryID', vendorRecord.get('propietaryid'));
-
-		
+        }else{		
             ctx.grid.getStore().getProxy().setExtraParams({action:'update'});
 			D7C.util.Util.showToast('Los datos fueron modificados correctamente!');
         }
