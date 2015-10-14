@@ -30,7 +30,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
         this.lookupReference('newRecordButton').setDisabled(false);
     },
     onGridEditorEdit: function (editor, ctx, eOpts) {		
-        if(this.isNewRecord){
+        if(this.isNewRecord){		
             ctx.grid.getStore().getProxy().setExtraParams({action:'insert'});
 			D7C.util.Util.showToast('Los datos fueron ingresados correctamente!');
         }else{		
@@ -46,7 +46,14 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 	onAddVehiclePropietaryClick: function(button, ctx, evt) {
         var newVehiclePropietary = Ext.create('D7C.model.propietarios.UnidadPropietario', {
             vehicleid: 0,
-			propietaryID: 0
+			propietaryid: 0,
+			vehiclecapacity: ''/*,
+			vehiclecategory: '',
+			vehiclechasis: '',
+			vehicleclass: '',
+			vehiclebrand: '',
+			vehicleregistrationnumber: '',
+			vehiclemodel: ''*/
         });
         this.isNewRecord = true;
         this.newRecordId = newVehiclePropietary.get('vehicleid');

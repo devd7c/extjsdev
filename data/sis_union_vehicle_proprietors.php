@@ -13,10 +13,10 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
-		//$sql = "SELECT v.vehicleid, v.propietaryid, ";
-		//$sql .= "p.propietaryci FROM vehicle v ";
-		//$sql .= "inner join propietary p on v.propietaryid = p.propietaryid";
-		$sql = "SELECT * FROM vehicle";
+		$sql = "SELECT v.vehicleid, v.propietaryid, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, ";
+		$sql .= "v.vehiclebrand, v.vehicleregistrationnumber, v.vehiclemodel, p.propietaryci FROM vehicle v ";
+		$sql .= "inner join propietary p on v.propietaryid = p.propietaryid";
+		//$sql = "SELECT * FROM vehicle";
 
 		$result = array();
 
@@ -25,30 +25,32 @@ switch($action){
 			while($record = $resultDb->fetch_assoc()) {
 				array_push($result, $record);
 			}
-
 			$resultDb->close();
 		}
-
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
 			"modelVehicleProprietors" => $result
 		));
-
 		/* close connection */
 		$mysqli->close();
 		break;
 	case 'insert':
 		$data=json_decode($_POST['data'])[0];
-		
+
 		$query = "INSERT INTO vehicle (vehicleid, propietaryid) ";
-		$query .= "VALUES (NULL,'".$data->propietaryID./*"', '".$data->propietarylastname."', '".$data->propietaryci."', '".$data->propietaryadress."', '".$data->propietaryphone.*/"')";
+		$query .= "VALUES (NULL,'".$data->propietaryid."')";
 		if ($resultDb = $mysqli->query($query)) {
+			$operatorid = $mysqli->insert_id;
+		}/*
+		$query = "INSERT INTO vehicle (vehicleid, propietaryid) ";
+		$query .= "VALUES (NULL,'".$data->propietaryid./*"', '".$data->vehiclecapacity."', '".$data->vehiclecategory."', '".$data->vehiclechasis."', '".$data->vehicleclass.", '".$data->vehiclebrand."', '".$data->vehicleregistrationnumber."', '".$data->vehiclemodel.*/"')";
+		/*if ($resultDb = $mysqli->query($query)) {
 			$vehicleid = $mysqli->insert_id;
-		}
+		}*/
 	break;
 	case 'update':
 		$data=json_decode($_POST['data'])[0];
-		$query = "UPDATE vehicle SET  propietaryid='".$data->propietaryID./*"',propietarylastname='".$data->propietarylastname."',propietaryci='".$data->propietaryci."',propietaryadress='".$data->propietaryadress."',propietaryphone='".$data->propietaryphone.*/
+		$query = "UPDATE vehicle SET  propietaryid='".$data->propietaryid."',vehiclecapacity='".$data->vehiclecapacity.//"',vehiclecategory='".$data->vehiclecategory."',vehiclechasis='".$data->vehiclechasis."',vehicleclass='".$data->vehicleclass."',vehiclebrand='".$data->vehiclebrand."',vehicleregistrationnumber='".$data->vehicleregistrationnumber."',vehiclemodel='".$data->vehiclemodel.
 			   "' WHERE vehicleid=".$data->vehicleid;
 		if ($resultDb = $mysqli->query($query)) {
 			$vehicleid = $mysqli->insert_id;
