@@ -37,20 +37,15 @@ switch($action){
 	case 'insert':
 		$data=json_decode($_POST['data'])[0];
 
-		$query = "INSERT INTO vehicle (vehicleid, propietaryid) ";
-		$query .= "VALUES (NULL,'".$data->propietaryid."')";
+		$query = "INSERT INTO vehicle (vehicleid, propietaryid, vehiclecapacity, vehiclecategory, vehiclechasis, vehicleclass, vehiclebrand, vehicleregistrationnumber, vehiclemodel) ";
+		$query .= "VALUES (NULL,'".$data->propietaryid."', '".$data->vehiclecapacity."', '".$data->vehiclecategory."', '".$data->vehiclechasis."', '".$data->vehicleclass."', '".$data->vehiclebrand."', '".$data->vehicleregistrationnumber."', '".$data->vehiclemodel."')";
 		if ($resultDb = $mysqli->query($query)) {
 			$operatorid = $mysqli->insert_id;
-		}/*
-		$query = "INSERT INTO vehicle (vehicleid, propietaryid) ";
-		$query .= "VALUES (NULL,'".$data->propietaryid./*"', '".$data->vehiclecapacity."', '".$data->vehiclecategory."', '".$data->vehiclechasis."', '".$data->vehicleclass.", '".$data->vehiclebrand."', '".$data->vehicleregistrationnumber."', '".$data->vehiclemodel.*/"')";
-		/*if ($resultDb = $mysqli->query($query)) {
-			$vehicleid = $mysqli->insert_id;
-		}*/
+		}
 	break;
 	case 'update':
 		$data=json_decode($_POST['data'])[0];
-		$query = "UPDATE vehicle SET  propietaryid='".$data->propietaryid."',vehiclecapacity='".$data->vehiclecapacity.//"',vehiclecategory='".$data->vehiclecategory."',vehiclechasis='".$data->vehiclechasis."',vehicleclass='".$data->vehicleclass."',vehiclebrand='".$data->vehiclebrand."',vehicleregistrationnumber='".$data->vehicleregistrationnumber."',vehiclemodel='".$data->vehiclemodel.
+		$query = "UPDATE vehicle SET  propietaryid='".$data->propietaryid."',vehiclecapacity='".$data->vehiclecapacity."',vehiclecategory='".$data->vehiclecategory."',vehiclechasis='".$data->vehiclechasis."',vehicleclass='".$data->vehicleclass."',vehiclebrand='".$data->vehiclebrand."',vehicleregistrationnumber='".$data->vehicleregistrationnumber."',vehiclemodel='".$data->vehiclemodel.
 			   "' WHERE vehicleid=".$data->vehicleid;
 		if ($resultDb = $mysqli->query($query)) {
 			$vehicleid = $mysqli->insert_id;

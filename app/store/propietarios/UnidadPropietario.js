@@ -2,7 +2,7 @@ Ext.define('D7C.store.propietarios.UnidadPropietario', {
 	extend: 'Ext.data.Store',
     alias: 'widget.unidadpropietariostore',
     model: 'D7C.model.propietarios.UnidadPropietario',
-	sorters: ['propietaryid'],
+	sorters: ['vehicleid'],
     autoLoad: true,
     autoSync: false,    // Make sure that autosync is disabled to avoid posting invalid vendorName.
     proxy: {

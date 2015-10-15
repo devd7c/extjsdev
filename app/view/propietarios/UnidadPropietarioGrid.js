@@ -82,7 +82,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclecapacity;
 			}
-		}/*,
+		},
 		{text: 'Categoria', dataIndex: 'vehiclecategory', flex: 1,
 			editor: {
 				xtype: 'combobox',
@@ -151,7 +151,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclemodel;
 			}
-		}*/
+		}
 		
     ],
 	selType: 'rowmodel',
