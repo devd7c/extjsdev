@@ -89,7 +89,7 @@ Ext.define('D7C.view.menu.Accordion', {
 							{
 								xtype: 'menuitem',
 								text: 'Infraccion de Unidades',
-								option:'infraccionunidadtransporte'
+								option:'btnListaInfraccionesUnidades'
 							}
 						]
 					}

@@ -24,13 +24,14 @@ Ext.define('D7C.view.main.MainController', {
 		'UsuarioGrid',
 		'Infraccion',
 		'InfraccionGrid',
+		'InfraccionRegistro',
+		'InfraccionRegistroGrid',
 		'ResolucionAdministrativa',
 		'ResolucionAdministrativaGrid',
 		'Propietario',
 		'PropietarioGrid',
 		'UnidadPropietario',
-		'UnidadPropietarioGrid',
-		'PropietarioPdf'
+		'UnidadPropietarioGrid'
     ],
 	
 	init: function() {
@@ -131,6 +132,35 @@ Ext.define('D7C.view.main.MainController', {
 
                 }else{
                     listInfraction.show();
+                }
+
+			break;
+			
+			case 'btnListaInfraccionesUnidades':
+
+				var listInfractionRegister =Ext.getCmp('win-infraccionregistro');
+
+                if(typeof listInfractionRegister=="undefined"){
+                    var storeInfractionRegister=Ext.create('D7C.store.infracciones.InfraccionRegistro',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+					var storeInfractionRegister=Ext.create('D7C.store.infracciones.InfraccionRegistro');
+                    var GridInfractionRegister=Ext.create('D7C.view.infracciones.InfraccionRegistroGrid',{store: storeInfractionRegister});
+                    GridInfractionRegister.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeInfractionRegister,
+                        dock        : 'bottom',
+                        displayInfo : true,
+                        plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var infractionregisterview=Ext.create('D7C.view.infracciones.InfraccionRegistro',{id:'win-infraccionregistro'});
+
+                    infractionregisterview.add(GridInfractionRegister);
+                    fp.add(infractionregisterview);
+                    infractionregisterview.show();
+
+                }else{
+                    listInfractionRegister.show();
                 }
 
 			break;

@@ -42,8 +42,8 @@ Ext.define('D7C.view.infracciones.InfraccionGrid',{
 				xtype: 'textfield', allowBlank: false
 			}
 		},
-        {text: 'Monto Infraccion', dataIndex: 'amountinfraction', xtype: 'numbercolumn', 
-			format: '0.00', width:155, align: 'right', sortable: true,
+        {text: 'Monto Infraccion', dataIndex: 'amountinfraction', xtype: 'numbercolumn',
+			format: '0.00 Bs', width:155, align: 'right', sortable: true,
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
