@@ -1,6 +1,6 @@
-Ext.define('D7C.store.operadores.RegistroOperador', {
+Ext.define('D7C.store.operadores.RegistroOperadorValido', {
 	extend: 'Ext.data.Store',
-    alias: 'widget.registrooperadorstore',
+    alias: 'widget.registrooperadorvalidostore',
     model: 'D7C.model.operadores.RegistroOperador',
 	sorters: ['operatorregisterid'],
     autoLoad: true,
@@ -8,7 +8,7 @@ Ext.define('D7C.store.operadores.RegistroOperador', {
     proxy: {
         type: 'ajax',
         url: 'data/sis_union_operators_register.php',
-        extraParams:{action:'read'},
+        extraParams:{action:'readvalid'},
         actionMethods: {
             read: 'POST'
         },

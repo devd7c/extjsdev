@@ -66,7 +66,7 @@ Ext.define('D7C.view.menu.Accordion', {
 							{
 								xtype: 'menuitem',
 								text: 'Ampliacion de Unidades',
-								option:'apliacionunidadtransporte'
+								option:'btnListaAmpliacionUnidadTransportes'
 							}
 						]
 					}
@@ -98,15 +98,15 @@ Ext.define('D7C.view.menu.Accordion', {
 				{
 					xtype: 'button',
 					width:220,
-					text: 'Operarios',
-					option: 'registrooperario'
+					text: 'Tarjetas de Operacion',
+					option: 'btnListaTarjetasOperacion'
 					
 				},
 				{
 					xtype: 'button',
 					width:220,
-					text: 'Tarjetas de Operacion',
-					option: 'registrotarjetaoperacion'
+					text: 'Tarjetas de Operacion Temporal',
+					option: 'btnListaTarjetasOperacionTemporal'
 					
 				},
 				{

@@ -41,18 +41,19 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
+		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'propietaryid', width:55, hidden:false, filter:false},
-        {text: 'Nombre', dataIndex: 'propietaryfirstname', flex: 1,filter:true,
+        {text: 'Nombre', dataIndex: 'propietaryfirstname', flex: 1, filter:true,
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
 		},
-        {text: 'Apellidos', dataIndex: 'propietarylastname', flex: 1, sortable: true,
+        {text: 'Apellidos', dataIndex: 'propietarylastname', flex: 1, sortable: true, filter:true,
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
 		},
-        {text: 'C.I.', dataIndex: 'propietaryci', flex: 1, sortable: true,
+        {text: 'C.I.', dataIndex: 'propietaryci', flex: 1, sortable: true, filter:true,
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
@@ -67,10 +68,25 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
+		},
+		{text: 'Operador', dataIndex: 'operatorregisterid', flex: 1,
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				displayField: 'syndicatename',
+				valueField: 'operatorregisterid',
+				queryMode: 'local',
+				store: Ext.create('D7C.store.operadores.RegistroOperadorValido')
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.syndicatename;
+			}
 		}
     ],
 	selType: 'rowmodel',
-    plugins: [{
+    plugins: [
+	{ptype: 'gridfilters'},
+	{
 		ptype: 'rowediting',
 		pluginId: 'propietaryRowEditingPlugin',
 		clicksToEdit: 2,

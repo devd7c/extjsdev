@@ -45,24 +45,60 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
+		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'adminresolutionid', width:55, hidden:false, filter:false},
-        {header: 'Fecha Resolucion', xtype: 'datecolumn', dataIndex: 'adminresolutiondate', flex: 1,format: 'M d, Y',
+        {header: 'Fecha Resolucion', xtype: 'datecolumn', dataIndex: 'adminresolutiondate', flex: 1, format: 'Y-m-d',
+			filter: {
+				//type: 'list'
+			},
 			editor: {
 				xtype: 'datefield', allowBlank: false,
 				format: 'Y-m-d',
-                minValue: '01/01/05'/*,
+                minValue: '01/01/15'/*,
                 disabledDays: [0, 6],
                 disabledDaysText: 'Plants are not available on the weekends'*/
+			},
+			renderer: function(value, metaData, record ){
+				return Ext.util.Format.date(record.data.adminresolutiondate, 'Y-m-d');
+				//return record.data.adminresolutiondate;
 			}
 		},
         {text: 'Codigo Resolucion', dataIndex: 'adminresolutioncode', flex: 1,filter:true,
+			filter: {
+				//type: 'list'
+			},
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
-		}
+		},
+        {text: 'Informe Tecnico', dataIndex: 'adminresolutiontechnical', flex: 1,filter:true,
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+        {text: 'Informe Legal', dataIndex: 'adminresolutionlegal', flex: 1,filter:true,
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+		{text: 'Cantidad Autorizada', dataIndex: 'vehiclequantityid', flex: 1,
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				displayField: 'vehiclequantitydescription',
+				valueField: 'vehiclequantityid',
+				queryMode: 'local',
+				store: Ext.create('D7C.store.propietarios.Unidad')
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.vehiclequantitydescription;
+			}
+        }
     ],
 	selType: 'rowmodel',
-    plugins: [{
+    plugins: [
+	{ptype: 'gridfilters'},
+	{
 		ptype: 'rowediting',
 		pluginId: 'modelAdministrativeResolutionRowEditingPlugin',
 		clicksToEdit: 2,

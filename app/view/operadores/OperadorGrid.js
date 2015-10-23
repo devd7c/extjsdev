@@ -37,8 +37,12 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
+		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'operatorid', width:55, hidden:false, filter:false},
         {text: 'Nombre del Operador', dataIndex: 'syndicatename', flex: 1,filter:true,
+			filter: {
+				//type: 'list'
+			},
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
@@ -47,10 +51,31 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 			editor: {
 				xtype: 'textfield', allowBlank: false
 			}
+		},
+		{text: 'Estado', dataIndex: 'operatorstate', width:100,
+			filter: {
+				type: 'list'
+			},
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				editable: false,
+				forceSelection: true,
+				store: [
+					'Valido',
+					'Pendiente',
+					'Invalido'
+				]
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.operatorstate;
+			}
 		}
     ],
 	selType: 'rowmodel',
-    plugins: [{
+    plugins: [
+	{ptype: 'gridfilters'},
+	{
 		ptype: 'rowediting',
 		pluginId: 'modelOperatorRowEditingPlugin',
 		clicksToEdit: 2,

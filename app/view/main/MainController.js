@@ -10,18 +10,26 @@ Ext.define('D7C.view.main.MainController', {
     alias: 'controller.main',
     requires: [
 		'Ext.util.*',
+		'Ext.grid.*',
+		'Ext.data.*',
         'Ext.window.MessageBox',
 		'Ext.toolbar.Paging',
         'Ext.ux.ProgressBarPager',
+		'Ext.grid.filters.Filters',
+		'Ext.tip.ToolTip',
 		'D7C.util.Util',
 		'D7C.ux.grid.Printer'
     ],
     views: [
 		'Accordion',
-        'Operador',
-		'OperadorGrid',
         'Usuario',
 		'UsuarioGrid',
+        'Operador',
+		'OperadorGrid',
+		'TarjetaOperacion',
+		'TarjetaOperacionGrid',
+        'RegistroOperador',
+		'RegistroOperadorGrid',
 		'Infraccion',
 		'InfraccionGrid',
 		'InfraccionRegistro',
@@ -97,6 +105,34 @@ Ext.define('D7C.view.main.MainController', {
                         plugins: new Ext.ux.ProgressBarPager()
                     });
                     var videoview=Ext.create('D7C.view.operadores.Operador',{id:'win-operador'});
+
+                    videoview.add(GridTest);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listMageSoap.show();
+                }
+
+			break;
+			case 'btnListaRegistroOperadores':
+
+				var listMageSoap =Ext.getCmp('win-registrooperador');
+
+                if(typeof listMageSoap=="undefined"){
+                    var storeMage=Ext.create('D7C.store.operadores.RegistroOperador',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+					var storeMage=Ext.create('D7C.store.operadores.RegistroOperador');
+                    var GridTest=Ext.create('D7C.view.operadores.RegistroOperadorGrid',{store: storeMage});
+                    GridTest.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeMage,
+                        dock        : 'bottom',
+                        displayInfo : true,
+                        plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var videoview=Ext.create('D7C.view.operadores.RegistroOperador',{id:'win-registrooperador'});
 
                     videoview.add(GridTest);
                     fp.add(videoview);
@@ -246,6 +282,34 @@ Ext.define('D7C.view.main.MainController', {
 
                 }else{
                     listVehiclePropietary.show();
+                }
+
+			break;
+			case 'btnListaTarjetasOperacion':
+
+				var listMageSoap =Ext.getCmp('win-tarjetaoperacion');
+
+                if(typeof listMageSoap=="undefined"){
+                    var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+					var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion');
+                    var GridTest=Ext.create('D7C.view.operadores.TarjetaOperacionGrid',{store: storeMage});
+                    GridTest.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeMage,
+                        dock        : 'bottom',
+                        displayInfo : true,
+                        plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var videoview=Ext.create('D7C.view.operadores.TarjetaOperacion',{id:'win-tarjetaoperacion'});
+
+                    videoview.add(GridTest);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listMageSoap.show();
                 }
 
 			break;

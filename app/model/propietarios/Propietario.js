@@ -3,6 +3,7 @@ Ext.define('D7C.model.propietarios.Propietario', {
     idProperty: 'propietaryid',
     fields: [
         {name: 'propietaryid', type: 'int' },
+		{name: 'operatorregisterid', type: 'int' },		
         {name: 'propietaryfirstname', type: 'string'},
         {name: 'propietarylastname', type: 'string'},
 		{name: 'propietaryci', type: 'string'},

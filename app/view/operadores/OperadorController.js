@@ -44,7 +44,8 @@ Ext.define('D7C.view.operadores.OperadorController', {
         var newCar = Ext.create('D7C.model.operadores.Operador', {
             operatorid: 0,
 			operatorcode: '',
-            syndicatename: ''
+            syndicatename: '',
+			operatorstate: ''
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('operatorid');

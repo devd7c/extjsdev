@@ -8,11 +8,11 @@ Ext.define('D7C.view.operadores.RegistroOperador', {
     id: 'win-registrooperador',
     controller: 'registrooperador',
     layout		: "fit",
-    width		: 720,
+    width		: 1100,
     height		: 450,
     minHeight           : 450,
     constrainHeader : true,
-    title: 'Operadores',
+    title: 'Registro de Operadores',
     maximized: false,
     maximizable:true,
     initComponent: function() {

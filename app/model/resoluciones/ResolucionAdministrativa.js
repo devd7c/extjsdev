@@ -3,11 +3,16 @@ Ext.define('D7C.model.resoluciones.ResolucionAdministrativa', {
     idProperty: 'adminresolutionid',
     fields: [
         {name: 'adminresolutionid', type: 'int' },
+		{name: 'vehiclequantityid', type: 'int' },
         {name: 'adminresolutioncode', type: 'string'},
-		{name: 'adminresolutiondate', type: 'string'}
+		{name: 'adminresolutiondate', type: 'date', dateFormat: 'Y-m-d'},
+		{name: 'adminresolutiontechnical', type: 'string'},
+		{name: 'adminresolutionlegal', type: 'string'}
     ],
     validators: {
         adminresolutioncode: { type: 'presence', allowEmpty: false },
-		adminresolutiondate: { type: 'presence', allowEmpty: false }
+		adminresolutiondate: { type: 'presence', allowEmpty: false },
+		adminresolutiontechnical: { type: 'presence', allowEmpty: false },
+		adminresolutionlegal: { type: 'presence', allowEmpty: false }
     }
 });

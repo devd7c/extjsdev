@@ -4,20 +4,19 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
     requires: ['Ext.toolbar.Paging'],
     stateful: true,
     multiSelect: true,
-    stateId: 'stateGrid',
+	reference: 'operatorRegisterGrid',
     height: 350,
-    viewConfig: {
-        stripeRows: true
-    },
     tbar: [{
-        text: 'Añadir Operador',
-        handler: 'onAddCustomerClick'
+		xtype: 'button',
+        text: 'Añadir Registro',
+		reference: 'newRecordButton',
+        handler: 'onAddOperatorRegisterClick'
     }, {
-        text: 'Eliminar Operador',
-        handler: 'onRemoveCustomerClick',
-        bind: {
-            disabled: '{!customerGrid.selection}'
-        }
+		xtype: 'button',
+        text: 'Eliminar Registro',
+		reference: 'deleteRecordButton',
+        handler: 'onRemoveOperatorRegisterClick',
+		disabled:true
     },
 	{
 		xtype: 'button',
@@ -33,31 +32,131 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 			click: 'onExportPDF'
 		}
 	}],
-    buttons: [{
-        text: 'Visualizar Cambios',
-        handler: 'onSessionChangeClick'
-    }],
+	listeners: {
+	   select: 'onGridSelect',
+	   deselect: 'onGridDeselect'
+	},
     columns: [
-        {header: 'ID',  dataIndex: 'product_id',width:55, hidden:true},
-        {text: 'Codigo',
-            flex: 1,
-            dataIndex: 'sku',filter:true,
-            renderer : function(value, metadata, record) {
-                myToolTipText = '<image style=\'min-height:160px;min-width:160px;\' src=http://www.freeshi.com/v/vspfiles/photos/'+ record.data.image +'></image>';
-                metadata.tdAttr = 'data-qtip="' + myToolTipText + '"';
-                return value;
-            }
+		{xtype: 'rownumberer'},
+        {text: 'ID',  dataIndex: 'operatorregisterid', width:55, hidden:false, filter:false},
+		{text: 'Operador', dataIndex: 'operatorid', flex: 1,
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				displayField: 'operatorcode',
+				valueField: 'operatorid',
+				queryMode: 'local',
+				store: Ext.create('D7C.store.operadores.OperadorValido')
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.syndicatename;
+			}
         },
-        {text: 'Descripcion',
-            sortable: true,
-            dataIndex: 'name',
-            width: 450,
-            editor: {
-                xtype: 'textfield'
-            }
-        }
+		{text: 'Resolucion Administrativa', dataIndex: 'adminresolutionid', flex: 1,
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				displayField: 'adminresolutioncode',
+				valueField: 'adminresolutionid',
+				queryMode: 'local',
+				store: Ext.create('D7C.store.resoluciones.ResolucionAdministrativa')
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.adminresolutioncode;
+			}
+        },
+		{text: 'Zona Inicio', dataIndex: 'operatorregisterzonestart', width:110,
+			filter: {
+				type: 'list'
+			},
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				editable: false,
+				forceSelection: true,
+				store: [
+					'Zona Tropico',
+					'Zona Valle Alto',
+					'Zona Sud',
+					'Zona Andina',
+					'Cercado'
+				]
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.operatorregisterzonestart;
+			}
+		},
+        {text: 'Ruta Inicio', dataIndex: 'operatorregisterroutestart', flex: 1,filter:true,
+			filter: {
+				//type: 'list'
+			},
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+		{text: 'Zona Final', dataIndex: 'operatorregisterzonefinish', width:110,
+			filter: {
+				type: 'list'
+			},
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				editable: false,
+				forceSelection: true,
+				store: [
+					'Zona Tropico',
+					'Zona Valle Alto',
+					'Zona Sud',
+					'Zona Andina',
+					'Cercado'
+				]
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.operatorregisterzonefinish;
+			}
+		},
+        {text: 'Ruta Final', dataIndex: 'operatorregisterroutefinish', flex: 1, sortable: true,
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+		{text: 'Estado', dataIndex: 'operatorregisterstate', width:100,
+			filter: {
+				type: 'list'
+			},
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				editable: false,
+				forceSelection: true,
+				store: [
+					'Activo',
+					'Pendiente',
+					'Baja'
+				]
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.operatorregisterstate;
+			}
+		}
     ],
-    plugins: [{
-        ptype: 'gridfilters'
+	selType: 'rowmodel',
+    plugins: [
+	{ptype: 'gridfilters'},
+	{
+        ptype: 'rowexpander',
+        // dblclick invokes the row editor
+        expandOnDblClick: false,
+        rowBodyTpl: 'Codigo Operador: <b>{operatorcode}</b> - Fecha Resolucion Administrativa: <b>{adminresolutiondate}</b><br>Informe Tecnico: <b>{adminresolutiontechnical}</b><br></b>Informe Legal: <b>{adminresolutionlegal}</b><br></b>Cantidad Autorizada: <b>{vehiclequantitydescription}</b>'
+    },
+	{
+		ptype: 'rowediting',
+		pluginId: 'operatorRegisterRowEditingPlugin',
+		clicksToEdit: 2,
+		listeners: {
+		   beforeedit: 'onGridEditorBeforeEdit',
+		   canceledit: 'onGridEditorCancelEdit',
+		   edit: 'onGridEditorEdit'
+		}
     }]
 });

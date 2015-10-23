@@ -1,12 +1,12 @@
-Ext.define('D7C.view.operadores.RegistroOperadorController', {
+Ext.define('D7C.view.operadores.TarjetaOperacionController', {
 	extend: 'Ext.app.ViewController',
-    alias: 'controller.registrooperador',
-	stores: ['RegistroOperador'],
-	models: ['RegistroOperador'],
-	views: ['RegistroOperador', 'RegistroOperadorGrid'],
+    alias: 'controller.tarjetaoperacion',
+	stores: ['TarjetaOperacion'],
+	models: ['TarjetaOperacion'],
+	views: ['TarjetaOperacion', 'TarjetaOperacionGrid'],
 	requires: [
-		'D7C.view.operadores.RegistroOperador',
-        'D7C.view.operadores.RegistroOperadorGrid'
+		'D7C.view.operadores.TarjetaOperacion',
+        'D7C.view.operadores.TarjetaOperacionGrid'
 	],
 	newRecordId: '',
     isNewRecord: false,
@@ -14,15 +14,15 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
         this.lookupReference('newRecordButton').setDisabled(true);
     },
     onGridEditorCancelEdit: function (editor, ctx, eOpts) {
-        if (this.newRecordId && ctx.record.get('operatorregisterid') === this.newRecordId && this.isNewRecord) {
+        if (this.newRecordId && ctx.record.get('cardoperationid') === this.newRecordId && this.isNewRecord) {
             ctx.grid.getStore().remove(ctx.record);
             this.isNewRecord = false;
             this.newRecordId = null;
         }
 		this.isNewRecord = false;		
-        var grid = this.lookupReference('operatorRegisterGrid'),
+        var grid = this.lookupReference('cardOperationGrid'),
             selectedRecords = grid.getSelection(),
-            store = grid.getStore('operatorregisterid');
+            store = grid.getStore('cardoperationid');
         store.remove(selectedRecords);
         this.lookupReference('newRecordButton').setDisabled(false);
     },
@@ -40,27 +40,26 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
 		this.lookupReference('newRecordButton').setDisabled(false);
         this.lookupReference('deleteRecordButton').setDisabled(true);
     },
-	onAddOperatorRegisterClick: function(button, ctx, evt) {
-        var newCar = Ext.create('D7C.model.operadores.RegistroOperador', {
-            operatorregisterid: 0,
-			operatorid: 0,
-			adminresolutionid: 0,
-			operatorregisterzonestart: '',
-            operatorregisterroutestart: '',
-			operatorregisterzonefinish: '',
-			operatorregisterroutefinish: '',
-			operatorregisterstate: ''
+	onAddCardOperationClick: function(button, ctx, evt) {
+        var newCar = Ext.create('D7C.model.operadores.TarjetaOperacion', {
+            cardoperationid: 0,
+			operatorregisterid: 0,
+			vehicleid: 0,
+			cardoperationstatus: '',
+            cardoperationvalidity: '',
+			nameprincipal: '',
+			namesecretary: ''
         });
         this.isNewRecord = true;
-        this.newRecordId = newCar.get('operatorregisterid');
-        var grid = this.lookupReference('operatorRegisterGrid');
+        this.newRecordId = newCar.get('cardoperationid');
+        var grid = this.lookupReference('cardOperationGrid');
         grid.getStore().insert(0, newCar);
-		grid.getPlugin('operatorRegisterRowEditingPlugin').startEdit(newCar);
+		grid.getPlugin('cardOperationRowEditingPlugin').startEdit(newCar);
 	},
-	onRemoveOperatorRegisterClick: function (button, evt) {
-        var grid = this.lookupReference('operatorRegisterGrid'),
+	onRemoveCardOperationClick: function (button, evt) {
+        var grid = this.lookupReference('cardOperationGrid'),
             selectedRecords = grid.getSelection(),
-            store = grid.getStore('operatorregisterid');
+            store = grid.getStore('cardoperationid');
 		Ext.Msg.show({ 
 			title: 'Eliminar Datos',
 			msg: 'Esta seguro que desea eliminar los datos?',
@@ -87,7 +86,7 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
     onPrint: function(button, e, options) {
         var printer = D7C.ux.grid.Printer;
         printer.printAutomatically = false;
-        printer.print(this.lookupReference('operatorRegisterGrid'));
+        printer.print(this.lookupReference('cardOperationGrid'));
     },
     onExportPDF: function(button, e, options) {
 		var fp=Ext.getCmp('content-panel');
@@ -98,7 +97,7 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/propietaries_registerPdf.php'
+						src: 'data/pdf/card_operationPdf.php'
 					}]
 				}
 			);

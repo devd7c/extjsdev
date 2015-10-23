@@ -36,8 +36,14 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
+		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'infractionregisterid', width:55, hidden:false, filter:false},
 		//{text: 'ID Infraccion',  dataIndex: 'infractionid', width:55, hidden:false, filter:false},
+        {text: 'No. Boleta Infraccion', dataIndex: 'infractionnumberticket', flex: 1, filter:true,
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
 		{text: 'Infraccion', dataIndex: 'infractionid', flex: 1,
 			editor: {
 				xtype: 'combobox',
@@ -51,18 +57,48 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 				return record.data.descriptioninfraction;
 			}
         },
-		{text: 'Monto',  dataIndex: 'amountinfraction', width:110, xtype: 'numbercolumn', format: '0.00 Bs',
-			renderer: function(value, metaData, record ){
-				return record.data.amountinfraction;
-			}
-		},
-		{text: 'ID Unidad',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false},
-        {text: 'No. Boleta Infraccion', dataIndex: 'infractionnumberticket', flex: 1, filter:true,
+		{text: 'Monto',  dataIndex: 'amountinfraction', width:110, xtype: 'numbercolumn', format: '0.00 Bs'},
+		{text: 'No. de Placa', dataIndex: 'vehicleid', flex: 1,
 			editor: {
-				xtype: 'textfield', allowBlank: false
+				xtype: 'combobox',
+				allowBlank: false,
+				displayField: 'vehiclelicense',
+				valueField: 'vehicleid',
+				queryMode: 'local',
+				store: Ext.create('D7C.store.propietarios.UnidadPropietario')
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.vehiclelicense;
+			},
+			items    : {
+				xtype: 'textfield',
+				reference: 'vehicleLicenseFilterField',  // So that the Controller can access it easily
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onVehicleLicenseFilterKeyup',
+					buffer: 500
+				}
+			}
+        },
+		{text: 'C.I. Propietario', dataIndex: 'propietaryci', flex: 1, filter:true,
+			items    : {
+				xtype: 'textfield',
+				reference: 'propietaryCiFilterField',  // So that the Controller can access it easily
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onPropietaryCiFilterKeyup',
+					buffer: 500
+				}
 			}
 		},
-		{text: 'Estado Infraccion', dataIndex: 'infractionregisterstate', flex: 1,
+		{text: 'Estado', dataIndex: 'infractionregisterstate', width:100,
+			filter: {
+				type: 'list'
+			},
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
@@ -85,8 +121,22 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 			}
 		}*/
     ],
+	viewConfig: { 
+        stripeRows: false, 
+        getRowClass: function(record) { 
+            return record.get('infractionregisterstate') == 'Pagado' ? 'valid-row' : record.get('infractionregisterstate') == 'Cancelado' ? 'invalid-row' : ''; 
+        } 
+    },
 	selType: 'rowmodel',
-    plugins: [{
+    plugins: [
+	{ptype: 'gridfilters'},
+	{
+        ptype: 'rowexpander',
+        // dblclick invokes the row editor
+        expandOnDblClick: false,
+        rowBodyTpl: 'Propietario: <b>{propietaryfirstname} {propietarylastname}</b> - Sindicato: <b>{syndicatename}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
+    },
+	{
 		ptype: 'rowediting',
 		pluginId: 'modelInfractionRegisterRowEditingPlugin',
 		clicksToEdit: 2,

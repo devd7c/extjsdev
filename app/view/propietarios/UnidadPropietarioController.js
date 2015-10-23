@@ -52,8 +52,9 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 			vehiclechasis: '',
 			vehicleclass: '',
 			vehiclebrand: '',
-			vehicleregistrationnumber: '',
-			vehiclemodel: ''
+			vehiclestatus: 'NO',
+			vehiclemodel: '',
+			vehiclelicense: ''
         });
         this.isNewRecord = true;
         this.newRecordId = newVehiclePropietary.get('vehicleid');

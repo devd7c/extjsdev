@@ -1,20 +1,20 @@
-Ext.define('D7C.store.operadores.RegistroOperador', {
+Ext.define('D7C.store.propietarios.UnidadRegistroPropietario', {
 	extend: 'Ext.data.Store',
-    alias: 'widget.registrooperadorstore',
-    model: 'D7C.model.operadores.RegistroOperador',
-	sorters: ['operatorregisterid'],
+    alias: 'widget.unidadregistropropietariostore',
+    model: 'D7C.model.propietarios.UnidadPropietario',
+	sorters: ['vehicleid'],
     autoLoad: true,
     autoSync: false,    // Make sure that autosync is disabled to avoid posting invalid vendorName.
     proxy: {
         type: 'ajax',
-        url: 'data/sis_union_operators_register.php',
-        extraParams:{action:'read'},
+        url: 'data/sis_union_vehicle_proprietors.php',
+        extraParams:{action:'readValidROP'},
         actionMethods: {
             read: 'POST'
         },
         reader: {
             type: 'json',
-            rootProperty: 'modelOperatorsRegister'
+            rootProperty: 'modelVehicleProprietors'
         },
         writer: {
             type: 'json',

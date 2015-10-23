@@ -53,7 +53,7 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroController', {
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('infractionregisterid');
-        var grid = this.lookupReference('infractionGrid');
+        var grid = this.lookupReference('infractionRegisterGrid');
         grid.getStore().insert(0, newCar);
 		grid.getPlugin('modelInfractionRegisterRowEditingPlugin').startEdit(newCar);
 	},
@@ -108,5 +108,41 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroController', {
 		}else{
 			pdfGrid.show();
 		}
+    },
+	onVehicleLicenseFilterKeyup: function() {
+        var grid = this.lookupReference('infractionRegisterGrid'),
+            filterField = this.lookupReference('vehicleLicenseFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.vehicleLicenseFilter = filters.add({
+                id            : 'vehicleLicenseFilter',
+                property      : 'vehiclelicense',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.vehicleLicenseFilter) {
+            filters.remove(this.vehicleLicenseFilter);
+            this.vehicleLicenseFilter = null;
+        }
+    },
+	onPropietaryCiFilterKeyup: function() {
+        var grid = this.lookupReference('infractionRegisterGrid'),
+            filterField = this.lookupReference('propietaryCiFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.propietaryCiFilter = filters.add({
+                id            : 'propietaryCiFilter',
+                property      : 'propietaryci',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.propietaryCiFilter) {
+            filters.remove(this.propietaryCiFilter);
+            this.propietaryCiFilter = null;
+        }
     }
 });

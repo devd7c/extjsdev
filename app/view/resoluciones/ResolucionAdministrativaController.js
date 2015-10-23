@@ -44,8 +44,11 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaController', {
 	onAddAdministrativeResolutionClick: function(button, ctx, evt) {
         var newAdministrativeResolution = Ext.create('D7C.model.resoluciones.ResolucionAdministrativa', {
             adminresolutionid: 0,
+			vehiclequantityid: 0,
 			adminresolutioncode: '',
-			adminresolutiondate: ''
+			adminresolutiondate: '',
+			adminresolutiontechnical: '',
+			adminresolutionlegal: ''
         });
         this.isNewRecord = true;
         this.newRecordId = newAdministrativeResolution.get('adminresolutionid');

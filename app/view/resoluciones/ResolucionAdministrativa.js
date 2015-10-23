@@ -8,7 +8,7 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativa', {
     id: 'win-resolucionadministrativa',
     controller: 'resolucionadministrativa',
     layout		: "fit",
-    width		: 780,
+    width		: 880,
     height		: 450,
     minHeight           : 450,
     constrainHeader : true,

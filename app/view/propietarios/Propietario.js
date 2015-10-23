@@ -8,7 +8,7 @@ Ext.define('D7C.view.propietarios.Propietario', {
     id: 'win-propietario',
     controller: 'propietario',
     layout		: "fit",
-    width		: 780,
+    width		: 950,
     height		: 450,
     minHeight           : 450,
     constrainHeader : true,

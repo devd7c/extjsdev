@@ -43,8 +43,9 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 	   deselect: 'onGridDeselect'
 	},
     columns: [
+		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false},
-		{text: 'Operador', dataIndex: 'propietaryid', width:100,
+		{text: 'Propietario', dataIndex: 'propietaryid', width:250,
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
@@ -53,88 +54,107 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				queryMode: 'local',
 				store: Ext.create('D7C.store.propietarios.Propietario')
 			},
-			renderer: function(value, metaData, record ){
+			/*renderer: function(value, metaData, record ){
 				return record.data.propietaryci;
+			},*/
+			renderer : function(value, metadata, record) {
+				 myToolTipText = record.data.propietaryfirstname + " " + record.data.propietarylastname;
+				 return myToolTipText;
 			}
         },
-        {text: 'Capacidad', dataIndex: 'vehiclecapacity', flex: 1,
-			editor: {
-				xtype: 'combobox',
-				allowBlank: false,
-				editable: false,
-				forceSelection: true,
-				store: [
-					'2TN/20 Personas',
-					'4TN/40 Personas',
-					'6TN/50 Personas',
-					'8TN/60 Personas',
-					'10TN/70 Personas',
-					'12TN/80 Personas',
-					'14TN/90 Personas',
-					'16TN/100 Personas',
-					'18TN/110 Personas',
-					'20TN/120 Personas',
-					'22TN/130 Personas',
-					'24TN/140 Personas',
-					'26TN/150 Personas'
-				]
+		{text: 'Categoria', dataIndex: 'vehiclecategory', width:80,
+			filter: {
+				type: 'list'
 			},
-			renderer: function(value, metaData, record ){
-				return record.data.vehiclecapacity;
-			}
-		},
-		{text: 'Categoria', dataIndex: 'vehiclecategory', flex: 1,
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
 				editable: false,
 				forceSelection: true,
 				store: [
-					'Categoria A',
-					'Categoria B',
-					'Categoria C',
-					'Categoria D',
-					'Categoria E'
+					'Pasajeros',
+					'Carga'
 				]
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclecategory;
 			}
 		},
-		{text: 'No. Chasis', dataIndex: 'vehiclechasis', flex: 1, sortable: true,
-			editor: {
-				xtype: 'textfield', allowBlank: false
-			}
-		},
-		{text: 'Clase', dataIndex: 'vehicleclass', width:80,
+        {text: 'Capacidad', dataIndex: 'vehiclecapacity', width:120,
+			filter: {
+				type: 'list'
+			},
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
 				editable: false,
 				forceSelection: true,
 				store: [
-					'Clase A',
-					'Clase B',
-					'Clase C',
-					'Clase D',
-					'Clase E'
+					'5 Personas',
+					'6 Personas',
+					'7 Personas',
+					'8 Personas',
+					'9 Personas',
+					'10 Personas',
+					'12 Personas',
+					'14 Personas',
+					'16 Personas',
+					'18 Personas',
+					'20 Personas',
+					'25 Personas',
+					'35 Personas',
+					'40 Personas',
+					'45 Personas',
+					'50 Personas',
+					'1 Tonelada',
+					'2 Toneladas',
+					'3 Toneladas'
+				]
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.vehiclecapacity;
+			}
+		},
+		{text: 'Clase', dataIndex: 'vehicleclass', width:90,
+			filter: {
+				type: 'list'
+			},
+			editor: {
+				xtype: 'combobox',
+				allowBlank: false,
+				editable: false,
+				forceSelection: true,
+				store: [
+					'Camion',
+					'Camioneta',
+					'Minibus',
+					'Omnibus',
+					'Taxi',
+					'Vagoneta'
 				]
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.vehicleclass;
 			}
 		},
-		{text: 'Marca', dataIndex: 'vehiclebrand', flex: 1, sortable: true,
+		{text: 'Marca', dataIndex: 'vehiclebrand', width:100, sortable: true,
+			filter: {
+				//type: 'list'
+			},
 			editor: {
 				xtype: 'textfield', allowBlank: false
-			}
-		},
-		{text: 'No. de Registro', dataIndex: 'vehicleregistrationnumber', flex: 1, sortable: true,
-			editor: {
-				xtype: 'textfield', allowBlank: false
-			}
+			}/*,
+			renderer : function(value, metadata, record) {
+				 myToolTipText = "<b>Annotation</b>";
+				 myToolTipText = myToolTipText + "<br/>"+ record.data.propietaryfirstname;
+				 metadata.tdAttr = 'data-qtip="' + myToolTipText + '"';
+				 return value;
+			}*/
 		},
 		{text: 'Modelo', dataIndex: 'vehiclemodel', width:70,
+			filter: {
+				type: 'list'
+			},
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
@@ -143,19 +163,81 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				store: [
 					'1980',
 					'1981',
+					'1982',
 					'1983',
 					'1984',
-					'1985'
+					'1985',
+					'1986',
+					'1987',
+					'1988',
+					'1989',
+					'1990',
+					'1991',
+					'1992',
+					'1993',
+					'1994',
+					'1995',
+					'1996',
+					'1997',
+					'1998',
+					'1999',
+					'2000',
+					'2001',
+					'2002',
+					'2003',
+					'2004',
+					'2005',
+					'2006',
+					'2007',
+					'2008',
+					'2009',
+					'2010',
+					'2011',
+					'2012',
+					'2013',
+					'2014',
+					'2015',
+					'2016',
+					'2017',
+					'2018',
+					'2019',
+					'2020'
 				]
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclemodel;
 			}
+		},
+		{text: 'No. de Placa', dataIndex: 'vehiclelicense', width:100, sortable: true,
+			filter: {
+				//type: 'list'
+			},
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+		{text: 'No. Chasis', dataIndex: 'vehiclechasis', flex: 1, sortable: true,
+			editor: {
+				xtype: 'textfield', allowBlank: false
+			}
+		},
+		{text: 'Habilitado', dataIndex: 'vehiclestatus', flex: 1, sortable: true,
+			filter: {
+				type: 'list'
+			}
 		}
 		
     ],
+	viewConfig: { 
+        stripeRows: false, 
+        getRowClass: function(record) { 
+            return record.get('vehiclestatus') == 'NO' ? 'invalid-row' : 'valid-row'; 
+        } 
+    },
 	selType: 'rowmodel',
-    plugins: [{
+    plugins: [
+	{ptype: 'gridfilters'},
+	{
 		ptype: 'rowediting',
 		pluginId: 'vehiclePropietaryRowEditingPlugin',
 		clicksToEdit: 2,

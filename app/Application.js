@@ -19,6 +19,8 @@ Ext.define('D7C.Application', {
     requires: [
 		'D7C.view.sistema.UsuarioController',
         'D7C.view.operadores.OperadorController',
+        'D7C.view.operadores.RegistroOperadorController',
+		'D7C.view.operadores.TarjetaOperacionController',
 		'D7C.view.resoluciones.ResolucionAdministrativaController',
 		'D7C.view.propietarios.PropietarioController',
 		'D7C.view.propietarios.UnidadPropietarioController',
