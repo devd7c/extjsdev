@@ -4,7 +4,7 @@ Ext.define('D7C.store.propietarios.Propietario', {
     model: 'D7C.model.propietarios.Propietario',
 	sorters: ['propietaryid'],
     autoLoad: true,
-    autoSync: false,    // Make sure that autosync is disabled to avoid posting invalid vendorName.
+    autoSync: false,
     proxy: {
         type: 'ajax',
         url: 'data/sis_union_proprietors.php',

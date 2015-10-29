@@ -8,7 +8,8 @@ Ext.define('D7C.model.operadores.TarjetaOperacion', {
         {name: 'cardoperationstatus', type: 'string'},
         {name: 'cardoperationvalidity', type: 'date', dateFormat: 'Y-m-d'},
 		{name: 'nameprincipal', type: 'string'},
-		{name: 'namesecretary', type: 'string'}
+		{name: 'namesecretary', type: 'string'},
+		{name: 'vehiclestatuscard', type: 'string'}
     ],
     validators: {
         cardoperationstatus: { type: 'presence', allowEmpty: false },

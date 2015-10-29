@@ -3,3 +3,11 @@
 #app-header-logo {width: 40px;height: 25px;background: url(images/logo.png) no-repeat center 4px;}
 #app-header-title {padding: 15px 0 10px 0;color: #fff;font-size: 18px;font-weight: bold;}
 .x-btn-default-small {margin-bottom: 1px;}
+.invalid-row .x-grid-cell { 
+    background-color: #ffe2e2; 
+    color: #333; 
+}
+.valid-row .x-grid-cell { 
+    background-color: #e2ffe2; 
+    color: #090; 
+}

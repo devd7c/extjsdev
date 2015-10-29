@@ -14,12 +14,12 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
     },*/
     tbar: [{
 		xtype: 'button',
-        text: 'Añadir Unidad de Transporte',
+        text: 'Añadir',
 		reference: 'newRecordButton',
         handler: 'onAddVehiclePropietaryClick'
     }, {
 		xtype: 'button',
-        text: 'Eliminar Unidad de Transporte',
+        text: 'Eliminar',
 		reference: 'deleteRecordButton',
         handler: 'onRemoveVehiclePropietaryClick',
 		disabled:true
@@ -45,18 +45,33 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
     columns: [
 		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false},
-		{text: 'Propietario', dataIndex: 'propietaryid', width:250,
+		{text: 'Propietario', dataIndex: 'propietaryid', flex: 1,
 			editor: {
 				xtype: 'combobox',
+				alias: 'cmbOP',
 				allowBlank: false,
+				forceSelection : true,
+				matchFieldWidth :true,
+				enableKeyEvents :true,
+				typeAhead: true,
+				hideLabel: true,
+				hideTrigger:true,
+				minChars        :1,
 				displayField: 'propietaryci',
 				valueField: 'propietaryid',
-				queryMode: 'local',
-				store: Ext.create('D7C.store.propietarios.Propietario')
+				queryMode: 'remote',
+				store: Ext.create('D7C.store.propietarios.Propietario'),
+				listConfig   : {
+					itemTpl :
+					'<div data-qtip="{propietaryfirstname} {propietarylastname}">{propietaryci}</div>'
+				}
 			},
-			/*renderer: function(value, metaData, record ){
-				return record.data.propietaryci;
-			},*/
+			listeners:{
+				focus:function(cbo){
+					cbo.getStore().getProxy().setExtraParams({action:'read'});
+					cbo.getStore().reload();
+				}
+			},
 			renderer : function(value, metadata, record) {
 				 myToolTipText = record.data.propietaryfirstname + " " + record.data.propietarylastname;
 				 return myToolTipText;
@@ -80,15 +95,17 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				return record.data.vehiclecategory;
 			}
 		},
-        {text: 'Capacidad', dataIndex: 'vehiclecapacity', width:120,
+        {text: 'Capacidad', dataIndex: 'vehiclecapacity', width:125,
 			filter: {
 				type: 'list'
 			},
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
-				editable: false,
-				forceSelection: true,
+				forceSelection : true,
+				matchFieldWidth :true,
+				enableKeyEvents :true,
+				typeAhead: true,
 				store: [
 					'5 Personas',
 					'6 Personas',
@@ -115,15 +132,17 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				return record.data.vehiclecapacity;
 			}
 		},
-		{text: 'Clase', dataIndex: 'vehicleclass', width:90,
+		{text: 'Clase', dataIndex: 'vehicleclass', width:100,
 			filter: {
 				type: 'list'
 			},
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
-				editable: false,
-				forceSelection: true,
+				forceSelection : true,
+				matchFieldWidth :true,
+				enableKeyEvents :true,
+				typeAhead: true,
 				store: [
 					'Camion',
 					'Camioneta',
@@ -221,11 +240,25 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				xtype: 'textfield', allowBlank: false
 			}
 		},
-		{text: 'Habilitado', dataIndex: 'vehiclestatus', flex: 1, sortable: true,
+		{text: 'Habilitado', dataIndex: 'vehiclestatus', width:85, sortable: true, hidden:true,
 			filter: {
 				type: 'list'
 			}
-		}
+		},
+		{text: 'Operador', dataIndex: 'syndicatename', flex: 1, sortable: true,
+			filter: {
+				type: 'list'
+			}
+		},
+		{
+            xtype: 'widgetcolumn',
+            width: 45,
+            widget: {
+                xtype: 'button',
+                text: '...',
+                handler: 'onEditImgClick'
+            }
+        }
 		
     ],
 	viewConfig: { 
@@ -237,6 +270,12 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 	selType: 'rowmodel',
     plugins: [
 	{ptype: 'gridfilters'},
+	{
+        ptype: 'rowexpander',
+        // dblclick invokes the row editor
+        expandOnDblClick: false,
+        rowBodyTpl: '<img src="resources/vehicles/{picture}" height="100px" style="float:left;margin:0 10px 5px 0">Sindicato: <b>{syndicatename}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
+    },
 	{
 		ptype: 'rowediting',
 		pluginId: 'vehiclePropietaryRowEditingPlugin',

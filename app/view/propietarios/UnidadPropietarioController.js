@@ -7,12 +7,55 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 
 	requires: [
 		'D7C.view.propietarios.UnidadPropietario',
-        'D7C.view.propietarios.UnidadPropietarioGrid'
+        'D7C.view.propietarios.UnidadPropietarioGrid',
+		'D7C.view.propietarios.UnidadPropietarioForm',
+		'D7C.util.Util'
 	],
 	newRecordId: '',
     isNewRecord: false,
 	onGridEditorBeforeEdit: function (editor, ctx, eOpts) {
         this.lookupReference('newRecordButton').setDisabled(true);
+    },
+	createDialog: function(record) {
+        var me = this,
+            view = me.getView();
+
+        console.log(record);
+
+        me.dialog = view.add({
+            xtype: 'unidad-propietarioform',
+            viewModel: {
+                data: {
+                    title: record ? 'Vehiculo: ' + record.get('vehiclelicense') : 'title',
+					picture: record.get('picture'),
+					vehicleid: record.get('vehicleid')
+                },
+                links: {
+                    theVehicle: record || Ext.create('D7C.model.propietarios.UnidadPropietario')
+                }
+            }
+        });
+
+        me.dialog.show();
+    },
+	onEditImgClick: function (button) {
+        this.createDialog(button.getWidgetRecord());
+    },
+	onFileFieldChange: function(fileField, value, options) {
+
+        var me = this,
+            file = fileField.fileInputEl.dom.files[0],
+            picture = this.lookupReference('vehiclePicture');
+        if (typeof FileReader !== 'undefined' && (/image/i).test(file.type)) {
+            var reader = new FileReader();
+            reader.onload = function(e){
+                picture.setSrc(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        } else if (!(/image/i).test(file.type)){
+            Ext.Msg.alert('Warning', 'You can only upload image files!');
+            fileField.reset();
+        }
     },
     onGridEditorCancelEdit: function (editor, ctx, eOpts) {
         if (this.newRecordId && ctx.record.get('vehicleid') === this.newRecordId && this.isNewRecord) {
@@ -54,7 +97,8 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 			vehiclebrand: '',
 			vehiclestatus: 'NO',
 			vehiclemodel: '',
-			vehiclelicense: ''
+			vehiclelicense: '',
+			picture: ''
         });
         this.isNewRecord = true;
         this.newRecordId = newVehiclePropietary.get('vehicleid');
@@ -113,5 +157,36 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 		}else{
 			pdfGrid.show();
 		}
-    }
+    },
+    onSaveImg: function(button, e, options){
+
+        var me = this,
+            form = me.lookupReference('form');
+
+        if (form.isValid()) {
+            form.submit({
+                clientValidation: true,
+                url: 'data/sis_union_vehicle_img.php',
+                scope: me,
+                success: 'onSaveSuccess',
+                failure: 'onSaveFailure'
+            });
+        }
+    },
+    onCancelImg: function(button, e, options){
+        var me = this;
+        me.dialog = Ext.destroy(me.dialog);
+    },
+    onSaveSuccess: function(form, action) {
+        var me = this;
+		me.onCancelImg();
+		me.refresh();
+        D7C.util.Util.showToast('Exito! Imagen Guardada.');
+    },
+    refresh: function(button, e, options){
+
+    },
+    onSaveFailure: function(form, action) {
+        D7C.util.Util.handleFormFailure(action);
+    },
 });

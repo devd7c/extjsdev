@@ -43,10 +43,27 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
-				displayField: 'operatorcode',
+				forceSelection : true,
+				matchFieldWidth :false,
+				enableKeyEvents :true,
+				typeAhead: true,
+				hideLabel: true,
+				hideTrigger:true,
+				minChars        :5,
+				displayField: 'syndicatename',
 				valueField: 'operatorid',
-				queryMode: 'local',
-				store: Ext.create('D7C.store.operadores.OperadorValido')
+				queryMode: 'remote',
+				store: Ext.create('D7C.store.operadores.OperadorValido'),
+				listConfig   : {
+					itemTpl :
+					'<div data-qtip="Codigo: {operatorcode}">{syndicatename}</div>'
+				}
+			},
+			listeners:{
+				focus:function(cbo){
+					cbo.getStore().getProxy().setExtraParams({action:'readvalid'});
+					cbo.getStore().reload();
+				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.syndicatename;
@@ -56,10 +73,27 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
+				forceSelection : true,
+				matchFieldWidth :true,
+				enableKeyEvents :true,
+				typeAhead: true,
+				hideLabel: true,
+				hideTrigger:true,
+				minChars        :1,
 				displayField: 'adminresolutioncode',
 				valueField: 'adminresolutionid',
-				queryMode: 'local',
-				store: Ext.create('D7C.store.resoluciones.ResolucionAdministrativa')
+				queryMode: 'remote',
+				store: Ext.create('D7C.store.resoluciones.ResolucionAdministrativa'),
+				listConfig   : {
+					itemTpl :
+					'<div data-qtip="Fecha: <strong>{adminresolutiondate:date("Y-m-d")}</strong><br>Cod Resolucion: <strong>{adminresolutioncode}</strong><br>Informe Tecnico: <strong>{adminresolutiontechnical}</strong><br>Informe Legal: <strong>{adminresolutionlegal}</strong><br>Cantidad Autorizada: <strong>{vehiclequantitydescription}</strong>">{adminresolutioncode}</div>'
+				}
+			},
+			listeners:{
+				focus:function(cbo){
+					cbo.getStore().getProxy().setExtraParams({action:'read'});
+					cbo.getStore().reload();
+				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.adminresolutioncode;

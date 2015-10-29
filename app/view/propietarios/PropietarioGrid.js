@@ -73,10 +73,27 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
+				forceSelection : true,
+				matchFieldWidth :false,
+				enableKeyEvents :true,
+				typeAhead: true,
+				hideLabel: true,
+				hideTrigger:true,
+				minChars        :5,
 				displayField: 'syndicatename',
 				valueField: 'operatorregisterid',
-				queryMode: 'local',
-				store: Ext.create('D7C.store.operadores.RegistroOperadorValido')
+				queryMode: 'remote',
+				store: Ext.create('D7C.store.operadores.RegistroOperadorValido'),
+				listConfig   : {
+					itemTpl :
+					'<div data-qtip="Codigo: {operatorcode}">{syndicatename}</div>'
+				}
+			},
+			listeners:{
+				focus:function(cbo){
+					cbo.getStore().getProxy().setExtraParams({action:'readvalid'});
+					cbo.getStore().reload();
+				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.syndicatename;

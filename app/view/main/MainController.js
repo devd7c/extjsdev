@@ -12,11 +12,14 @@ Ext.define('D7C.view.main.MainController', {
 		'Ext.util.*',
 		'Ext.grid.*',
 		'Ext.data.*',
+		'Ext.form.Panel',
         'Ext.window.MessageBox',
 		'Ext.toolbar.Paging',
         'Ext.ux.ProgressBarPager',
 		'Ext.grid.filters.Filters',
+		'Ext.grid.Panel',
 		'Ext.tip.ToolTip',
+		'Ext.Img',
 		'D7C.util.Util',
 		'D7C.ux.grid.Printer'
     ],
@@ -39,7 +42,8 @@ Ext.define('D7C.view.main.MainController', {
 		'Propietario',
 		'PropietarioGrid',
 		'UnidadPropietario',
-		'UnidadPropietarioGrid'
+		'UnidadPropietarioGrid',
+		'UnidadPropietarioForm'
     ],
 	
 	init: function() {
@@ -311,7 +315,7 @@ Ext.define('D7C.view.main.MainController', {
                 }else{
                     listMageSoap.show();
                 }
-
+				
 			break;
 		}
 	},

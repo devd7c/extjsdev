@@ -14,8 +14,8 @@ $action = $_POST['action'];
 switch($action){
 	case 'read':
 		$sql = "SELECT v.vehicleid, v.propietaryid, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, ";
-		$sql .= "v.vehiclebrand, v.vehiclestatus, v.vehiclemodel, v.vehiclelicense, p.propietaryci, p.propietaryfirstname, p.propietarylastname, p.operatorregisterid FROM vehicle v ";
-		$sql .= "inner join propietary p on v.propietaryid = p.propietaryid";
+		$sql .= "v.vehiclebrand, v.vehiclestatus, v.vehiclemodel, v.vehiclelicense, v.picture, p.propietaryci, p.propietaryfirstname, p.propietarylastname, p.operatorregisterid, o.syndicatename FROM vehicle v ";
+		$sql .= "inner join propietary p on v.propietaryid = p.propietaryid inner join operator_register r on p.operatorregisterid = r.operatorregisterid inner join operator o on r.operatorid = o.operatorid";
 		//$sql = "SELECT * FROM vehicle";
 
 		$result = array();
@@ -36,7 +36,7 @@ switch($action){
 	break;
 	case 'readValidROP':
 		$sql = "SELECT v.vehicleid, v.propietaryid, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, v.vehiclebrand, v.vehiclestatus, ";
-		$sql .= "v.vehiclemodel, v.vehiclelicense, p.propietaryci, p.propietaryfirstname, p.propietarylastname, p.operatorregisterid FROM vehicle v ";
+		$sql .= "v.vehiclemodel, v.vehiclelicense, v.picture, p.propietaryci, p.propietaryfirstname, p.propietarylastname, p.operatorregisterid FROM vehicle v ";
 		$sql .= "inner join propietary p on v.propietaryid = p.propietaryid WHERE v.vehiclestatus = 'NO'";
 		//$sql = "SELECT * FROM vehicle";
 

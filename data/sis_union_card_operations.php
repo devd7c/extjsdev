@@ -16,7 +16,7 @@ switch($action){
 		//$sql = "SELECT * FROM card_operation";
 		$sql = "SELECT c.cardoperationid, c.cardoperationstatus, c.cardoperationvalidity, c.nameprincipal, c.namesecretary, c.operatorregisterid, c.vehicleid, ";
 		$sql .= "r.adminresolutionid, r.operatorregisterstate, ";
-		$sql .= "v.vehiclebrand, v.vehiclestatus, v.vehiclelicense, ";
+		$sql .= "v.vehiclebrand, v.vehiclestatus, v.vehiclemodel, v.vehiclelicense, v.picture, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, ";
 		$sql .= "p.propietaryfirstname, p.propietarylastname, p.propietaryci, o.syndicatename, o.operatorstate FROM  card_operation c ";
 		$sql .= "inner join operator_register r on c.operatorregisterid = r.operatorregisterid inner join vehicle v on c.vehicleid = v.vehicleid ";
 		$sql .="inner join propietary p on v.propietaryid = p.propietaryid inner join operator o on r.operatorid = o.operatorid";
@@ -70,6 +70,12 @@ switch($action){
 		if ($resultDb = $mysqli->query($query)) {
 			$cardoperationid = $mysqli->insert_id;
 		}
+
+		$query = "UPDATE vehicle SET  vehiclestatus='".$data->vehiclestatuscard.
+			   "' WHERE vehicleid=".$data->vehicleid;
+		if ($resultDb = $mysqli->query($query)) {
+			$vehicleid = $mysqli->insert_id;
+		}
 	break;
 	case 'update':
 		$data=json_decode($_POST['data'])[0];
@@ -79,8 +85,38 @@ switch($action){
 			$cardoperationid = $mysqli->insert_id;
 		}
 	break;
+	case 'updateDisable':
+		$data=json_decode($_POST['data'])[0];
+		$query = "UPDATE card_operation SET cardoperationstatus='Baja' WHERE cardoperationid=".$data->cardoperationid;
+		if ($resultDb = $mysqli->query($query)) {
+			$cardoperationid = $mysqli->insert_id;
+		}
+		
+		$query = "UPDATE vehicle SET  vehiclestatus='NO' WHERE vehicleid=".$data->vehicleid;
+		if ($resultDb = $mysqli->query($query)) {
+			$vehicleid = $mysqli->insert_id;
+		}
+	break;
+	case 'updateActive':
+		$data=json_decode($_POST['data'])[0];
+		$query = "UPDATE card_operation SET  operatorregisterid='".$data->operatorregisterid."',vehicleid='".$data->vehicleid."',cardoperationstatus='".$data->cardoperationstatus."',cardoperationvalidity='".$data->cardoperationvalidity."',nameprincipal='".$data->nameprincipal."',namesecretary='".$data->namesecretary.
+			   "' WHERE cardoperationid=".$data->cardoperationid;
+		if ($resultDb = $mysqli->query($query)) {
+			$cardoperationid = $mysqli->insert_id;
+		}
+		
+		$query = "UPDATE vehicle SET  vehiclestatus='SI' WHERE vehicleid=".$data->vehicleid;
+		if ($resultDb = $mysqli->query($query)) {
+			$vehicleid = $mysqli->insert_id;
+		}
+	break;
 	case 'destroy':
 		$data=json_decode($_POST['data'])[0];
+		$query = "UPDATE vehicle SET  vehiclestatus='NO' WHERE vehicleid=".$data->vehicleid;
+		if ($resultDb = $mysqli->query($query)) {
+			$vehicleid = $mysqli->insert_id;
+		}
+		
 		$query = "DELETE FROM card_operation WHERE cardoperationid=".$data->cardoperationid;
 		if ($resultDb = $mysqli->query($query)) {
 			$cardoperationid = $mysqli->insert_id;

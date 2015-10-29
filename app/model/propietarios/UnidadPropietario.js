@@ -11,7 +11,8 @@ Ext.define('D7C.model.propietarios.UnidadPropietario', {
         {name: 'vehiclebrand', type: 'string'},
 		{name: 'vehiclestatus', type: 'string'},
 		{name: 'vehiclemodel', type: 'string'},
-		{name: 'vehiclelicense', type: 'string'}
+		{name: 'vehiclelicense', type: 'string'},
+		{name: 'picture', type: 'string'}
     ],
     validators: {
         propietaryid: { type: 'presence', allowEmpty: false },
@@ -22,6 +23,7 @@ Ext.define('D7C.model.propietarios.UnidadPropietario', {
 		vehiclebrand: { type: 'presence', allowEmpty: false },
 		vehiclestatus: { type: 'presence', allowEmpty: false },
 		vehiclemodel: { type: 'presence', allowEmpty: true },
-		vehiclelicense: { type: 'presence', allowEmpty: true }
+		vehiclelicense: { type: 'presence', allowEmpty: true },
+		picture: { type: 'presence', allowEmpty: true }
     }
 });

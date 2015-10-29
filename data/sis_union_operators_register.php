@@ -37,7 +37,7 @@ switch($action){
 		$mysqli->close();
 	break;
 	case 'readvalid':
-		$sql = "SELECT r.operatorid, r.operatorregisterid, o.syndicatename FROM operator_register r inner join operator o on r.operatorid = o.operatorid WHERE r.operatorregisterstate = 'Activo'";
+		$sql = "SELECT r.operatorid, r.operatorregisterid, o.operatorcode, o.syndicatename FROM operator_register r inner join operator o on r.operatorid = o.operatorid WHERE r.operatorregisterstate = 'Activo'";
 
 		$result = array();
 

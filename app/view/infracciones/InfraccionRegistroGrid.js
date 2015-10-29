@@ -62,17 +62,34 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
+				forceSelection : true,
+				matchFieldWidth :true,
+				enableKeyEvents :true,
+				typeAhead: true,
+				hideLabel: true,
+				hideTrigger:true,
+				minChars        :1,
 				displayField: 'vehiclelicense',
 				valueField: 'vehicleid',
-				queryMode: 'local',
-				store: Ext.create('D7C.store.propietarios.UnidadPropietario')
+				queryMode: 'remote',
+				store: Ext.create('D7C.store.propietarios.UnidadPropietario'),
+				listConfig   : {
+					itemTpl :
+					'<div data-qtip="Propietario: <strong>{propietaryfirstname} {propietarylastname}</strong><br>Sindicato: <strong>{syndicatename}</strong><br></b>Marca Vehiculo: <strong>{vehiclebrand}</strong><br></b>Capacidad: <strong>{vehiclecapacity}</strong><br></b>Categoria: <strong>{vehiclecategory}</strong><br></b>Clase: <strong>{vehicleclass}</strong><br></b>Modelo: <strong>{vehiclemodel}</strong>">{vehiclelicense}</div>'
+				}
+			},
+			listeners:{
+				focus:function(cbo){
+					cbo.getStore().getProxy().setExtraParams({action:'read'});
+					cbo.getStore().reload();
+				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclelicense;
 			},
 			items    : {
 				xtype: 'textfield',
-				reference: 'vehicleLicenseFilterField',  // So that the Controller can access it easily
+				reference: 'vehicleLicenseFilterField',
 				flex : 1,
 				margin: 2,
 				enableKeyEvents: true,
@@ -85,7 +102,7 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 		{text: 'C.I. Propietario', dataIndex: 'propietaryci', flex: 1, filter:true,
 			items    : {
 				xtype: 'textfield',
-				reference: 'propietaryCiFilterField',  // So that the Controller can access it easily
+				reference: 'propietaryCiFilterField',
 				flex : 1,
 				margin: 2,
 				enableKeyEvents: true,
@@ -134,7 +151,7 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
         ptype: 'rowexpander',
         // dblclick invokes the row editor
         expandOnDblClick: false,
-        rowBodyTpl: 'Propietario: <b>{propietaryfirstname} {propietarylastname}</b> - Sindicato: <b>{syndicatename}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
+        rowBodyTpl: '<img src="resources/vehicles/{picture}" height="100px" style="float:left;margin:0 10px 5px 0">Propietario: <b>{propietaryfirstname} {propietarylastname}</b> - Sindicato: <b>{syndicatename}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
     },
 	{
 		ptype: 'rowediting',

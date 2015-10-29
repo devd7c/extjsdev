@@ -15,6 +15,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietario', {
     title: 'Unidades de Transporte',
     maximized: false,
     maximizable:true,
+	closeAction: "destroy",
     initComponent: function() {
         var me = this;
 
