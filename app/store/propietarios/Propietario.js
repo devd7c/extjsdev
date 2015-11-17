@@ -5,7 +5,7 @@ Ext.define('D7C.store.propietarios.Propietario', {
 	pageSize: 35,
     remoteSort: true, 
 	sorters: ['propietaryid'],
-    autoLoad: {params:{start: 0, limit: 25, pageSize: 35}},
+    autoLoad: {/*params:{start: 0, limit: 25, pageSize: 35}*/},
     autoSync: false,
     proxy: {
         type: 'ajax',
