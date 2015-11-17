@@ -250,17 +250,28 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				type: 'list'
 			}
 		},
+		{text: 'Entidad Matriz', dataIndex: 'operatormatrix', flex: 1, hidden:true, 
+			filter: {
+				type: 'list'
+			}
+		},
 		{
             xtype: 'widgetcolumn',
             width: 45,
             widget: {
                 xtype: 'button',
-                text: '...',
+                icon: 'resources/images/icons/fam/image_add.png',
+				tooltip: 'Ingresar la Imagen del vehiculo',
                 handler: 'onEditImgClick'
             }
         }
 		
     ],
+	features: [{
+		ftype: 'grouping',
+		groupHeaderTpl: '{name} ({children.length})',
+		enableNoGroups:true
+	}],
 	viewConfig: { 
         stripeRows: false, 
         getRowClass: function(record) { 
@@ -274,7 +285,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
         ptype: 'rowexpander',
         // dblclick invokes the row editor
         expandOnDblClick: false,
-        rowBodyTpl: '<img src="resources/vehicles/{picture}" height="100px" style="float:left;margin:0 10px 5px 0">Sindicato: <b>{syndicatename}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
+        rowBodyTpl: '<img src="resources/vehicles/{picture}" height="100px" style="float:left;margin:0 10px 5px 0">Sindicato: <b>{syndicatename}</b> - Entidad Matriz: <b>{operatormatrix}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
     },
 	{
 		ptype: 'rowediting',

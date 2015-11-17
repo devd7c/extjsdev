@@ -59,15 +59,15 @@ switch($action){
 	case 'insert':
 		$data=json_decode($_POST['data'])[0];
 		
-		$query = "INSERT INTO operator (operatorid, syndicatename, operatorcode, operatorstate) ";
-		$query .= "VALUES (NULL,'".$data->syndicatename."', '".$data->operatorcode."', '".$data->operatorstate."')";
+		$query = "INSERT INTO operator (operatorid, syndicatename, operatorcode, operatorstate, operatormatrix) ";
+		$query .= "VALUES (NULL,'".$data->syndicatename."', '".$data->operatorcode."', '".$data->operatorstate."', '".$data->operatormatrix."')";
 		if ($resultDb = $mysqli->query($query)) {
 			$operatorid = $mysqli->insert_id;
 		}
 	break;
 	case 'update':
 		$data=json_decode($_POST['data'])[0];
-		$query = "UPDATE operator SET  syndicatename='".$data->syndicatename."',operatorcode='".$data->operatorcode."',operatorstate='".$data->operatorstate.
+		$query = "UPDATE operator SET  syndicatename='".$data->syndicatename."',operatorcode='".$data->operatorcode."',operatorstate='".$data->operatorstate."',operatormatrix='".$data->operatormatrix.
 			   "' WHERE operatorid=".$data->operatorid." AND ".$data->operatorid."!=1";
 		if ($resultDb = $mysqli->query($query)) {
 			$operatorid = $mysqli->insert_id;

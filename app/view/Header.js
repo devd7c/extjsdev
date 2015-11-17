@@ -21,10 +21,19 @@ Ext.define('D7C.view.Header', {
             id: 'app-header-title',
             html: this.title,
             flex: 1
-        },{
-			xtype: 'button',
-			text: 'Salir',
-			handler: 'onClickButtonLogout'
+        },
+		{
+			xtype: 'component',
+			id: 'app-header-text',
+			html: ' ' + D7C.Profile.getName() + ' <strong>X<strong> ',
+			flex: 0.2,
+			listeners: {
+				render: function(c){
+					c.getEl().on({
+						click: 'onInfoProfileClick'
+					});
+				}
+			}
 		}];
 
         /*if (!Ext.getCmp('options-toolbar')) {

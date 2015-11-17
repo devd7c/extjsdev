@@ -14,7 +14,7 @@ $action = $_POST['action'];
 switch($action){
 	case 'read':		
 		$sql = "SELECT r.operatorregisterid, r.operatorid, r.adminresolutionid, r.operatorregisterzonestart, r.operatorregisterroutestart, r.operatorregisterzonefinish, r.operatorregisterroutefinish, r.operatorregisterstate, ";
-		$sql .= "o.operatorcode, o.syndicatename, a.adminresolutioncode, a.adminresolutiondate, a.adminresolutionlegal, a.adminresolutiontechnical, a.vehiclequantityid, q.vehiclequantitydescription FROM operator_register r ";
+		$sql .= "o.operatorcode, o.syndicatename, o.operatormatrix, a.adminresolutioncode, a.adminresolutiondate, a.adminresolutionlegal, a.adminresolutiontechnical, a.vehiclequantityid, q.vehiclequantitydescription FROM operator_register r ";
 		$sql .= "inner join operator o on r.operatorid = o.operatorid inner join administrative_resolution a on r.adminresolutionid = a.adminresolutionid inner join vehicle_quantity q on a.vehiclequantityid = q.vehiclequantityid";
 
 		$result = array();
@@ -37,7 +37,7 @@ switch($action){
 		$mysqli->close();
 	break;
 	case 'readvalid':
-		$sql = "SELECT r.operatorid, r.operatorregisterid, o.operatorcode, o.syndicatename FROM operator_register r inner join operator o on r.operatorid = o.operatorid WHERE r.operatorregisterstate = 'Activo'";
+		$sql = "SELECT r.operatorid, r.operatorregisterid, o.operatorcode, o.syndicatename, o.operatormatrix FROM operator_register r inner join operator o on r.operatorid = o.operatorid WHERE r.operatorregisterstate = 'Activo'";
 
 		$result = array();
 

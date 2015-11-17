@@ -55,16 +55,13 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 				valueField: 'operatorregisterid',
 				queryMode: 'remote',
 				publishes: 'value',
-				store: Ext.create('D7C.store.operadores.RegistroOperadorValido')
+				store: Ext.create('D7C.store.operadores.RegistroOperadorValido'),
+				listeners:{
+				focus: 'onValidateComboBox'
+				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.syndicatename;
-			},
-			listeners:{
-				focus:function(cbo){
-					cbo.getStore().getProxy().setExtraParams({action:'readvalid'});
-					cbo.getStore().reload();
-				}
 			},
 			items    : {
 				xtype: 'textfield',
@@ -81,6 +78,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 		{text: 'Placa Vehiculo', dataIndex: 'vehicleid', flex: 1,
 			editor: {
 				xtype: 'combobox',
+				reference: 'cb_vehicle',
 				allowBlank: false,
 				forceSelection : true,
 				matchFieldWidth :true,
@@ -103,6 +101,9 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 				listConfig   : {
 					itemTpl :
 					'<div data-qtip="Propietario: <strong>{propietaryfirstname} {propietarylastname}</strong><br></b>Marca Vehiculo: <strong>{vehiclebrand}</strong><br></b>Capacidad: <strong>{vehiclecapacity}</strong><br></b>Categoria: <strong>{vehiclecategory}</strong><br></b>Clase: <strong>{vehicleclass}</strong><br></b>Modelo: <strong>{vehiclemodel}</strong>">{vehiclelicense}</div>'
+				},
+				listeners:{
+					focus: 'onValidateComboBox'
 				}
 			},
 			renderer: function(value, metaData, record ){
@@ -168,6 +169,11 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 				return record.data.cardoperationstatus;
 			}
 		},
+		{text: 'Entidad Matriz', dataIndex: 'operatormatrix', flex: 1, hidden:true, 
+			filter: {
+				type: 'list'
+			}
+		},
 		{
 			xtype: 'actioncolumn',
 			width: 30,
@@ -196,7 +202,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 	viewConfig: { 
         stripeRows: false, 
         getRowClass: function(record) { 
-            return record.get('cardoperationstatus') == 'Activo' ? 'valid-row' : record.get('infractionregisterstate') == 'Baja' ? 'invalid-row' : ''; 
+            return record.get('cardoperationstatus') == 'Activo' ? 'valid-row' : record.get('cardoperationstatus') == 'Baja' ? 'invalid-row' : ''; 
         } 
     },
 	selType: 'rowmodel',

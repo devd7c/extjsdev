@@ -1,14 +1,14 @@
-Ext.define('D7C.store.sistema.Usuario', {
+Ext.define('D7C.store.sistema.Privilegios', {
 	extend: 'Ext.data.Store',
-    alias: 'widget.usuariostore',
+    alias: 'widget.privilegiosstore',
     model: 'D7C.model.sistema.Usuario',
-	sorters: ['userid'],
+	sorters: ['privilegesid'],
     autoLoad: true,
     autoSync: false,
     proxy: {
         type: 'ajax',
         url: 'data/sis_union_users.php',
-        extraParams:{action:'read'},
+        extraParams:{action:'readPrivileges'},
         actionMethods: {
             read: 'POST'
         },

@@ -56,6 +56,12 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
         var grid = this.lookupReference('cardOperationGrid');
         grid.getStore().insert(0, newCar);
 		grid.getPlugin('cardOperationRowEditingPlugin').startEdit(newCar);
+		
+		/*PRIVILEGES ENABLED*/
+		var operatorCombo = this.lookupReference('operator');
+		var vehicleCombo = this.lookupReference('cb_vehicle');
+		operatorCombo.setDisabled(false);
+		vehicleCombo.setDisabled(false);
 	},
 	onRemoveCardOperationClick: function (button, evt) {
         var grid = this.lookupReference('cardOperationGrid'),
@@ -79,26 +85,65 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
 		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onDisableClick: function(grid, rowIndex){
-        var grids = this.lookupReference('cardOperationGrid'),
-            selectedRecords = grids.getSelection(),
-            store = grids.getStore('cardoperationid');
-			
-		var rec = grid.getStore().getAt(rowIndex);
+		var me = this,         
+		gw = this.lookupReference('cardOperationGrid'),        
+		store = gw.getStore('cardoperationid');
 		
+        grid = this.lookupReference('cardOperationGrid');			
+		var rec = grid.getStore().getAt(rowIndex);
 		if (rec.get('cardoperationstatus') == 'Baja')
 		{D7C.util.Util.showToast('Aviso, No se Encontro Ningun Cambio');
 		}else {
-			grids.getStore().getProxy().setExtraParams({action:'updateDisable'});
-			D7C.util.Util.showToast('Los datos fueron ingresados correctamente');
+			if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2){
+				Ext.Msg.show({ 
+					title: 'Modificar Estado',
+					msg: 'Esta seguro que desea dar de BAJA?',
+					buttons: Ext.Msg.YESNO,
+					icon: Ext.Msg.QUESTION,
+					fn: function (buttonId) {
+						if (buttonId == 'yes') {
+							Ext.Ajax.request({
+								url:'data/sis_union_card_operations_status.php',
+								method:'POST',
+								params:{
+									cardoperationid:rec.get('cardoperationid'), 
+									cardoperationstatus: rec.get('cardoperationstatus'), 
+									vehicleid:rec.get('vehicleid')
+								},
+								success:function(transport){
+									D7C.util.Util.showToast('Los Datos Fueron Modificados Correctamente');
+								},
+								failure:function(transport){
+									D7C.util.Util.handleFormFailure(action);
+								}
+							});
+						}
+					}
+				});
+			}else{D7C.util.Util.showToast('Advertencia, Privilegios Insuficientes');}
 		}
     },
     onActiveClick: function(grid, rowIndex){
+		grid = this.lookupReference('cardOperationGrid');
 		var rec = grid.getStore().getAt(rowIndex);
 		if (rec.get('cardoperationstatus') == 'Activo')
 		{D7C.util.Util.showToast('Aviso, No se Encontro Ningun Cambio');
-		}else {
-			grid.getStore().getProxy().setExtraParams({action:'updateActive'});
-			D7C.util.Util.showToast('Los datos fueron ingresados correctamente');
+		}else {			
+			Ext.Ajax.request({
+				url:'data/sis_union_card_operations_status.php',
+				method:'POST',
+				params:{
+					cardoperationid:rec.get('cardoperationid'), 
+					cardoperationstatus: rec.get('cardoperationstatus'), 
+					vehicleid:rec.get('vehicleid')
+				},
+				success:function(transport){
+					D7C.util.Util.showToast('Los Datos Fueron Modificados Correctamente');
+				},
+				failure:function(transport){
+					D7C.util.Util.handleFormFailure(action);
+				}
+			});
 		}
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
@@ -166,6 +211,21 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
 
 		}else{
 			pdfGrid.show();
+		}
+    },
+	onValidateComboBox: function(combo) {		
+		var operatorCombo = this.lookupReference('operator');
+		var vehicleCombo = this.lookupReference('cb_vehicle');
+		if(this.isNewRecord)
+		{operatorCombo.setDisabled(false);vehicleCombo.setDisabled(false);}
+		else{
+			if(D7C.Profile.getPrivilege() == 1)
+			{
+				operatorCombo.setDisabled(false);
+				vehicleCombo.setDisabled(false);
+				combo.getStore().getProxy().setExtraParams({action:'readvalid'});
+				combo.getStore().reload();
+			}else{operatorCombo.setDisabled(true);vehicleCombo.setDisabled(true);}
 		}
     }
 });

@@ -56,6 +56,9 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
         var grid = this.lookupReference('operatorRegisterGrid');
         grid.getStore().insert(0, newCar);
 		grid.getPlugin('operatorRegisterRowEditingPlugin').startEdit(newCar);
+		
+		var statusCombo = this.lookupReference('combobox_status');
+		statusCombo.setDisabled(false);
 	},
 	onRemoveOperatorRegisterClick: function (button, evt) {
         var grid = this.lookupReference('operatorRegisterGrid'),
@@ -79,7 +82,9 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
 		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
-        this.lookupReference('deleteRecordButton').setDisabled(false);
+		if(D7C.Profile.getPrivilege() == 1){
+			this.lookupReference('deleteRecordButton').setDisabled(false);
+		}
     },
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
@@ -107,6 +112,16 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
 
 		}else{
 			pdfGrid.show();
+		}
+    },
+	onValidateComboBox: function(combo) {
+		var statusCombo = this.lookupReference('combobox_status');
+		if(this.isNewRecord)
+			{statusCombo.setDisabled(false);}
+		else{
+			if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2)
+			{statusCombo.setDisabled(false);}
+			else{statusCombo.setDisabled(true);}	
 		}
     }
 });

@@ -55,6 +55,9 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaController', {
         var grid = this.lookupReference('modelAdministrativeResolutionGrid');
         grid.getStore().insert(0, newAdministrativeResolution);
 		grid.getPlugin('modelAdministrativeResolutionRowEditingPlugin').startEdit(newAdministrativeResolution);
+		
+		var quantityCombo = this.lookupReference('cb_quantity');
+		quantityCombo.setDisabled(false);
 	},
 	onRemoveAdministrativeResolutionClick: function (button, evt) {
         var grid = this.lookupReference('modelAdministrativeResolutionGrid'),
@@ -78,7 +81,9 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaController', {
 		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
-        this.lookupReference('deleteRecordButton').setDisabled(false);
+		if(D7C.Profile.getPrivilege() == 1){
+			this.lookupReference('deleteRecordButton').setDisabled(false);
+		}
     },
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
@@ -106,6 +111,16 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaController', {
 
 		}else{
 			pdfGrid.show();
+		}
+    },
+	onValidateComboBox: function(combo) {
+		var quantityCombo = this.lookupReference('cb_quantity');
+		if(this.isNewRecord)
+		{quantityCombo.setDisabled(false);}
+		else{
+			if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2)
+			{quantityCombo.setDisabled(false);}
+			else{quantityCombo.setDisabled(true);}	
 		}
     }
 });

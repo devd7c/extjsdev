@@ -1,50 +1,82 @@
 Ext.define('D7C.view.sistema.UsuarioGrid',{
     extend: 'Ext.grid.Panel',
     alias: 'widget.usuariogrid',
-
     requires: ['Ext.toolbar.Paging'],
-
     stateful: true,
     multiSelect: true,
-    stateId: 'stateGrid',
+	reference: 'userGrid',
     height: 350,
-    viewConfig: {
-        stripeRows: true
-    },
     tbar: [{
-        text: 'Añadir Usuario',
+		xtype: 'button',
+        text: 'Añadir',
+		reference: 'newRecordButton',
         handler: 'onAddUserClick'
-    }, {
-        text: 'Eliminar Usuario',
+    },
+	{
+		xtype: 'button',
+        text: 'Eliminar',
+		reference: 'deleteRecordButton',
         handler: 'onRemoveUserClick',
-        bind: {
-            disabled: '{!customerGrid.selection}'
-        }
-    }],
-
-    buttons: [{
-        handler: 'onSessionChangeClick'
-    }],
-	selType: 'rowmodel',
+		disabled:true
+    },
+	{
+		xtype: 'button',
+		text: 'Imprimir',
+		listeners: {
+			click: 'onPrint'
+		}
+	},
+	{
+		xtype: 'button',
+		text: 'Generar PDF',
+		listeners: {
+			click: 'onExportPDF'
+		}
+	}],
+	listeners: {
+	   select: 'onGridSelect',
+	   deselect: 'onGridDeselect'
+	},
     columns: [
-        {header: 'ID',  dataIndex: 'userid',width:55, hidden:false, filter:false},
-        {text: 'Nombre', dataIndex: 'name', flex: 1,filter:true,},
-        {text: 'Nombre de Usuario', dataIndex: 'username', flex: 1, sortable: true,
-			editor: {
-				xtype: 'textfield', allowBlank: false
+		{xtype: 'rownumberer'},
+        {text: 'ID',  dataIndex: 'userid', width:55, hidden:false, filter:false},
+        {text: 'Nombre Completo', dataIndex: 'name', flex: 1,filter:true,
+			filter: {
+				//type: 'list'
 			}
-        },
-		{text: 'Email', dataIndex: 'email', flex: 1,filter:false,}
+		},
+        {text: 'E-mail', dataIndex: 'email', flex: 1,filter:true,
+			filter: {
+				//type: 'list'
+			}
+		},
+		{text: 'Privilegios', dataIndex: 'privilegesdescription', flex: 1,
+			filter: {
+				type: 'list'
+			}
+		},
+		{
+            xtype: 'widgetcolumn',
+            width: 45,
+            widget: {
+                xtype: 'button',
+                icon: 'resources/images/icons/fam/user_edit.png',
+				tooltip: 'Modificar Datos',
+                handler: 'onEditUserClick'
+            }
+        }
     ],
-    plugins: [{
-        //ptype: 'gridfilters',
+	selType: 'rowmodel',
+    plugins: [
+	{ptype: 'gridfilters'},
+	/*{
 		ptype: 'rowediting',
-		pluginId: 'modelCarsRowEditingPlugin',
-		clicksToEdit: 1,
+		pluginId: 'userRowEditingPlugin',
+		clicksToEdit: 2,
 		listeners: {
 		   beforeedit: 'onGridEditorBeforeEdit',
 		   canceledit: 'onGridEditorCancelEdit',
 		   edit: 'onGridEditorEdit'
 		}
-    }]
+    }*/]
 });

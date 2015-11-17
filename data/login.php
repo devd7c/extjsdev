@@ -15,7 +15,11 @@ $pass = stripslashes($pass);
 
 $userName = $mysqli->real_escape_string($userName);
 $pass = $mysqli->real_escape_string($pass);
-$sql = "SELECT * FROM user WHERE userName='$userName'";
+
+//$sql = "SELECT * FROM user WHERE userName='$userName'";
+
+$sql = "SELECT u.address, u.email, u.name, u.password, u.phone, u.picture, u.userid, u.username, u.privilegesid, r.privilegesdescription FROM user u ";
+$sql .= "inner join privileges r on u.privilegesid = r.privilegesid WHERE u.userName='$userName'";
 
 $result = array();
 
@@ -33,8 +37,8 @@ if ($resultDb = $mysqli->query($sql)) {
             $_SESSION['authenticated'] = "yes";
             $_SESSION['username'] = $userName;
 
-            $result['success'] = true;
-            $result['msg'] = 'Welcome!!!';
+            $result = array ("success" => true, "data" => array($record['name'], $record['privilegesid'], $record['privilegesdescription']));
+            //$result['msg'] = 'Welcome!!!';
 
         } else{
             $result['success'] = false;

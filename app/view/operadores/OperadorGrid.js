@@ -52,7 +52,7 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 				xtype: 'textfield', allowBlank: false
 			}
 		},
-		{text: 'Estado', dataIndex: 'operatorstate', width:100,
+		{text: 'Entidad Matriz', dataIndex: 'operatormatrix', flex: 1,
 			filter: {
 				type: 'list'
 			},
@@ -62,10 +62,32 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 				editable: false,
 				forceSelection: true,
 				store: [
+					'Libre',
+					'Federado'
+				]
+			},
+			renderer: function(value, metaData, record ){
+				return record.data.operatormatrix;
+			}
+		},
+		{text: 'Estado', dataIndex: 'operatorstate', width:100,
+			filter: {
+				type: 'list'
+			},
+			editor: {
+				xtype: 'combobox',
+				reference: 'combobox_status',
+				allowBlank: false,
+				editable: false,
+				forceSelection: true,
+				store: [
 					'Valido',
 					'Pendiente',
 					'Invalido'
-				]
+				],
+				listeners: {
+                    focus: 'onValidateComboBox'
+                }
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.operatorstate;

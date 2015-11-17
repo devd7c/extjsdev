@@ -61,6 +61,7 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 		{text: 'No. de Placa', dataIndex: 'vehicleid', flex: 1,
 			editor: {
 				xtype: 'combobox',
+				reference: 'combobox_vehicle',
 				allowBlank: false,
 				forceSelection : true,
 				matchFieldWidth :true,
@@ -76,7 +77,10 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 				listConfig   : {
 					itemTpl :
 					'<div data-qtip="Propietario: <strong>{propietaryfirstname} {propietarylastname}</strong><br>Sindicato: <strong>{syndicatename}</strong><br></b>Marca Vehiculo: <strong>{vehiclebrand}</strong><br></b>Capacidad: <strong>{vehiclecapacity}</strong><br></b>Categoria: <strong>{vehiclecategory}</strong><br></b>Clase: <strong>{vehicleclass}</strong><br></b>Modelo: <strong>{vehiclemodel}</strong>">{vehiclelicense}</div>'
-				}
+				},
+				listeners: {
+                    focus: 'onValidateComboBox'
+                }
 			},
 			listeners:{
 				focus:function(cbo){
@@ -151,7 +155,7 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
         ptype: 'rowexpander',
         // dblclick invokes the row editor
         expandOnDblClick: false,
-        rowBodyTpl: '<img src="resources/vehicles/{picture}" height="100px" style="float:left;margin:0 10px 5px 0">Propietario: <b>{propietaryfirstname} {propietarylastname}</b> - Sindicato: <b>{syndicatename}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
+        rowBodyTpl: '<img src="resources/vehicles/{picture}" height="100px" style="float:left;margin:0 10px 5px 0">Propietario: <b>{propietaryfirstname} {propietarylastname}</b><br>Sindicato: <b>{syndicatename}</b><br>Entidad Matriz: <b>{operatormatrix}</b><br></b>Marca Vehiculo: <b>{vehiclebrand}</b><br></b>Capacidad: <b>{vehiclecapacity}</b><br></b>Categoria: <b>{vehiclecategory}</b><br></b>Clase: <b>{vehicleclass}</b><br></b>Modelo: <b>{vehiclemodel}</b>'
     },
 	{
 		ptype: 'rowediting',

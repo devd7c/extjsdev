@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2015 at 06:41 PM
+-- Generation Time: Nov 17, 2015 at 04:39 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -57,14 +57,15 @@ CREATE TABLE IF NOT EXISTS `card_operation` (
   `namesecretary` varchar(255) DEFAULT NULL,
   `cardoperationvalidity` date DEFAULT NULL,
   `cardoperationstatus` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `card_operation`
 --
 
 INSERT INTO `card_operation` (`cardoperationid`, `operatorregisterid`, `vehicleid`, `nameprincipal`, `namesecretary`, `cardoperationvalidity`, `cardoperationstatus`) VALUES
-(5, 2, 12, 'dfdf', 'dfdfd', '2015-10-07', 'Activo');
+(5, 2, 12, 'dfdf', 'dfdfd', '2015-10-07', 'Activo'),
+(6, 2, 11, 'sdsdsd', 'sdsdsd', '2015-11-13', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `infraction_register` (
   `vehicleid` int(11) NOT NULL,
   `infractionnumberticket` varchar(155) DEFAULT NULL,
   `infractionregisterstate` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `infraction_register`
@@ -107,7 +108,8 @@ CREATE TABLE IF NOT EXISTS `infraction_register` (
 INSERT INTO `infraction_register` (`infractionregisterid`, `infractionid`, `vehicleid`, `infractionnumberticket`, `infractionregisterstate`) VALUES
 (1, 2, 10, '5270700dsdsds', 'Pagado'),
 (2, 1, 13, '5151451', 'Pagado'),
-(3, 2, 14, '12345', 'Cancelado');
+(3, 2, 14, '12345', 'Cancelado'),
+(4, 1, 13, 'sdsd', 'Pagado');
 
 -- --------------------------------------------------------
 
@@ -119,18 +121,20 @@ CREATE TABLE IF NOT EXISTS `operator` (
   `operatorid` int(11) NOT NULL,
   `syndicatename` varchar(195) DEFAULT NULL,
   `operatorcode` varchar(85) DEFAULT NULL,
-  `operatorstate` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  `operatorstate` varchar(45) DEFAULT NULL,
+  `operatormatrix` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `operator`
 --
 
-INSERT INTO `operator` (`operatorid`, `syndicatename`, `operatorcode`, `operatorstate`) VALUES
-(1, 'TEMPORAL', 'TEMPORAL', 'Valido'),
-(2, '16 de Julio', '16JULIO2015', 'Valido'),
-(3, '16 de diciembre', '14OCT2015s', 'Valido'),
-(7, 'defcom', '234343434', 'Valido');
+INSERT INTO `operator` (`operatorid`, `syndicatename`, `operatorcode`, `operatorstate`, `operatormatrix`) VALUES
+(1, 'TEMPORAL', 'TEMPORAL', 'Valido', 'TEMPORAL'),
+(2, '16 de Julio', '16JULIO2015', 'Valido', 'Federado'),
+(3, '16 de diciembre', '14OCT2015s', 'Valido', 'Libre'),
+(7, 'DEFCOM', '234343434', 'Valido', 'Federado'),
+(8, 'dfdfd', 'dfdf', 'Pendiente', 'Federado');
 
 -- --------------------------------------------------------
 
@@ -161,6 +165,27 @@ INSERT INTO `operator_register` (`operatorregisterid`, `operatorregisterzonestar
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `privileges`
+--
+
+CREATE TABLE IF NOT EXISTS `privileges` (
+  `privilegesid` int(11) NOT NULL,
+  `privilegesdescription` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `privileges`
+--
+
+INSERT INTO `privileges` (`privilegesid`, `privilegesdescription`) VALUES
+(1, 'Super Admin'),
+(2, 'Administrador'),
+(3, 'Usuario'),
+(4, 'Director de Operaciones');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `propietary`
 --
 
@@ -172,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `propietary` (
   `propietaryadress` varchar(155) DEFAULT NULL,
   `propietaryphone` varchar(45) DEFAULT NULL,
   `operatorregisterid` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `propietary`
@@ -180,7 +205,31 @@ CREATE TABLE IF NOT EXISTS `propietary` (
 
 INSERT INTO `propietary` (`propietaryid`, `propietaryfirstname`, `propietarylastname`, `propietaryci`, `propietaryadress`, `propietaryphone`, `operatorregisterid`) VALUES
 (1, 'Guido', 'Terceros Fernandez', '5270700', 'Republica 155', '70735194', 1),
-(42, 'Ruben', 'Pacheco', '2822525', '6 de Agosto', '51515151', 2);
+(42, 'Ruben', 'Pacheco', '2822525', '6 de Agosto', '51515151', 2),
+(50, 'er', 'edfdfd', '34545', '45454', '34343', 2),
+(51, 'ffdfd', 'fdfd', 'f34343', 'fdfd', '34343', 1),
+(52, 'erere', 'rere', '43543', 'rfdf', '3434343', 1),
+(53, 'dfdfdfd3dfd', 'eef', '354353', 'dfgdf', '33443', 1),
+(54, 'fdfd', 'erfdf', '5454', 'dgdfg', '44545', 2),
+(55, 'ererdfd', 'dfdf', '4354', 'ergfg', '4545', 2),
+(56, 'fdfdf', 'dfdf', '45454', 'dgdg', '34545', 2),
+(57, 'dfdfgnhmhj', 'rfghgh', '45454', 'fgfg', '4545', 2),
+(58, 'dfdfdff', 'dgdfg', '544545', 'fgfgg', '45454', 2),
+(59, 'dfgdfg', 'xcxc', '3435', 'rgfg', '4545', 1),
+(60, 'efdf', 'edfdf', '4545', 'dgdg', '45454', 1),
+(61, 'fdfdf', 'dfdf', '3434', 'fdf', '3434', 1),
+(62, 'dfdf', 'efdf', '4545', 'edfgdfg', '4545', 2),
+(63, 'dfdf', 'efdf', '34545', 'dgdfg', '4545', 2),
+(64, 'dfdf', 'efd', '5445', 'DGDFG', 'FGFGF', 2),
+(65, 'edfdf', 'df', '4545', 'dgfdf', '4545', 2),
+(66, 'ddf', 'dfdf', '3454', 'dfdf', '4545', 2),
+(67, 'dfdf', 'dfdf', '4545', 'dfdf', '454', 2),
+(68, 'df', 'df', '34545', 'edfgdf', '4545', 2),
+(69, 'dfdf', 'dfdf', '4545', 'dgdfg', '4545', 1),
+(70, 'dfdf', 'dfdf', '4545', 'dfdf', '454', 2),
+(71, 'dfdf', 'edfdf', '4545', 'dfdf', '4545', 2),
+(72, 'dfdf', 'dfd', '4545', 'dfdf', '4545', 1),
+(73, 'fdf', 'dfdf', '34545', 'dfdf', '4545', 2);
 
 -- --------------------------------------------------------
 
@@ -196,15 +245,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `phone` varchar(50) DEFAULT NULL,
   `address` varchar(90) DEFAULT NULL,
   `email` varchar(65) DEFAULT NULL,
-  `picture` varchar(150) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `picture` varchar(150) DEFAULT NULL,
+  `privilegesid` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `name`, `username`, `password`, `phone`, `address`, `email`, `picture`) VALUES
-(1, 'Demo', 'demo', 'demo', '70794135', 'Beverly Hills', NULL, NULL);
+INSERT INTO `user` (`userid`, `name`, `username`, `password`, `phone`, `address`, `email`, `picture`, `privilegesid`) VALUES
+(1, 'SUPERMAN', 'demo', 'demo', '70794135', 'Kansas City', 'superman@dc.com', 'superman.jpg', 1),
+(9, 'Guido Terceros Fernandez', 'gtf', 'gtf', '70735194', '6 de Agosto 1568', 'guido.terceros@gmail.com', 'logocapitalenationale.png', 2),
+(10, 'D7C', 'd7c', 'd7c', '232323', '323232', 'wdwew', 'solhydroc_bw.jpg', 3);
 
 -- --------------------------------------------------------
 
@@ -233,8 +285,8 @@ CREATE TABLE IF NOT EXISTS `vehicle` (
 INSERT INTO `vehicle` (`vehicleid`, `vehiclecapacity`, `vehiclecategory`, `vehiclechasis`, `vehicleclass`, `vehiclebrand`, `vehiclestatus`, `vehiclemodel`, `vehiclelicense`, `propietaryid`, `picture`) VALUES
 (1, '5 Personas', 'Pasajeros', '1234', 'Taxi', 'Suzuki', 'NO', '1980', '358BLG', 42, 'banner.jpg'),
 (10, '1 Tonelada', 'Carga', '34343', 'Camion', 'Toyota', 'NO', '1984', '1528JKL', 42, 'solhydroc_bw.jpg'),
-(11, '50 Personas', 'Pasajeros', '34343', 'Omnibus', 'Toyota', 'NO', '1989', '1525HJY', 42, 'logo.png'),
-(12, '40 Personas', 'Pasajeros', '1234', 'Minibus', 'Nissan', 'SI', '2009', '15254FTG', 42, 'solhydroc_bw.jpg'),
+(11, '50 Personas', 'Pasajeros', '34343', 'Omnibus', 'Toyota', 'SI', '1989', '1525HJY', 42, 'logo.png'),
+(12, '40 Personas', 'Pasajeros', '1234', 'Minibus', 'Nissan', 'SI', '2009', '15254FTG', 42, 'logo1.png'),
 (13, '3 Toneladas', 'Carga', '34343', 'Camioneta', 'Toyota', 'NO', '1984', '2535FRP', 1, 'solhydroc_bw.jpg'),
 (14, '6 Personas', 'Pasajeros', 'sfdfdfdfdfd', 'Minibus', 'Suzuky', 'NO', '1983', '515151GHJ', 42, 'solhydroc_bw.jpg'),
 (15, '7 Personas', 'Carga', '51515454', 'Omnibus', 'Toyota', 'NO', '1984', '5855141GHT', 1, 'logo_bricollard.png');
@@ -318,6 +370,12 @@ ALTER TABLE `operator_register`
   ADD PRIMARY KEY (`operatorregisterid`);
 
 --
+-- Indexes for table `privileges`
+--
+ALTER TABLE `privileges`
+  ADD PRIMARY KEY (`privilegesid`);
+
+--
 -- Indexes for table `propietary`
 --
 ALTER TABLE `propietary`
@@ -354,7 +412,7 @@ ALTER TABLE `administrative_resolution`
 -- AUTO_INCREMENT for table `card_operation`
 --
 ALTER TABLE `card_operation`
-  MODIFY `cardoperationid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `cardoperationid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `infraction`
 --
@@ -364,27 +422,32 @@ ALTER TABLE `infraction`
 -- AUTO_INCREMENT for table `infraction_register`
 --
 ALTER TABLE `infraction_register`
-  MODIFY `infractionregisterid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `infractionregisterid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `operator`
 --
 ALTER TABLE `operator`
-  MODIFY `operatorid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `operatorid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `operator_register`
 --
 ALTER TABLE `operator_register`
   MODIFY `operatorregisterid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `privileges`
+--
+ALTER TABLE `privileges`
+  MODIFY `privilegesid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `propietary`
 --
 ALTER TABLE `propietary`
-  MODIFY `propietaryid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
+  MODIFY `propietaryid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `vehicle`
 --

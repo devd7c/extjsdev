@@ -2,8 +2,17 @@
 #app-header {border-bottom: 1px solid rgb(94, 148, 5);background-image: url(images/header-bg.png);}
 #app-header-logo {width: 40px;height: 25px;background: url(images/logo.png) no-repeat center 4px;}
 #app-header-title {padding: 15px 0 10px 0;color: #fff;font-size: 18px;font-weight: bold;}
+#app-header-text {padding: 0px 5px 0px 0;
+    cursor: pointer;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    text-shadow: 0 1px 0 #4e691f;
+    /*background-color: rgb(132, 180, 53) !important;*/
+	background: url(images/header-bg.png) no-repeat left 20px;
+    text-align: center;}
 .x-btn-default-small {margin-bottom: 1px;}
-.invalid-row .x-grid-cell { 
+.invalid-row .x-grid-cell {
     background-color: #ffe2e2; 
     color: #333; 
 }
@@ -11,3 +20,39 @@
     background-color: #e2ffe2; 
     color: #090; 
 }
+/*.x-body, .x-mask {background:rgba(26, 135, 197, 0.32) !important;}*/
+/*.x-mask.splashscreen {
+ background-color: #1A87C5;
+ opacity: 1;
+}
+.x-mask-msg.splashscreen,
+.x-mask-msg.splashscreen div {
+	border: none;
+	background-color: transparent;
+	background-position: top center;
+	width: 158px;
+    margin-top: -158px;
+}*/
+.x-message-box .x-window-body .x-box-inner {
+ /*min-height: 600px;
+ min-width: 800px;*/
+}
+/*.x-splash-icon {
+ background-image: url(images/load.gif) !important;
+ margin-top: 0px;
+ height: 600px;
+ width: 800px;
+}*/
+.x-mask-msg.splashscreen .x-mask-msg-text {display:none !important;}
+html, body, #wrapper {
+   height:100%;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+#wrapper td {
+   vertical-align: middle;
+   text-align: center;
+}
+.wrapperoff .loading {display:none !important;}

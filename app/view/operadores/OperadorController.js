@@ -39,43 +39,52 @@ Ext.define('D7C.view.operadores.OperadorController', {
 		this.isNewRecord = false;
 		this.lookupReference('newRecordButton').setDisabled(false);
         this.lookupReference('deleteRecordButton').setDisabled(true);
+		
+		this.lookupReference('combobox_status').setDisabled(true);
+		
     },
 	onAddOperatorClick: function(button, ctx, evt) {
         var newCar = Ext.create('D7C.model.operadores.Operador', {
             operatorid: 0,
 			operatorcode: '',
             syndicatename: '',
-			operatorstate: ''
+			operatorstate: '',
+			operatormatrix: ''
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('operatorid');
         var grid = this.lookupReference('operatorGrid');
         grid.getStore().insert(0, newCar);
 		grid.getPlugin('modelOperatorRowEditingPlugin').startEdit(newCar);
+		
+		var statusCombo = this.lookupReference('combobox_status');
+		statusCombo.setDisabled(false);
 	},
 	onRemoveOperatorClick: function (button, evt) {
-        var grid = this.lookupReference('operatorGrid'),
-            selectedRecords = grid.getSelection(),
-            store = grid.getStore('operatorid');
-		Ext.Msg.show({ 
-			title: 'Eliminar Datos',
-			msg: 'Esta seguro que desea eliminar los datos?',
-			buttons: Ext.Msg.YESNO,
-			icon: Ext.Msg.QUESTION,
-			fn: function (buttonId) {
-				if (buttonId == 'yes') {
-					store.remove(selectedRecords);
-					store.getProxy().setExtraParams({action:'destroy'});
-					store.sync();
-					store.getProxy().setExtraParams({action:'read'});
-					D7C.util.Util.showToast('Eliminacion Satisfactoria! Los datos fueron eliminados');
+			var grid = this.lookupReference('operatorGrid'),
+			selectedRecords = grid.getSelection(),
+			store = grid.getStore('operatorid');
+			Ext.Msg.show({ 
+				title: 'Eliminar Datos',
+				msg: 'Esta seguro que desea eliminar los datos?',
+				buttons: Ext.Msg.YESNO,
+				icon: Ext.Msg.QUESTION,
+				fn: function (buttonId) {
+					if (buttonId == 'yes') {
+						store.remove(selectedRecords);
+						store.getProxy().setExtraParams({action:'destroy'});
+						store.sync();
+						store.getProxy().setExtraParams({action:'read'});
+						D7C.util.Util.showToast('Eliminacion Satisfactoria! Los datos fueron eliminados');
+					}
 				}
-			}
-		});
-		this.lookupReference('deleteRecordButton').setDisabled(true);
+			});
+			this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
-        this.lookupReference('deleteRecordButton').setDisabled(false);
+		if(D7C.Profile.getPrivilege() == 1){
+			this.lookupReference('deleteRecordButton').setDisabled(false);
+		}
     },
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
@@ -103,6 +112,15 @@ Ext.define('D7C.view.operadores.OperadorController', {
 
 		}else{
 			pdfGrid.show();
+		}
+    },
+	onValidateComboBox: function(combo) {
+		var statusCombo = this.lookupReference('combobox_status');
+		if(this.isNewRecord){statusCombo.setDisabled(false);}
+		else{
+			if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2)
+			{statusCombo.setDisabled(false);}
+			else{statusCombo.setDisabled(true);}
 		}
     }
 });

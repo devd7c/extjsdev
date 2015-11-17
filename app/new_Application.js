@@ -3,6 +3,7 @@
  * Ext.application(). This is the ideal place to handle application launch and initialization
  * details.
  */
+ 
 Ext.define('D7C.Application', {
     extend: 'Ext.app.Application',
     
@@ -27,16 +28,35 @@ Ext.define('D7C.Application', {
 		'D7C.view.infracciones.InfraccionController',
 		'D7C.view.infracciones.InfraccionRegistroController'
     ],
-
+	init: function () {
+		var me = this;
+		me.splashscreen = Ext.getBody().mask('', 'splashscreen');
+		me.splashscreen.addCls('splashscreen');
+		Ext.DomHelper.insertFirst(Ext.query('.x-mask-msg')[0], {cls: 'x-splash-icon'});
+	},
     launch: function () {
         //Ext.widget(loggedIn ? 'app-main' : 'login');
+		
+		var me = this;
+        var task = new Ext.util.DelayedTask(function() {
 
-        var me = this;
-		me.wrapper = Ext.getBody('wrapper');
-		me.wrapper.addCls('wrapperoff');
-		
-        Ext.widget('login');
-		
-		
+            //Fade out the body mask
+            me.splashscreen.fadeOut({
+                duration: 100,
+                remove:true
+            });
+
+            //Fade out the icon and message
+            me.splashscreen.next().fadeOut({
+                duration: 100,
+                remove:true,
+                listeners: {
+                    afteranimate: function(el, startTime, eOpts ){
+						Ext.widget('login');
+                    }
+                }
+            });
+		});
+		task.delay(150);
     }
 });

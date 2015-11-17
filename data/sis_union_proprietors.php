@@ -19,10 +19,12 @@ switch($action){
 		$sql .= "v.vehiclebrand, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, v.vehiclemodel, v.vehiclelicense, ";
 		$sql .= "v.vehicleregistrationnumber, p.propietaryci, p.propietaryfirstname, p.propietarylastname FROM infraction_register i ";
 		$sql .= "inner join infraction n on i.infractionid = n.infractionid inner join vehicle v on i.vehicleid = v.vehicleid inner join propietary p on v.propietaryid = p.propietaryid";*/
-
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
 		$sql = "SELECT p.operatorregisterid, p.propietaryadress, p.propietaryci, p.propietaryfirstname, ";
 		$sql .= "p.propietaryid, p.propietarylastname, p.propietaryphone, o.syndicatename FROM propietary p ";
-		$sql .= "inner join operator_register r on p.operatorregisterid = r.operatorregisterid inner join operator o on r.operatorid = o.operatorid";
+		$sql .= "inner join operator_register r on p.operatorregisterid = r.operatorregisterid inner join operator o on r.operatorid = o.operatorid ORDER BY p.propietarylastname DESC limit $limit offset $start";
 		
 		$result = array();
 
@@ -34,10 +36,14 @@ switch($action){
 
 			$resultDb->close();
 		}
+		
+		$total = mysql_query("SELECT COUNT(*) FROM propietary");
+		//$total = mysql_result($total, 0);
 
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelProprietors" => $result
+			"modelProprietors" => $result,
+			"total" => $total
 		));
 
 		/* close connection */

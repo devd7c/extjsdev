@@ -21,12 +21,14 @@ Ext.define('D7C.view.main.MainController', {
 		'Ext.tip.ToolTip',
 		'Ext.Img',
 		'D7C.util.Util',
+		'D7C.util.Profile',
 		'D7C.ux.grid.Printer'
     ],
     views: [
 		'Accordion',
         'Usuario',
 		'UsuarioGrid',
+		'UsuarioForm',
         'Operador',
 		'OperadorGrid',
 		'TarjetaOperacion',
@@ -65,31 +67,31 @@ Ext.define('D7C.view.main.MainController', {
 
 		switch(button.option){
 			case 'btnlistausuarios':
+				if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2){
+					var listUsers =Ext.getCmp('win-usuario');
 
-				var listUsers =Ext.getCmp('win-usuario');
+					if(typeof listUsers=="undefined"){
+						var storeUser=Ext.create('D7C.store.sistema.Usuario',{autoLoad: true,start: 0, limit: 25, pageSize: 400});
+						var GridUser=Ext.create('D7C.view.sistema.UsuarioGrid',{store: storeUser});
+						GridUser.addDocked({
 
-                if(typeof listUsers=="undefined"){
-                    var storeUser=Ext.create('D7C.store.sistema.Usuario',{autoLoad: true,start: 0, limit: 25, pageSize: 400});
-                    var GridUser=Ext.create('D7C.view.sistema.UsuarioGrid',{store: storeUser});
-                    GridUser.addDocked({
+							xtype       : 'pagingtoolbar',
+							//pageSize: 371,
+							store       : storeUser,
+							dock        : 'bottom',
+							displayInfo : true,
+							plugins: new Ext.ux.ProgressBarPager()
+						});
+						var videoview=Ext.create('D7C.view.sistema.Usuario',{id:'win-usuario'});
 
-                        xtype       : 'pagingtoolbar',
-                        //pageSize: 371,
-                        store       : storeUser,
-                        dock        : 'bottom',
-                        displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
-                    });
-                    var videoview=Ext.create('D7C.view.sistema.Usuario',{id:'win-usuario'});
+						videoview.add(GridUser);
+						fp.add(videoview);
+						videoview.show();
 
-                    videoview.add(GridUser);
-                    fp.add(videoview);
-                    videoview.show();
-
-                }else{
-                    listUsers.show();
-                }
-
+					}else{
+						listUsers.show();
+					}
+				}else{D7C.util.Util.showToast('Advertencia, Privilegios Insuficientes');}
 			break;
 			case 'btnListaOperadores':
 
@@ -238,8 +240,8 @@ Ext.define('D7C.view.main.MainController', {
 				var listPropietary =Ext.getCmp('win-propietario');
 
                 if(typeof listPropietary=="undefined"){
-                    var storePropietary=Ext.create('D7C.store.propietarios.Propietario',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
-					var storePropietary=Ext.create('D7C.store.propietarios.Propietario');
+                    var storePropietary=Ext.create('D7C.store.propietarios.Propietario',{/*autoLoad: true, start: 10, limit: 25, pageSize: 400*/});
+					//var storePropietary=Ext.create('D7C.store.propietarios.Propietario');
                     var GridPropietary=Ext.create('D7C.view.propietarios.PropietarioGrid',{store: storePropietary});
                     GridPropietary.addDocked({
 
@@ -320,13 +322,48 @@ Ext.define('D7C.view.main.MainController', {
 		}
 	},
 	
-    onClickButton: function () {
-        Ext.Msg.confirm('Confirmar', 'Esta Seguro?', 'onConfirm', this);
+    onInfoProfileClick: function () {
+       Ext.MessageBox.show({
+            title: 'Sesion Actual',
+            msg: Ext.String.format('Usuario: <b>{0}</b><br>Privilegio: <b>{1}</b>', D7C.Profile.getName(), D7C.Profile.getPrivilegeName()),
+            buttons: Ext.MessageBox.YES,
+            buttonText:{ 
+                yes: "Cerrar mi Sesion"
+            },
+            scope: this,
+            fn: this.onConfirmExit
+        });
     },
 
-    onConfirm: function (choice) {
-        if (choice === 'Si') {
-            //
+    onConfirmExit: function (btn, text) {
+        if (btn === 'yes') {
+			var me = this;
+			Ext.Ajax.request({
+				url: 'data/logout.php',
+				scope: me,
+				success: 'onLogoutSuccess',
+				failure: 'onLogoutFailure'
+			});
         }
+    },
+    onLogoutSuccess: function(conn, response, options, eOpts){
+        var result = D7C.util.Util.decodeJSON(conn.responseText);
+
+        if (result.success) {
+            this.getView().destroy();
+            window.location.reload();
+			D7C.Profile = Ext.create("D7C.util.Profile", {
+    					name: '',
+    					privilege: 0,
+						privilegeName: ''
+    		});
+        } else {
+
+            D7C.util.Util.showToast(result.msg);
+        }
+    },
+
+    onLogoutFailure: function(conn, response, options, eOpts){
+        D7C.util.Util.showToast(conn.responseText);
     }
 });

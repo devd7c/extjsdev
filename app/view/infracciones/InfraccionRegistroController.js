@@ -56,6 +56,9 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroController', {
         var grid = this.lookupReference('infractionRegisterGrid');
         grid.getStore().insert(0, newCar);
 		grid.getPlugin('modelInfractionRegisterRowEditingPlugin').startEdit(newCar);
+		
+		var vehicleCombo = this.lookupReference('combobox_vehicle');
+		vehicleCombo.setDisabled(false);
 	},
 	onRemoveInfractionRegisterClick: function (button, evt) {
         var grid = this.lookupReference('infractionRegisterGrid'),
@@ -79,7 +82,9 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroController', {
 		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
-        this.lookupReference('deleteRecordButton').setDisabled(false);
+		if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2){
+			this.lookupReference('deleteRecordButton').setDisabled(false);
+		}
     },
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
@@ -144,5 +149,15 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroController', {
             filters.remove(this.propietaryCiFilter);
             this.propietaryCiFilter = null;
         }
+    },
+	onValidateComboBox: function(combo) {
+		var vehicleCombo = this.lookupReference('combobox_vehicle');
+		if(this.isNewRecord)
+			{vehicleCombo.setDisabled(false);}
+		else{
+			if(D7C.Profile.getPrivilege() == 1 || D7C.Profile.getPrivilege() == 2)
+			{vehicleCombo.setDisabled(false);}
+			else{vehicleCombo.setDisabled(true);}
+		}
     }
 });

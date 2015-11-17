@@ -160,6 +160,7 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 			},
 			editor: {
 				xtype: 'combobox',
+				reference: 'combobox_status',
 				allowBlank: false,
 				editable: false,
 				forceSelection: true,
@@ -167,10 +168,18 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 					'Activo',
 					'Pendiente',
 					'Baja'
-				]
+				],
+				listeners: {
+                    focus: 'onValidateComboBox'
+                }
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.operatorregisterstate;
+			}
+		},
+		{text: 'Entidad Matriz', dataIndex: 'operatormatrix', flex: 1, hidden:true, 
+			filter: {
+				type: 'list'
 			}
 		}
     ],

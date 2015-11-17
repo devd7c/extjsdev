@@ -72,6 +72,7 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 		{text: 'Operador', dataIndex: 'operatorregisterid', flex: 1,
 			editor: {
 				xtype: 'combobox',
+				reference: 'cb_operator',
 				allowBlank: false,
 				forceSelection : true,
 				matchFieldWidth :false,
@@ -87,6 +88,9 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 				listConfig   : {
 					itemTpl :
 					'<div data-qtip="Codigo: {operatorcode}">{syndicatename}</div>'
+				},
+				listeners:{
+					focus: 'onValidateComboBox'
 				}
 			},
 			listeners:{

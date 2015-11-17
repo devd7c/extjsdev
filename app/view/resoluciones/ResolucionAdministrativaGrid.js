@@ -84,11 +84,15 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaGrid',{
 		{text: 'Cantidad Autorizada', dataIndex: 'vehiclequantityid', flex: 1,
 			editor: {
 				xtype: 'combobox',
+				reference: 'cb_quantity',
 				allowBlank: false,
 				displayField: 'vehiclequantitydescription',
 				valueField: 'vehiclequantityid',
 				queryMode: 'local',
-				store: Ext.create('D7C.store.propietarios.Unidad')
+				store: Ext.create('D7C.store.propietarios.Unidad'),
+				listeners:{
+					focus: 'onValidateComboBox'
+				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclequantitydescription;

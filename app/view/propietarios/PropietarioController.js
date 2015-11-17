@@ -54,6 +54,9 @@ Ext.define('D7C.view.propietarios.PropietarioController', {
         var grid = this.lookupReference('propietaryGrid');
         grid.getStore().insert(0, newPropietary);
 		grid.getPlugin('propietaryRowEditingPlugin').startEdit(newPropietary);
+		
+		var operatorCombo = this.lookupReference('cb_operator');
+		operatorCombo.setDisabled(false);
 	},
 	onRemovePropietaryClick: function (button, evt) {
 		var grid = this.lookupReference('propietaryGrid'),
@@ -77,7 +80,9 @@ Ext.define('D7C.view.propietarios.PropietarioController', {
 		this.lookupReference('deleteRecordButton').setDisabled(true);
     },
     onGridSelect: function (rowModel, record, idx, eOpts) {
-        this.lookupReference('deleteRecordButton').setDisabled(false);
+		if(D7C.Profile.getPrivilege() == 1){
+			this.lookupReference('deleteRecordButton').setDisabled(false);
+		}
     },
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
@@ -105,6 +110,16 @@ Ext.define('D7C.view.propietarios.PropietarioController', {
 
 		}else{
 			pdfGrid.show();
+		}
+    },
+	onValidateComboBox: function(combo) {		
+		var operatorCombo = this.lookupReference('cb_operator');
+		if(this.isNewRecord)
+		{operatorCombo.setDisabled(false);}
+		else{
+			if(D7C.Profile.getPrivilege() == 1)
+			{operatorCombo.setDisabled(false);
+			}else{operatorCombo.setDisabled(true);}
 		}
     }
 });

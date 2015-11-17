@@ -19,6 +19,7 @@ Ext.define('D7C.view.main.Main', {
         'D7C.view.menu.Accordion',
         'Ext.tab.Panel',
         'Ext.layout.container.Border'
+		//'D7C.util.Profile'
     ],
 	xtype: 'app-main',
     controller: 'main',

@@ -5,6 +5,9 @@
 Ext.define('D7C.view.sistema.Usuario', {
     extend: 'Ext.window.Window',
     alias: 'widget.winusuario',
+	requires: [
+		'D7C.util.Profile'
+	],
     id: 'win-usuario',
     controller: 'usuario',
     layout		: "fit",
@@ -12,7 +15,7 @@ Ext.define('D7C.view.sistema.Usuario', {
     height		: 450,
     minHeight           : 450,
     constrainHeader : true,
-    title: 'Usuarios',
+    title: 'Usuarios del Sistema',
     maximized: false,
     maximizable:true,
     initComponent: function() {

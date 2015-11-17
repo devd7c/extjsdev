@@ -16,7 +16,7 @@ switch($action){
 		$sql = "SELECT i.infractionregisterid, i.infractionid, i.vehicleid, i.infractionnumberticket, ";
 		$sql .= "i.infractionregisterstate, n.descriptioninfraction, n.amountinfraction, ";
 		$sql .= "v.vehiclebrand, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, v.vehiclemodel, v.vehiclelicense, ";
-		$sql .= "v.vehiclestatus, v.picture, p.propietaryci, p.propietaryfirstname, p.propietarylastname, o.syndicatename FROM infraction_register i ";
+		$sql .= "v.vehiclestatus, v.picture, p.propietaryci, p.propietaryfirstname, p.propietarylastname, o.syndicatename, o.operatormatrix FROM infraction_register i ";
 		$sql .= "inner join infraction n on i.infractionid = n.infractionid inner join vehicle v on i.vehicleid = v.vehicleid ";
 		$sql .="inner join propietary p on v.propietaryid = p.propietaryid inner join operator_register r on p.operatorregisterid = r.operatorregisterid ";
 		$sql .="inner join operator o on r.operatorid = o.operatorid";
