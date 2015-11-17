@@ -37,13 +37,15 @@ switch($action){
 			$resultDb->close();
 		}
 		
-		$total = mysql_query("SELECT COUNT(*) FROM propietary");
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM propietary");
+		$res=$total->fetch_assoc();
+		//$total=count($results);
 		//$total = mysql_result($total, 0);
 
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
 			"modelProprietors" => $result,
-			"total" => $total
+			"total" => $res['total']
 		));
 
 		/* close connection */
