@@ -106,7 +106,7 @@ Ext.define('D7C.view.menu.Accordion', {
 					xtype: 'button',
 					width:220,
 					text: 'Tarjetas de Operacion Temporal',
-					option: 'btnListaTarjetasOperacionTemporal'
+					option: 'btnListaTarjetasOperacionTemp'
 					
 				},
 				{

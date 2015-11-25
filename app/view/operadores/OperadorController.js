@@ -49,7 +49,8 @@ Ext.define('D7C.view.operadores.OperadorController', {
 			operatorcode: '',
             syndicatename: '',
 			operatorstate: '',
-			operatormatrix: ''
+			operatormatrix: '',
+			last_update: new Date()
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('operatorid');
@@ -66,7 +67,8 @@ Ext.define('D7C.view.operadores.OperadorController', {
 			store = grid.getStore('operatorid');
 			Ext.Msg.show({ 
 				title: 'Eliminar Datos',
-				msg: 'Esta seguro que desea eliminar los datos?',
+				//msg: 'Esta seguro que desea eliminar los datos?',
+				msg: Ext.String.format('Si elimina al Operador tambien se eliminaran de los siguientes Campos:<br><br>Propietarios Asociados al Operador<br> - <strong>Modulo Propietarios</strong><br>Vehiculos Asociados al Operador<br> - <strong>Modulo Unidad de Transporte</strong><br> - <strong>Modulo Registro Infracciones</strong><br> - <strong>Modulo Tarjeta de Operacion/Temporal</strong><br><br>Esta seguro que desea eliminar los datos?'),
 				buttons: Ext.Msg.YESNO,
 				icon: Ext.Msg.QUESTION,
 				fn: function (buttonId) {
@@ -113,6 +115,24 @@ Ext.define('D7C.view.operadores.OperadorController', {
 		}else{
 			pdfGrid.show();
 		}
+    },
+	onOperatorFilterKeyup: function() {
+        var grid = this.lookupReference('operatorGrid'),
+            filterField = this.lookupReference('operatorFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.operatorFilter = filters.add({
+                id            : 'operatorFilter',
+                property      : 'syndicatename',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.operatorFilter) {
+            filters.remove(this.operatorFilter);
+            this.operatorFilter = null;
+        }
     },
 	onValidateComboBox: function(combo) {
 		var statusCombo = this.lookupReference('combobox_status');

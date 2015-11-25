@@ -13,7 +13,10 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
-		$sql = "SELECT * FROM infraction";
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
+		$sql = "SELECT * FROM infraction limit $limit offset $start";
 
 		$result = array();
 
@@ -25,10 +28,14 @@ switch($action){
 
 			$resultDb->close();
 		}
-
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM infraction");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelInfractions" => $result
+			"modelInfractions" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */

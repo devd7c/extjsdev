@@ -1,4 +1,4 @@
-Ext.define('D7C.model.operadores.TarjetaOperacion', {
+Ext.define('D7C.model.operadores.TarjetaOperacionTemp', {
 	extend: 'Ext.data.Model',
     idProperty: 'cardoperationid',
     fields: [

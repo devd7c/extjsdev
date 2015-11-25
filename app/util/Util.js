@@ -38,7 +38,7 @@ Ext.define('D7C.util.Util', {
 
             switch (action.failureType) {
                 case Ext.form.action.Action.CLIENT_INVALID:
-                    me.showErrorMsg('Form fields may not be submitted with invalid values');
+                    me.showErrorMsg('Los campos del formulario no podrán ser enviados con valores no válidos');
                     break;
                 case Ext.form.action.Action.CONNECT_FAILURE:
                     me.showErrorMsg(action.response.responseText);

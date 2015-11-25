@@ -22,7 +22,7 @@ switch($action){
 		$sql .= "v.vehiclebrand, v.vehiclestatus, v.vehiclemodel, v.vehiclelicense, v.picture, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, ";
 		$sql .= "p.propietaryfirstname, p.propietarylastname, p.propietaryci, o.syndicatename, o.operatorstate, o.operatormatrix FROM  card_operation c ";
 		$sql .= "inner join operator_register r on c.operatorregisterid = r.operatorregisterid inner join vehicle v on c.vehicleid = v.vehicleid ";
-		$sql .="inner join propietary p on v.propietaryid = p.propietaryid inner join operator o on r.operatorid = o.operatorid WHERE c.operatorregisterid !=1 limit $limit offset $start";
+		$sql .="inner join propietary p on v.propietaryid = p.propietaryid inner join operator o on r.operatorid = o.operatorid WHERE c.operatorregisterid = 1 limit $limit offset $start";
 
 		$result = array();
 
@@ -35,35 +35,9 @@ switch($action){
 			$resultDb->close();
 		}
 		
-		$total = $mysqli->query("SELECT COUNT(*) as total FROM card_operation WHERE operatorregisterid !=1");
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM card_operation WHERE operatorregisterid = 1");
 		$res=$total->fetch_assoc();
 
-		echo json_encode(array(
-			"success" => $mysqli->connect_errno == 0,
-			"modelCardOperations" => $result,
-			"total" => $res['total']
-		));
-
-		/* close connection */
-		$mysqli->close();
-	break;
-	case 'readvalid':
-		$sql = "SELECT * FROM card_operation WHERE operatorstate = 'Valido'";
-
-		$result = array();
-
-		if ($resultDb = $mysqli->query($sql)) {
-
-			while($record = $resultDb->fetch_assoc()) {
-				array_push($result, $record);
-			}
-
-			$resultDb->close();
-		}
-		
-		$total = $mysqli->query("SELECT COUNT(*) as total FROM card_operation WHERE operatorstate = 'Valido'");
-		$res=$total->fetch_assoc();
-		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
 			"modelCardOperations" => $result,
@@ -91,7 +65,7 @@ switch($action){
 				   "' WHERE vehicleid=".$data->vehicleid;
 			if ($resultDb = $mysqli->query($query)) {
 				$vehicleid = $mysqli->insert_id;
-			}	
+			}
 		}
 	break;
 	case 'update':
@@ -114,7 +88,6 @@ switch($action){
 			$cardoperationid = $mysqli->insert_id;
 		}
 	break;
-
 }
 
 

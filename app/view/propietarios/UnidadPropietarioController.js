@@ -53,7 +53,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
             };
             reader.readAsDataURL(file);
         } else if (!(/image/i).test(file.type)){
-            Ext.Msg.alert('Warning', 'You can only upload image files!');
+            Ext.Msg.alert('Advertencia', 'Solo puede cargar imagenes!');
             fileField.reset();
         }
     },
@@ -98,7 +98,8 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 			vehiclestatus: 'NO',
 			vehiclemodel: '',
 			vehiclelicense: '',
-			picture: ''
+			picture: '',
+			last_update: new Date()
         });
         this.isNewRecord = true;
         this.newRecordId = newVehiclePropietary.get('vehicleid');
@@ -112,7 +113,8 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
             store = grid.getStore('vehicleid');
 		Ext.Msg.show({ 
 			title: 'Eliminar Datos',
-			msg: 'Esta seguro que desea eliminar los datos?',
+			//msg: 'Esta seguro que desea eliminar los datos?',
+			msg: Ext.String.format('Si elimina el Vehiculo tambien se eliminara de los siguientes Modulos:<br><br> - <strong>Infracciones</strong><br> - <strong>Tarjeta de Operacion/Temporal</strong><br><br>Esta seguro que desea eliminar los datos?'),
 			buttons: Ext.Msg.YESNO,
 			icon: Ext.Msg.QUESTION,
 			fn: function (buttonId) {
@@ -190,5 +192,41 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
     },
     onSaveFailure: function(form, action) {
         D7C.util.Util.handleFormFailure(action);
+    },
+	onVehicleLicenseFilterKeyup: function() {
+        var grid = this.lookupReference('vehiclePropietaryGrid'),
+            filterField = this.lookupReference('vehicleLicenseFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.vehicleLicenseFilter = filters.add({
+                id            : 'vehicleLicenseFilter',
+                property      : 'vehiclelicense',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.vehicleLicenseFilter) {
+            filters.remove(this.vehicleLicenseFilter);
+            this.vehicleLicenseFilter = null;
+        }
+    },
+	onPropietorFilterKeyup: function() {
+        var grid = this.lookupReference('vehiclePropietaryGrid'),
+            filterField = this.lookupReference('propietorFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.propietorFilter = filters.add({
+                id            : 'propietorFilter',
+                property      : 'propietaryci',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.propietorFilter) {
+            filters.remove(this.propietorFilter);
+            this.propietorFilter = null;
+        }
     }
 });

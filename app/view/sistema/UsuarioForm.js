@@ -56,6 +56,7 @@ Ext.define('D7C.view.sistema.UsuarioForm', {
                             fieldLabel: 'Contraseña',
 							inputType: 'password',
                             name: 'password',
+							vtype: 'customPass',
                             bind : '{password}',
 							allowBlank  : false
                         },
@@ -93,6 +94,7 @@ Ext.define('D7C.view.sistema.UsuarioForm', {
                         {
                             fieldLabel: 'Email',
                             name: 'email',
+							vtype: 'customEmail',
                             bind : '{email}'
                         },
                         {

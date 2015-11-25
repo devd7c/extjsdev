@@ -134,7 +134,10 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 			renderer: function(value, metaData, record ){
 				return record.data.infractionregisterstate;
 			}
-		}/*,
+		},
+		{text: 'Ultima Modificacion', xtype: 'datecolumn', width: 160, dataIndex: 'last_update',
+            format: 'Y-m-j H:i:s', filter: true, hidden:true
+        }/*,
         {text: 'Monto Infraccion', dataIndex: 'amountinfraction', xtype: 'numbercolumn',
 			format: '0.00 Bs', width:155, align: 'right', sortable: true,
 			editor: {

@@ -67,6 +67,17 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.syndicatename;
+			},
+			items    : {
+				xtype: 'textfield',
+				reference: 'operatorFilterField',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onOperatorFilterKeyup',
+					buffer: 500
+				}
 			}
         },
 		{text: 'Resolucion Administrativa', dataIndex: 'adminresolutionid', flex: 1,
@@ -181,7 +192,10 @@ Ext.define('D7C.view.operadores.RegistroOperadorGrid',{
 			filter: {
 				type: 'list'
 			}
-		}
+		},
+		{text: 'Ultima Modificacion', xtype: 'datecolumn', width: 160, dataIndex: 'last_update',
+            format: 'Y-m-j H:i:s', filter: true, hidden:true
+        }
     ],
 	selType: 'rowmodel',
     plugins: [

@@ -13,9 +13,12 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
-		$sql = "SELECT u.address, u.email, u.name, u.password, u.userid, u.username, ";
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
+		$sql = "SELECT u.address, u.email, u.name, u.password, u.userid, u.username, u.last_update, ";
 		$sql .= "u.phone, u.picture, u.privilegesid, g.privilegesdescription FROM user u ";
-		$sql .= "inner join privileges g on u.privilegesid = g.privilegesid";
+		$sql .= "inner join privileges g on u.privilegesid = g.privilegesid limit $limit offset $start";
 		//$sql = "SELECT * FROM user";
 
 		$result = array();
@@ -28,10 +31,14 @@ switch($action){
 
 			$resultDb->close();
 		}
-
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM user");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelUser" => $result
+			"modelUser" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */
@@ -53,10 +60,14 @@ switch($action){
 
 			$resultDb->close();
 		}
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM privileges");
+		$res=$total->fetch_assoc();
 
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelUser" => $result
+			"modelUser" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */

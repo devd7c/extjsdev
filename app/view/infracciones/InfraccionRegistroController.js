@@ -49,7 +49,8 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroController', {
 			descriptioninfraction: '',
 			amountinfraction: '',
 			infractionnumberticket: '',
-			infractionregisterstate: ''
+			infractionregisterstate: '',
+			last_update: new Date()
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('infractionregisterid');

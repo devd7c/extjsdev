@@ -23,8 +23,8 @@ switch($action){
         $limit=$_POST['limit'];
 		
 		$sql = "SELECT p.operatorregisterid, p.propietaryadress, p.propietaryci, p.propietaryfirstname, ";
-		$sql .= "p.propietaryid, p.propietarylastname, p.propietaryphone, o.syndicatename FROM propietary p ";
-		$sql .= "inner join operator_register r on p.operatorregisterid = r.operatorregisterid inner join operator o on r.operatorid = o.operatorid ORDER BY p.propietarylastname DESC limit $limit offset $start";
+		$sql .= "p.propietaryid, p.propietarylastname, p.propietaryphone, p.last_update, o.syndicatename FROM propietary p ";
+		$sql .= "inner join operator_register r on p.operatorregisterid = r.operatorregisterid inner join operator o on r.operatorid = o.operatorid limit $limit offset $start";
 		
 		$result = array();
 
@@ -74,6 +74,23 @@ switch($action){
 		if ($resultDb = $mysqli->query($query)) {
 			$propietaryid = $mysqli->insert_id;
 		}
+		
+		//$queryID = "SELECT vehicleid FROM vehicle WHERE propietaryid=".$data->propietaryid;
+		
+		/*$query = "DELETE FROM infraction_register WHERE vehicleid=(SELECT vehicleid FROM vehicle WHERE propietaryid = '".$data->propietaryid."')";
+		if ($resultDb = $mysqli->query($query)) {
+			$cardoperationid = $mysqli->insert_id;
+		}
+
+		$query = "DELETE FROM card_operation WHERE vehicleid=(SELECT vehicleid FROM vehicle WHERE propietaryid = '".$data->propietaryid."')";
+		if ($resultDb = $mysqli->query($query)) {
+			$vehicleid = $mysqli->insert_id;
+		}
+		
+		$query = "DELETE FROM vehicle WHERE propietaryid=".$data->propietaryid;
+		if ($resultDb = $mysqli->query($query)) {
+			$cardoperationid = $mysqli->insert_id;
+		}*/
 	break;
 
 }

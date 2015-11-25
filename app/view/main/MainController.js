@@ -15,6 +15,7 @@ Ext.define('D7C.view.main.MainController', {
 		'Ext.form.Panel',
         'Ext.window.MessageBox',
 		'Ext.toolbar.Paging',
+		'Ext.ux.SlidingPager',
         'Ext.ux.ProgressBarPager',
 		'Ext.grid.filters.Filters',
 		'Ext.grid.Panel',
@@ -33,6 +34,8 @@ Ext.define('D7C.view.main.MainController', {
 		'OperadorGrid',
 		'TarjetaOperacion',
 		'TarjetaOperacionGrid',
+		'TarjetaOperacionTemp',
+		'TarjetaOperacionGridTemp',
         'RegistroOperador',
 		'RegistroOperadorGrid',
 		'Infraccion',
@@ -71,7 +74,7 @@ Ext.define('D7C.view.main.MainController', {
 					var listUsers =Ext.getCmp('win-usuario');
 
 					if(typeof listUsers=="undefined"){
-						var storeUser=Ext.create('D7C.store.sistema.Usuario',{autoLoad: true,start: 0, limit: 25, pageSize: 400});
+						var storeUser=Ext.create('D7C.store.sistema.Usuario',{/*autoLoad: true,start: 0, limit: 25, pageSize: 400*/});
 						var GridUser=Ext.create('D7C.view.sistema.UsuarioGrid',{store: storeUser});
 						GridUser.addDocked({
 
@@ -80,7 +83,8 @@ Ext.define('D7C.view.main.MainController', {
 							store       : storeUser,
 							dock        : 'bottom',
 							displayInfo : true,
-							plugins: new Ext.ux.ProgressBarPager()
+							displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+							//plugins: new Ext.ux.ProgressBarPager()
 						});
 						var videoview=Ext.create('D7C.view.sistema.Usuario',{id:'win-usuario'});
 
@@ -98,7 +102,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listMageSoap =Ext.getCmp('win-operador');
 
                 if(typeof listMageSoap=="undefined"){
-                    var storeMage=Ext.create('D7C.store.operadores.Operador',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeMage=Ext.create('D7C.store.operadores.Operador',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
 					var storeMage=Ext.create('D7C.store.operadores.Operador');
                     var GridTest=Ext.create('D7C.view.operadores.OperadorGrid',{store: storeMage});
                     GridTest.addDocked({
@@ -108,7 +112,8 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeMage,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var videoview=Ext.create('D7C.view.operadores.Operador',{id:'win-operador'});
 
@@ -126,7 +131,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listMageSoap =Ext.getCmp('win-registrooperador');
 
                 if(typeof listMageSoap=="undefined"){
-                    var storeMage=Ext.create('D7C.store.operadores.RegistroOperador',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeMage=Ext.create('D7C.store.operadores.RegistroOperador',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
 					var storeMage=Ext.create('D7C.store.operadores.RegistroOperador');
                     var GridTest=Ext.create('D7C.view.operadores.RegistroOperadorGrid',{store: storeMage});
                     GridTest.addDocked({
@@ -136,7 +141,8 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeMage,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var videoview=Ext.create('D7C.view.operadores.RegistroOperador',{id:'win-registrooperador'});
 
@@ -154,7 +160,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listInfraction =Ext.getCmp('win-infraccion');
 
                 if(typeof listInfraction=="undefined"){
-                    var storeInfraction=Ext.create('D7C.store.infracciones.Infraccion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeInfraction=Ext.create('D7C.store.infracciones.Infraccion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
 					var storeInfraction=Ext.create('D7C.store.infracciones.Infraccion');
                     var GridInfraction=Ext.create('D7C.view.infracciones.InfraccionGrid',{store: storeInfraction});
                     GridInfraction.addDocked({
@@ -164,7 +170,8 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeInfraction,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var infractionview=Ext.create('D7C.view.infracciones.Infraccion',{id:'win-infraccion'});
 
@@ -183,7 +190,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listInfractionRegister =Ext.getCmp('win-infraccionregistro');
 
                 if(typeof listInfractionRegister=="undefined"){
-                    var storeInfractionRegister=Ext.create('D7C.store.infracciones.InfraccionRegistro',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeInfractionRegister=Ext.create('D7C.store.infracciones.InfraccionRegistro',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
 					var storeInfractionRegister=Ext.create('D7C.store.infracciones.InfraccionRegistro');
                     var GridInfractionRegister=Ext.create('D7C.view.infracciones.InfraccionRegistroGrid',{store: storeInfractionRegister});
                     GridInfractionRegister.addDocked({
@@ -193,7 +200,8 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeInfractionRegister,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var infractionregisterview=Ext.create('D7C.view.infracciones.InfraccionRegistro',{id:'win-infraccionregistro'});
 
@@ -212,7 +220,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listAdministrativeResolution =Ext.getCmp('win-resolucionadministrativa');
 
                 if(typeof listAdministrativeResolution=="undefined"){
-                    var storeAdministrativeResolution=Ext.create('D7C.store.resoluciones.ResolucionAdministrativa',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeAdministrativeResolution=Ext.create('D7C.store.resoluciones.ResolucionAdministrativa',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
                     var storeAdministrativeResolution=Ext.create('D7C.store.resoluciones.ResolucionAdministrativa');
 					var GridAdministrativeResolution=Ext.create('D7C.view.resoluciones.ResolucionAdministrativaGrid',{store: storeAdministrativeResolution});
                     GridAdministrativeResolution.addDocked({
@@ -222,7 +230,8 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeAdministrativeResolution,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var vresolucionadministrativaview=Ext.create('D7C.view.resoluciones.ResolucionAdministrativa',{id:'win-resolucionadministrativa'});
 
@@ -240,17 +249,18 @@ Ext.define('D7C.view.main.MainController', {
 				var listPropietary =Ext.getCmp('win-propietario');
 
                 if(typeof listPropietary=="undefined"){
-                    var storePropietary=Ext.create('D7C.store.propietarios.Propietario',{/*autoLoad: true, start: 10, limit: 25, pageSize: 400*/});
-					//var storePropietary=Ext.create('D7C.store.propietarios.Propietario');
+                    //var storePropietary=Ext.create('D7C.store.propietarios.Propietario',{/*autoLoad: true, start: 10, limit: 25, pageSize: 400*/});
+					var storePropietary=Ext.create('D7C.store.propietarios.Propietario');
                     var GridPropietary=Ext.create('D7C.view.propietarios.PropietarioGrid',{store: storePropietary});
                     GridPropietary.addDocked({
 
                         xtype       : 'pagingtoolbar',
-                        //pageSize: 371,
+                        //pageSize: 10,
                         store       : storePropietary,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.SlidingPager()
                     });
                     var propietaryview=Ext.create('D7C.view.propietarios.Propietario',{id:'win-propietario'});
 
@@ -268,7 +278,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listVehiclePropietary =Ext.getCmp('win-unidadpropietario');
 
                 if(typeof listVehiclePropietary=="undefined"){
-                    var storeVehiclePropietary=Ext.create('D7C.store.propietarios.UnidadPropietario',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeVehiclePropietary=Ext.create('D7C.store.propietarios.UnidadPropietario',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
 					var storeVehiclePropietary=Ext.create('D7C.store.propietarios.UnidadPropietario');
                     var GridVehiclePropietary=Ext.create('D7C.view.propietarios.UnidadPropietarioGrid',{store: storeVehiclePropietary});
                     GridVehiclePropietary.addDocked({
@@ -278,7 +288,8 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeVehiclePropietary,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var vehiclepropietaryview=Ext.create('D7C.view.propietarios.UnidadPropietario',{id:'win-unidadpropietario'});
 
@@ -296,7 +307,7 @@ Ext.define('D7C.view.main.MainController', {
 				var listMageSoap =Ext.getCmp('win-tarjetaoperacion');
 
                 if(typeof listMageSoap=="undefined"){
-                    var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+                    //var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
 					var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion');
                     var GridTest=Ext.create('D7C.view.operadores.TarjetaOperacionGrid',{store: storeMage});
                     GridTest.addDocked({
@@ -306,9 +317,39 @@ Ext.define('D7C.view.main.MainController', {
                         store       : storeMage,
                         dock        : 'bottom',
                         displayInfo : true,
-                        plugins: new Ext.ux.ProgressBarPager()
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var videoview=Ext.create('D7C.view.operadores.TarjetaOperacion',{id:'win-tarjetaoperacion'});
+
+                    videoview.add(GridTest);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listMageSoap.show();
+                }
+				
+			break;
+			case 'btnListaTarjetasOperacionTemp':
+
+				var listMageSoap =Ext.getCmp('win-tarjetaoperaciontemp');
+
+                if(typeof listMageSoap=="undefined"){
+                    //var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+					var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacionTemp');
+                    var GridTest=Ext.create('D7C.view.operadores.TarjetaOperacionGridTemp',{store: storeMage});
+                    GridTest.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeMage,
+                        dock        : 'bottom',
+                        displayInfo : true,
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var videoview=Ext.create('D7C.view.operadores.TarjetaOperacionTemp',{id:'win-tarjetaoperaciontemp'});
 
                     videoview.add(GridTest);
                     fp.add(videoview);

@@ -47,7 +47,8 @@ Ext.define('D7C.view.propietarios.PropietarioController', {
             propietarylastname: '',
 			propietaryci: '',
 			propietaryadress: '',
-			propietaryphone: ''
+			propietaryphone: '',
+			last_update: new Date()
         });
         this.isNewRecord = true;
         this.newRecordId = newPropietary.get('propietaryid');
@@ -64,7 +65,8 @@ Ext.define('D7C.view.propietarios.PropietarioController', {
 			store = grid.getStore('propietaryid');
 		Ext.Msg.show({ 
 			title: 'Eliminar Datos',
-			msg: 'Esta seguro que desea eliminar los datos?',
+			//msg: 'Esta seguro que desea eliminar los datos?',
+			msg: Ext.String.format('Si elimina al Propietario tambien se eliminaran los vehiculos asociados al propietario, de los siguientes Modulos:<br><br> - <strong>Unidades de Transporte</strong><br> - <strong>Infracciones</strong><br> - <strong>Tarjeta de Operacion/Temporal</strong><br><br>Esta seguro que desea eliminar los datos?'),
 			buttons: Ext.Msg.YESNO,
 			icon: Ext.Msg.QUESTION,
 			fn: function (buttonId) {
@@ -111,6 +113,42 @@ Ext.define('D7C.view.propietarios.PropietarioController', {
 		}else{
 			pdfGrid.show();
 		}
+    },
+	onCiFilterKeyup: function() {
+        var grid = this.lookupReference('propietaryGrid'),
+            filterField = this.lookupReference('ciFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.ciFilter = filters.add({
+                id            : 'ciFilter',
+                property      : 'propietaryci',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.ciFilter) {
+            filters.remove(this.ciFilter);
+            this.ciFilter = null;
+        }
+    },
+	onOperatorFilterKeyup: function() {
+        var grid = this.lookupReference('propietaryGrid'),
+            filterField = this.lookupReference('operatorFilterField'),
+            filters = grid.store.getFilters();
+
+        if (filterField.value) {
+            this.operatorFilter = filters.add({
+                id            : 'operatorFilter',
+                property      : 'syndicatename',
+                value         : filterField.value,
+                anyMatch      : true,
+                caseSensitive : false
+            });
+        } else if (this.operatorFilter) {
+            filters.remove(this.operatorFilter);
+            this.operatorFilter = null;
+        }
     },
 	onValidateComboBox: function(combo) {		
 		var operatorCombo = this.lookupReference('cb_operator');

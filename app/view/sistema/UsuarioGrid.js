@@ -64,6 +64,9 @@ Ext.define('D7C.view.sistema.UsuarioGrid',{
 				tooltip: 'Modificar Datos',
                 handler: 'onEditUserClick'
             }
+        },
+		{text: 'Ultima Modificacion', xtype: 'datecolumn', width: 160, dataIndex: 'last_update',
+            format: 'Y-m-j H:i:s', filter: true, hidden:true
         }
     ],
 	selType: 'rowmodel',

@@ -1,15 +1,43 @@
-/*
- @autor:Pablo Garcia
- */
 Ext.define('D7C.view.login.LoginController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.login',
 
     requires: [
         'D7C.view.main.Main',
-		'D7C.util.Profile'
+		'D7C.util.Profile',
+        'D7C.view.login.CapsLockTooltip',
+        'D7C.util.Util',
+        'D7C.util.SessionMonitor'
     ],
+	
+    onTextFieldSpecialKey: function(field, e, options){
+        if (e.getKey() === e.ENTER) {
+            this.doLogin();
+        }
+    },
 
+    onTextFieldKeyPress: function(field, e, options){
+
+        var charCode = e.getCharCode(),
+            me = this;
+
+        if((e.shiftKey && charCode >= 97 && charCode <= 122) ||
+            (!e.shiftKey && charCode >= 65 && charCode <= 90)){
+
+            if(me.capslockTooltip === undefined){
+                me.capslockTooltip = Ext.widget('capslocktooltip');
+            }
+
+            me.capslockTooltip.show();
+
+        } else {
+
+            if(me.capslockTooltip !== undefined){
+                me.capslockTooltip.hide();
+            }
+        }
+    },
+	
     onClickCancel: function(button, e, options){
         this.lookupReference('form').reset();
     },
@@ -74,6 +102,8 @@ Ext.define('D7C.view.login.LoginController', {
 				view.unmask();
 				view.close();
 				Ext.create('D7C.view.main.Main');
+				D7C.util.SessionMonitor.start();
+				D7C.util.Util.showToast(Ext.String.format('Bienvenido {0} !!!',D7C.Profile.getName()));
 			},
             failure: 'onLoginFailure'
         });
@@ -82,23 +112,9 @@ Ext.define('D7C.view.login.LoginController', {
     onLoginFailure: function(form, action) {
 
         this.getView().unmask();
+		//var messageLogin = Ext.String.format('sdsdsds {0}',action);
+		D7C.util.Util.showToast('<strong>DATOS INCORRECTOS</strong><br>Usuario o Password Incorrecto');
+		//D7C.util.Util.handleFormFailure(action);
 
-    }/*,
-
-    onLoginSuccess: function(form, action) {
-        var view = this.getView();
-        view.unmask();
-        view.close();
-        Ext.create('D7C.view.main.Main');
-    }*/
-
-
-
-
-
-
-
-
-
-
+    }
 });

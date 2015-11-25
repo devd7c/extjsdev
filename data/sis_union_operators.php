@@ -13,7 +13,10 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
-		$sql = "SELECT * FROM operator";
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
+		$sql = "SELECT * FROM operator limit $limit offset $start";
 
 		$result = array();
 
@@ -25,10 +28,14 @@ switch($action){
 
 			$resultDb->close();
 		}
-
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM operator");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelOperators" => $result
+			"modelOperators" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */
@@ -47,10 +54,14 @@ switch($action){
 
 			$resultDb->close();
 		}
-
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM operator WHERE operatorstate = 'Valido'");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelOperators" => $result
+			"modelOperators" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */

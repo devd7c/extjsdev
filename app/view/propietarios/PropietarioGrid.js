@@ -56,6 +56,17 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
         {text: 'C.I.', dataIndex: 'propietaryci', flex: 1, sortable: true, filter:true,
 			editor: {
 				xtype: 'textfield', allowBlank: false
+			},
+			items    : {
+				xtype: 'textfield',
+				reference: 'ciFilterField',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onCiFilterKeyup',
+					buffer: 500
+				}
 			}
 		},
         {text: 'Domicilio', dataIndex: 'propietaryadress', flex: 1, sortable: true,
@@ -69,7 +80,7 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 				xtype: 'textfield', allowBlank: false
 			}
 		},
-		{text: 'Operador', dataIndex: 'operatorregisterid', flex: 1,
+		{text: 'Operador', dataIndex: 'operatorregisterid', flex: 1.3, filter:true,
 			editor: {
 				xtype: 'combobox',
 				reference: 'cb_operator',
@@ -101,8 +112,22 @@ Ext.define('D7C.view.propietarios.PropietarioGrid',{
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.syndicatename;
+			},
+			items    : {
+				xtype: 'textfield',
+				reference: 'operatorFilterField',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onOperatorFilterKeyup',
+					buffer: 500
+				}
 			}
-		}
+		},
+		{text: 'Ultima Modificacion', xtype: 'datecolumn', width: 160, dataIndex: 'last_update',
+            format: 'Y-m-j H:i:s', filter: true, hidden:true
+        }
     ],
 	selType: 'rowmodel',
     plugins: [

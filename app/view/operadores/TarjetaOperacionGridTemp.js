@@ -1,6 +1,6 @@
-Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
+Ext.define('D7C.view.operadores.TarjetaOperacionGridTemp',{
     extend: 'Ext.grid.Panel',
-    alias: 'widget.tarjetaoperaciongrid',
+    alias: 'widget.tarjetaoperaciongridtemp',
     requires: ['Ext.toolbar.Paging'],
     stateful: true,
     multiSelect: true,
@@ -39,42 +39,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
     columns: [
 		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'cardoperationid', width:55, hidden:false, filter:false},
-		{text: 'Operador', dataIndex: 'operatorregisterid', flex: 1,
-			editor: {
-				xtype: 'combobox',
-				reference: 'operator',
-				allowBlank: false,
-				forceSelection : true,
-				matchFieldWidth :true,
-				enableKeyEvents :true,
-				typeAhead: true,
-				hideLabel: true,
-				hideTrigger:true,
-				minChars        :5,
-				displayField: 'syndicatename',
-				valueField: 'operatorregisterid',
-				queryMode: 'remote',
-				publishes: 'value',
-				store: Ext.create('D7C.store.operadores.RegistroOperadorValidoNoTemp'),
-				listeners:{
-				focus: 'onValidateOpComboBox'
-				}
-			},
-			renderer: function(value, metaData, record ){
-				return record.data.syndicatename;
-			},
-			items    : {
-				xtype: 'textfield',
-				reference: 'operatorFilterField',
-				flex : 1,
-				margin: 2,
-				enableKeyEvents: true,
-				listeners: {
-					keyup: 'onOperatorFilterKeyup',
-					buffer: 500
-				}
-			}
-        },
+		{text: 'OperatorId',  dataIndex: 'operatorregisterid', width:55, hidden:true, filter:false},
 		{text: 'Placa Vehiculo', dataIndex: 'vehicleid', flex: 1,
 			editor: {
 				xtype: 'combobox',
@@ -86,34 +51,22 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 				typeAhead: true,
 				hideLabel: true,
 				hideTrigger:true,
-				minChars        :1,
+				minChars        :5,
 				displayField: 'vehiclelicense',
 				valueField: 'vehicleid',
 				queryMode: 'remote',
-				bind: {
-					visible: '{operator.value}',
-					filters: {
-						property: 'operatorregisterid',
-						value: '{operator.value}'
-					}
-				},
-				store: Ext.create('D7C.store.propietarios.UnidadRegistroPropietario'),
+				publishes: 'value',
+				store: Ext.create('D7C.store.propietarios.UnidadRegistroPropietarioTemp'),
 				listConfig   : {
 					itemTpl :
 					'<div data-qtip="Propietario: <strong>{propietaryfirstname} {propietarylastname}</strong><br></b>Marca Vehiculo: <strong>{vehiclebrand}</strong><br></b>Capacidad: <strong>{vehiclecapacity}</strong><br></b>Categoria: <strong>{vehiclecategory}</strong><br></b>Clase: <strong>{vehicleclass}</strong><br></b>Modelo: <strong>{vehiclemodel}</strong>">{vehiclelicense}</div>'
 				},
 				listeners:{
-					focus: 'onValidateVhComboBox'
+				focus: 'onValidateComboBox'
 				}
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclelicense;
-			},
-			listeners:{
-				focus:function(cbo){
-					cbo.getStore().getProxy().setExtraParams({action:'readValidROP'});
-					cbo.getStore().reload();
-				}
 			},
 			items    : {
 				xtype: 'textfield',

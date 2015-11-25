@@ -13,13 +13,16 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
 		$sql = "SELECT i.infractionregisterid, i.infractionid, i.vehicleid, i.infractionnumberticket, ";
-		$sql .= "i.infractionregisterstate, n.descriptioninfraction, n.amountinfraction, ";
+		$sql .= "i.infractionregisterstate, i.last_update, n.descriptioninfraction, n.amountinfraction, ";
 		$sql .= "v.vehiclebrand, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, v.vehiclemodel, v.vehiclelicense, ";
 		$sql .= "v.vehiclestatus, v.picture, p.propietaryci, p.propietaryfirstname, p.propietarylastname, o.syndicatename, o.operatormatrix FROM infraction_register i ";
 		$sql .= "inner join infraction n on i.infractionid = n.infractionid inner join vehicle v on i.vehicleid = v.vehicleid ";
 		$sql .="inner join propietary p on v.propietaryid = p.propietaryid inner join operator_register r on p.operatorregisterid = r.operatorregisterid ";
-		$sql .="inner join operator o on r.operatorid = o.operatorid";
+		$sql .="inner join operator o on r.operatorid = o.operatorid limit $limit offset $start";
 		
 		//$sql = "SELECT * FROM infraction_register";
 
@@ -33,10 +36,14 @@ switch($action){
 
 			$resultDb->close();
 		}
-
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM infraction_register");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelInfractionsRegister" => $result
+			"modelInfractionsRegister" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */

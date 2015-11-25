@@ -45,7 +45,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
     columns: [
 		{xtype: 'rownumberer'},
         {text: 'ID',  dataIndex: 'vehicleid', width:55, hidden:false, filter:false},
-		{text: 'Propietario', dataIndex: 'propietaryid', flex: 1,
+		{text: 'Propietario C.I.', dataIndex: 'propietaryid', flex: 1,
 			editor: {
 				xtype: 'combobox',
 				alias: 'cmbOP',
@@ -75,6 +75,17 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 			renderer : function(value, metadata, record) {
 				 myToolTipText = record.data.propietaryfirstname + " " + record.data.propietarylastname;
 				 return myToolTipText;
+			},
+			items    : {
+				xtype: 'textfield',
+				reference: 'propietorFilterField',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onPropietorFilterKeyup',
+					buffer: 500
+				}
 			}
         },
 		{text: 'Categoria', dataIndex: 'vehiclecategory', width:80,
@@ -233,6 +244,17 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 			},
 			editor: {
 				xtype: 'textfield', allowBlank: false
+			},
+			items    : {
+				xtype: 'textfield',
+				reference: 'vehicleLicenseFilterField',
+				flex : 1,
+				margin: 2,
+				enableKeyEvents: true,
+				listeners: {
+					keyup: 'onVehicleLicenseFilterKeyup',
+					buffer: 500
+				}
 			}
 		},
 		{text: 'No. Chasis', dataIndex: 'vehiclechasis', flex: 1, sortable: true,
@@ -264,6 +286,9 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 				tooltip: 'Ingresar la Imagen del vehiculo',
                 handler: 'onEditImgClick'
             }
+        },
+		{text: 'Ultima Modificacion', xtype: 'datecolumn', width: 160, dataIndex: 'last_update',
+            format: 'Y-m-j H:i:s', filter: true, hidden:true
         }
 		
     ],

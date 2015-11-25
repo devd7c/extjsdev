@@ -48,7 +48,8 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaController', {
 			adminresolutioncode: '',
 			adminresolutiondate: '',
 			adminresolutiontechnical: '',
-			adminresolutionlegal: ''
+			adminresolutionlegal: '',
+			last_update: new Date()
         });
         this.isNewRecord = true;
         this.newRecordId = newAdministrativeResolution.get('adminresolutionid');

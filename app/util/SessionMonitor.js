@@ -21,18 +21,18 @@ Ext.define('D7C.util.SessionMonitor', {
     closeAction: 'hide',
     modal: true,
     resizable: false,
-    title: 'Session Timeout Warning',
+    title: 'Advertencia Sesión Inactiva',
     width: 325,
     items: [{
       xtype: 'container',
       frame: true,
-      html: 'Your session will automatically expires after 15 minutes of  inactivity. If your session expires, any unsaved data will be lost and  you will be automatically logged out. </br></br>If you want  to continue working, click the "Continue Working"  button.</br></br>'
+      html: 'Su sesión expira automáticamente después de 15 minutos de inactividad. Si la sesión expira, los datos no guardados se perderán y se registrarán automáticamente. </br></br>Si desea seguir trabajando, haga clic en el boton "Continuar Trabajando".</br></br>'
     },{
       xtype: 'label',
       text: ''
     }],
     buttons: [{
-      text: 'Continue Working',
+      text: 'Continuar Trabajando',
       handler: function() {
         Ext.TaskManager.stop(D7C.util.SessionMonitor.countDownTask);
         D7C.util.SessionMonitor.window.hide();
@@ -43,7 +43,7 @@ Ext.define('D7C.util.SessionMonitor', {
         });
       }
     },{
-      text: 'Logout',
+      text: 'Cerrar Sesion',
       action: 'logout',
       handler: function() {
         Ext.TaskManager.stop(D7C.util.SessionMonitor.countDownTask);

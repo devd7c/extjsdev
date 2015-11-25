@@ -45,7 +45,8 @@ Ext.define('D7C.view.infracciones.InfraccionController', {
         var newCar = Ext.create('D7C.model.infracciones.Infraccion', {
             infractionid: 0,
 			descriptioninfraction: '',
-            amountinfraction: ''
+            amountinfraction: '',
+			last_update: new Date()
         });
         this.isNewRecord = true;
         this.newRecordId = newCar.get('infractionid');

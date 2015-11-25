@@ -1,12 +1,12 @@
-Ext.define('D7C.view.operadores.TarjetaOperacionController', {
+Ext.define('D7C.view.operadores.TarjetaOperacionControllerTemp', {
 	extend: 'Ext.app.ViewController',
-    alias: 'controller.tarjetaoperacion',
-	stores: ['TarjetaOperacion'],
-	models: ['TarjetaOperacion'],
-	views: ['TarjetaOperacion', 'TarjetaOperacionGrid'],
+    alias: 'controller.tarjetaoperaciontemp',
+	stores: ['TarjetaOperacionTemp'],
+	models: ['TarjetaOperacionTemp'],
+	views: ['TarjetaOperacionTemp', 'TarjetaOperacionGridTemp'],
 	requires: [
-		'D7C.view.operadores.TarjetaOperacion',
-        'D7C.view.operadores.TarjetaOperacionGrid'
+		'D7C.view.operadores.TarjetaOperacionTemp',
+        'D7C.view.operadores.TarjetaOperacionGridTemp'
 	],
 	newRecordId: '',
     isNewRecord: false,
@@ -41,9 +41,9 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
         this.lookupReference('deleteRecordButton').setDisabled(true);
     },
 	onAddCardOperationClick: function(button, ctx, evt) {
-        var newCar = Ext.create('D7C.model.operadores.TarjetaOperacion', {
-            cardoperationid: 0,
-			operatorregisterid: 0,
+        var newCar = Ext.create('D7C.model.operadores.TarjetaOperacionTemp', {
+			cardoperationid: 0,
+			operatorregisterid: 1,
 			vehicleid: 0,
 			cardoperationstatus: 'Activo',
             cardoperationvalidity: '',
@@ -59,9 +59,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
 		grid.getPlugin('cardOperationRowEditingPlugin').startEdit(newCar);
 		
 		/*PRIVILEGES ENABLED*/
-		var operatorCombo = this.lookupReference('operator');
 		var vehicleCombo = this.lookupReference('cb_vehicle');
-		operatorCombo.setDisabled(false);
 		vehicleCombo.setDisabled(false);
 	},
 	onRemoveCardOperationClick: function (button, evt) {
@@ -155,24 +153,6 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
     onGridDeselect: function (rowModel, record, idx, eOpts) {
         this.lookupReference('deleteRecordButton').setDisabled(true);
     },
-	onOperatorFilterKeyup: function() {
-        var grid = this.lookupReference('cardOperationGrid'),
-            filterField = this.lookupReference('operatorFilterField'),
-            filters = grid.store.getFilters();
-
-        if (filterField.value) {
-            this.operatorFilter = filters.add({
-                id            : 'operatorFilter',
-                property      : 'syndicatename',
-                value         : filterField.value,
-                anyMatch      : true,
-                caseSensitive : false
-            });
-        } else if (this.operatorFilter) {
-            filters.remove(this.operatorFilter);
-            this.operatorFilter = null;
-        }
-    },
 	onLicenceFilterKeyup: function() {
         var grid = this.lookupReference('cardOperationGrid'),
             filterField = this.lookupReference('licenceFilterField'),
@@ -216,20 +196,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
 			pdfGrid.show();
 		}
     },
-	onValidateOpComboBox: function(combo) {		
-		var operatorCombo = this.lookupReference('operator');
-		if(this.isNewRecord)
-		{operatorCombo.setDisabled(false);}
-		else{
-			if(D7C.Profile.getPrivilege() == 1)
-			{
-				operatorCombo.setDisabled(false);
-				combo.getStore().getProxy().setExtraParams({action:'readvalidnotemp'});
-				combo.getStore().reload();
-			}else{operatorCombo.setDisabled(true);}
-		}
-    },
-	onValidateVhComboBox: function(combo) {		
+	onValidateComboBox: function(combo) {		
 		var vehicleCombo = this.lookupReference('cb_vehicle');
 		if(this.isNewRecord)
 		{vehicleCombo.setDisabled(false);}
@@ -237,7 +204,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionController', {
 			if(D7C.Profile.getPrivilege() == 1)
 			{
 				vehicleCombo.setDisabled(false);
-				combo.getStore().getProxy().setExtraParams({action:'readValidROP'});
+				combo.getStore().getProxy().setExtraParams({action:'readvalidtemp'});
 				combo.getStore().reload();
 			}else{vehicleCombo.setDisabled(true);}
 		}

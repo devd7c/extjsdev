@@ -97,6 +97,9 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaGrid',{
 			renderer: function(value, metaData, record ){
 				return record.data.vehiclequantitydescription;
 			}
+        },
+		{text: 'Ultima Modificacion', xtype: 'datecolumn', width: 160, dataIndex: 'last_update',
+            format: 'Y-m-j H:i:s', filter: true, hidden:true
         }
     ],
 	selType: 'rowmodel',

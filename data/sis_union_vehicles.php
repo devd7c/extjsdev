@@ -13,7 +13,10 @@ $action = $_POST['action'];
 
 switch($action){
 	case 'read':
-		$sql = "SELECT * FROM vehicle_quantity";
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
+		$sql = "SELECT * FROM vehicle_quantity limit $limit offset $start";
 
 		$result = array();
 
@@ -24,9 +27,14 @@ switch($action){
 			}
 			$resultDb->close();
 		}
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM vehicle_quantity");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelVehicles" => $result
+			"modelVehicles" => $result,
+			"total" => $res['total']
 		));
 		/* close connection */
 		$mysqli->close();

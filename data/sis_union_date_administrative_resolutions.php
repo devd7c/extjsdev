@@ -14,10 +14,12 @@ $action = $_POST['action'];
 switch($action){
 	case 'read':
 		//$sql = "SELECT * FROM administrative_resolution";
-
+		$start=$_POST['start'];
+        $limit=$_POST['limit'];
+		
 		$sql = "SELECT a.adminresolutionid, a.adminresolutioncode, a.adminresolutiondate, a.adminresolutiontechnical, ";
-		$sql .= "a.adminresolutionlegal, a.vehiclequantityid, v.vehiclequantitydescription FROM administrative_resolution a ";
-		$sql .= "inner join vehicle_quantity v on a.vehiclequantityid = v.vehiclequantityid";
+		$sql .= "a.adminresolutionlegal, a.vehiclequantityid, a.last_update, v.vehiclequantitydescription FROM administrative_resolution a ";
+		$sql .= "inner join vehicle_quantity v on a.vehiclequantityid = v.vehiclequantityid limit $limit offset $start";
 
 		$result = array();
 
@@ -29,10 +31,14 @@ switch($action){
 
 			$resultDb->close();
 		}
-
+		
+		$total = $mysqli->query("SELECT COUNT(*) as total FROM administrative_resolution");
+		$res=$total->fetch_assoc();
+		
 		echo json_encode(array(
 			"success" => $mysqli->connect_errno == 0,
-			"modelAdministrativeResolutions" => $result
+			"modelAdministrativeResolutions" => $result,
+			"total" => $res['total']
 		));
 
 		/* close connection */
