@@ -151,7 +151,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioController', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/propietariesPdf.php'
+						src: 'data/pdf/vehiclesPdf.php'
 					}]
 				}
 			);

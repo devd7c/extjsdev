@@ -17,7 +17,7 @@ switch($action){
 		$start=$_POST['start'];
         $limit=$_POST['limit'];
 		
-		$sql = "SELECT c.cardoperationid, c.cardoperationstatus, c.cardoperationvalidity, c.nameprincipal, c.namesecretary, c.operatorregisterid, c.vehicleid, ";
+		$sql = "SELECT c.cardoperationid, c.cardoperationstatus, c.cardoperationvalidity, c.cardoperationexpire, c.nameprincipal, c.namesecretary, c.operatorregisterid, c.vehicleid, ";
 		$sql .= "c.last_update, r.adminresolutionid, r.operatorregisterstate, ";
 		$sql .= "v.vehiclebrand, v.vehiclestatus, v.vehiclemodel, v.vehiclelicense, v.picture, v.vehiclecapacity, v.vehiclecategory, v.vehiclechasis, v.vehicleclass, ";
 		$sql .= "p.propietaryfirstname, p.propietarylastname, p.propietaryci, o.syndicatename, o.operatorstate, o.operatormatrix FROM  card_operation c ";
@@ -81,8 +81,12 @@ switch($action){
 		
 		if($id['idCard'] == 0)
 		{
-			$query = "INSERT INTO card_operation (cardoperationid, operatorregisterid, vehicleid, cardoperationstatus, cardoperationvalidity, nameprincipal, namesecretary) ";
-			$query .= "VALUES (NULL,'".$data->operatorregisterid."', '".$data->vehicleid."', '".$data->cardoperationstatus."', '".$data->cardoperationvalidity."', '".$data->nameprincipal."', '".$data->namesecretary."')";
+			$dateExp = new DateTime($data->cardoperationvalidity);
+			$interval = new DateInterval('P12M');
+			$dateExp->add($interval);
+			
+			$query = "INSERT INTO card_operation (cardoperationid, operatorregisterid, vehicleid, cardoperationstatus, cardoperationvalidity, cardoperationexpire, nameprincipal, namesecretary) ";
+			$query .= "VALUES (NULL,'".$data->operatorregisterid."', '".$data->vehicleid."', '".$data->cardoperationstatus."', '".$data->cardoperationvalidity."', '".$dateExp->format('Y-m-d')."', '".$data->nameprincipal."', '".$data->namesecretary."')";
 			if ($resultDb = $mysqli->query($query)) {
 				$cardoperationid = $mysqli->insert_id;
 			}
@@ -96,7 +100,7 @@ switch($action){
 	break;
 	case 'update':
 		$data=json_decode($_POST['data'])[0];
-		$query = "UPDATE card_operation SET  operatorregisterid='".$data->operatorregisterid."',vehicleid='".$data->vehicleid."',cardoperationstatus='".$data->cardoperationstatus."',cardoperationvalidity='".$data->cardoperationvalidity."',nameprincipal='".$data->nameprincipal."',namesecretary='".$data->namesecretary.
+		$query = "UPDATE card_operation SET  operatorregisterid='".$data->operatorregisterid."',vehicleid='".$data->vehicleid."',cardoperationstatus='".$data->cardoperationstatus."',cardoperationvalidity='".$data->cardoperationvalidity."',cardoperationexpire='".$data->cardoperationexpire."',nameprincipal='".$data->nameprincipal."',namesecretary='".$data->namesecretary.
 			   "' WHERE cardoperationid=".$data->cardoperationid;
 		if ($resultDb = $mysqli->query($query)) {
 			$cardoperationid = $mysqli->insert_id;

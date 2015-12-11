@@ -8,15 +8,15 @@ Ext.define('D7C.model.propietarios.Propietario', {
         {name: 'propietarylastname', type: 'string'},
 		{name: 'propietaryci', type: 'string'},
 		{name: 'propietaryadress', type: 'string'},
-		{name: 'propietaryphone', type: 'string'},
-		{name: 'last_update', type: 'date', dateFormat: 'Y-m-j H:i:s'}
+		{name: 'propietaryphone', type: 'string'}/*,
+		{name: 'last_update', type: 'date', dateFormat: 'Y-m-j H:i:s'}*/
     ],
     validators: {
         propietaryfirstname: { type: 'presence', allowEmpty: false },
         propietarylastname: { type: 'presence', allowEmpty: false },
 		propietaryci: { type: 'presence', allowEmpty: false },
 		propietaryadress: { type: 'presence', allowEmpty: false },
-		propietaryphone: { type: 'presence', allowEmpty: false },
-		last_update: { type: 'presence'}
+		propietaryphone: { type: 'presence', allowEmpty: false }/*,
+		last_update: { type: 'presence'}*/
     }
 });

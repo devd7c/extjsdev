@@ -103,7 +103,7 @@ Ext.define('D7C.view.resoluciones.ResolucionAdministrativaController', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/propietariesPdf.php'
+						src: 'data/pdf/administrativedecisionsPdf.php'
 					}]
 				}
 			);

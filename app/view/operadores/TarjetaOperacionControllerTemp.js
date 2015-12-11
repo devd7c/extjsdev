@@ -47,6 +47,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionControllerTemp', {
 			vehicleid: 0,
 			cardoperationstatus: 'Activo',
             cardoperationvalidity: '',
+			//cardoperationexpire: '',
 			nameprincipal: '',
 			namesecretary: '',
 			vehiclestatuscard: 'SI',
@@ -185,7 +186,7 @@ Ext.define('D7C.view.operadores.TarjetaOperacionControllerTemp', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/card_operationPdf.php'
+						src: 'data/pdf/temporarycardoperationPdf.php'
 					}]
 				}
 			);

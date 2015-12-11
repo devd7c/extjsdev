@@ -27,7 +27,7 @@ Ext.define('D7C.view.sistema.UsuarioForm', {
                     title: 'Informacion de Usuario',
                     layout: 'anchor',
                     defaults: {
-                        afterLabelTextTpl: D7C.util.Util.required,
+                        //afterLabelTextTpl: D7C.util.Util.required,
                         anchor: '100%',
                         xtype: 'textfield',
                         msgTarget: 'side',

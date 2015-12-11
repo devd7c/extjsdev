@@ -11,8 +11,8 @@ Ext.define('D7C.model.sistema.Usuario', {
 		{name: 'phone', type: 'string'},
 		{name: 'username', type: 'string'},
 		{name: 'privilegesdescription', type: 'string'},
-		{name: 'picture'},
-		{name: 'last_update', type: 'date', dateFormat: 'Y-m-j H:i:s'}
+		{name: 'picture'}/*,
+		{name: 'last_update', type: 'date', dateFormat: 'Y-m-j H:i:s'}*/
     ],
     validators: {
         address: { type: 'presence', allowEmpty: false },
@@ -20,7 +20,7 @@ Ext.define('D7C.model.sistema.Usuario', {
 		name: { type: 'presence', allowEmpty: false },
 		password: { type: 'presence', allowEmpty: false },
 		phone: { type: 'presence', allowEmpty: false },
-		username: { type: 'presence', allowEmpty: false },
-		last_update: { type: 'presence'}
+		username: { type: 'presence', allowEmpty: false }/*,
+		last_update: { type: 'presence'}*/
     }
 });

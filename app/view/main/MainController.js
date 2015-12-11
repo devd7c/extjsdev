@@ -13,17 +13,28 @@ Ext.define('D7C.view.main.MainController', {
 		'Ext.grid.*',
 		'Ext.data.*',
 		'Ext.form.Panel',
+		'Ext.form.field.Number',
+		'Ext.form.field.Date',
+		'Ext.tip.QuickTipManager',
         'Ext.window.MessageBox',
 		'Ext.toolbar.Paging',
 		'Ext.ux.SlidingPager',
         'Ext.ux.ProgressBarPager',
 		'Ext.grid.filters.Filters',
+		'Ext.grid.feature.Grouping',
 		'Ext.grid.Panel',
 		'Ext.tip.ToolTip',
 		'Ext.Img',
 		'D7C.util.Util',
 		'D7C.util.Profile',
 		'D7C.ux.grid.Printer'
+		/*,
+		/*REPORTES*/
+		//'Ext.chart.series.Pie',
+		//'Ext.chart.interactions.Rotate',
+		//'Ext.chart.interactions.ItemHighlight',
+		//'Ext.chart.axis.Numeric',
+		//'Ext.chart.axis.Category'
     ],
     views: [
 		'Accordion',
@@ -38,6 +49,8 @@ Ext.define('D7C.view.main.MainController', {
 		'TarjetaOperacionGridTemp',
         'RegistroOperador',
 		'RegistroOperadorGrid',
+		'RegistroOperadorExpand',
+		'RegistroOperadorExpandGrid',
 		'Infraccion',
 		'InfraccionGrid',
 		'InfraccionRegistro',
@@ -48,7 +61,9 @@ Ext.define('D7C.view.main.MainController', {
 		'PropietarioGrid',
 		'UnidadPropietario',
 		'UnidadPropietarioGrid',
-		'UnidadPropietarioForm'
+		'UnidadPropietarioForm',
+		'PropietariosOperador',
+		'PropietariosOperadorReport'
     ],
 	
 	init: function() {
@@ -145,6 +160,35 @@ Ext.define('D7C.view.main.MainController', {
                         //plugins: new Ext.ux.ProgressBarPager()
                     });
                     var videoview=Ext.create('D7C.view.operadores.RegistroOperador',{id:'win-registrooperador'});
+
+                    videoview.add(GridTest);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listMageSoap.show();
+                }
+
+			break;
+			case 'btnListaAmpliacionResitro':
+
+				var listMageSoap =Ext.getCmp('win-registrooperadorexpand');
+
+                if(typeof listMageSoap=="undefined"){
+                    //var storeMage=Ext.create('D7C.store.operadores.RegistroOperador',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+					var storeMage=Ext.create('D7C.store.operadores.RegistroOperadorExpand');
+                    var GridTest=Ext.create('D7C.view.operadores.RegistroOperadorExpandGrid',{store: storeMage});
+                    GridTest.addDocked({
+
+                        xtype       : 'pagingtoolbar',
+                        //pageSize: 371,
+                        store       : storeMage,
+                        dock        : 'bottom',
+                        displayInfo : true,
+						displayMsg: 'Visualizando {0} - {1} de {2} Registros'
+                        //plugins: new Ext.ux.ProgressBarPager()
+                    });
+                    var videoview=Ext.create('D7C.view.operadores.RegistroOperadorExpand',{id:'win-registrooperadorexpand'});
 
                     videoview.add(GridTest);
                     fp.add(videoview);
@@ -352,6 +396,29 @@ Ext.define('D7C.view.main.MainController', {
                     var videoview=Ext.create('D7C.view.operadores.TarjetaOperacionTemp',{id:'win-tarjetaoperaciontemp'});
 
                     videoview.add(GridTest);
+                    fp.add(videoview);
+                    videoview.show();
+
+                }else{
+                    listMageSoap.show();
+                }
+				
+			break;
+			
+			//REPORTES
+			case 'btnRptPropietariosOperador':
+
+				var listMageSoap =Ext.getCmp('win-propietariosoperador');
+
+                if(typeof listMageSoap=="undefined"){
+                    //var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacion',{autoLoad: true/*,start: 0, limit: 25, pageSize: 400*/});
+					//var storeMage=Ext.create('D7C.store.operadores.TarjetaOperacionTemp');
+                    //var GridTest=Ext.create('D7C.view.reportes.PropietariosOperador');
+					var viewReport=Ext.create('D7C.view.reportes.PropietariosOperadorReport');
+                    var videoview=Ext.create('D7C.view.reportes.PropietariosOperador',{id:'win-propietariosoperador'});
+
+                    videoview.add(viewReport);
+					//videoview.add(GridTestPie);
                     fp.add(videoview);
                     videoview.show();
 

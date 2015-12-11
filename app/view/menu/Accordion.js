@@ -66,7 +66,7 @@ Ext.define('D7C.view.menu.Accordion', {
 							{
 								xtype: 'menuitem',
 								text: 'Ampliacion de Unidades',
-								option:'btnListaAmpliacionUnidadTransportes'
+								option:'btnListaAmpliacionResitro'
 							}
 						]
 					}
@@ -121,7 +121,7 @@ Ext.define('D7C.view.menu.Accordion', {
 				items:[
 					{
 						xtype: 'splitbutton',
-						text: 'Reportes',
+						text: 'Operadores',
 						width:220,
 						menuAlign:'tr',
 						listeners:{
@@ -136,13 +136,13 @@ Ext.define('D7C.view.menu.Accordion', {
 							[
 								{
 									xtype: 'menuitem',
-									option:'btnrptoperadores',
-									text: 'Operadores'
+									option:'btnRptPropietariosOperador',
+									text: 'Propietarios por Operador'
 								},
 								{
 									xtype: 'menuitem',
-									option : 'btnrptoperarios',
-									text   : 'Operarios'
+									option : 'btnRptUnidadesOperador',
+									text   : 'Unidades por Operador'
 								}
 							]
 						}					

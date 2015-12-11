@@ -176,7 +176,7 @@ Ext.define('D7C.view.sistema.UsuarioController', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/propietariesPdf.php'
+						src: 'data/pdf/userssytemPdf.php'
 					}]
 				}
 			);

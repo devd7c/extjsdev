@@ -105,7 +105,7 @@ Ext.define('D7C.view.operadores.OperadorController', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/propietariesPdf.php'
+						src: 'data/pdf/operatorsPdf.php'
 					}]
 				}
 			);

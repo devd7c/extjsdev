@@ -159,7 +159,7 @@ Ext.define('D7C.view.propietarios.UnidadPropietarioGrid',{
 					'Camioneta',
 					'Minibus',
 					'Omnibus',
-					'Taxi',
+					'Microbus',
 					'Vagoneta'
 				]
 			},

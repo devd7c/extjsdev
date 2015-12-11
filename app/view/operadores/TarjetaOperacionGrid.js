@@ -150,6 +150,22 @@ Ext.define('D7C.view.operadores.TarjetaOperacionGrid',{
 				return Ext.util.Format.date(record.data.cardoperationvalidity, 'Y-m-d');
 			}
 		},
+        {header: 'Expira en', xtype: 'datecolumn', dataIndex: 'cardoperationexpire', flex: 1, format: 'Y-m-d',
+			filter: {
+				//type: 'list'
+			},
+			/*editor: {
+				xtype: 'datefield', allowBlank: false,
+				format: 'Y-m-d',
+                minValue: '01/01/15'
+			},*/
+			renderer: function(value, metaData, record ){
+				/*var expire = new Date(record.data.cardoperationvalidity);
+				expire.setDate(expire.getDate() + 365);
+				return (Ext.Date.format(expire,'Y-m-d'));*/
+				return Ext.util.Format.date(record.data.cardoperationexpire, 'Y-m-d');
+			}
+		},
 		{text: 'Estado', dataIndex: 'cardoperationstatus', width:100,
 			filter: {
 				type: 'list'

@@ -5,14 +5,79 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
 	models: ['RegistroOperador'],
 	views: ['RegistroOperador', 'RegistroOperadorGrid'],
 	requires: [
+		'Ext.window.Window',
 		'D7C.view.operadores.RegistroOperador',
-        'D7C.view.operadores.RegistroOperadorGrid'
+        'D7C.view.operadores.RegistroOperadorGrid',
+		'D7C.util.Util'
 	],
 	newRecordId: '',
     isNewRecord: false,
 	onGridEditorBeforeEdit: function (editor, ctx, eOpts) {
         this.lookupReference('newRecordButton').setDisabled(true);
     },
+	createDialog: function(record) {
+        var me = this,
+            view = me.getView();
+        console.log(record);
+		me.isEdit = !!record;
+		me.dialog = view.add({
+			xtype: 'registro-operador-form',
+			viewModel: {
+				data: {
+					title: record ? 'Sindicato: ' + record.get('syndicatename') : '',
+					operatorregisterzonestart: record.get('operatorregisterzonestart'),
+					id: record.get('operatorregisterid'),
+					oprexpandid: record.get('oprexpandid')
+				},
+				// If we are passed a record, a copy of it will be created in the newly spawned session.
+				// Otherwise, create a new phantom customer in the child.
+				links: {
+					//theCustomer: record
+					//theCustomer: record || Ext.create('D7C.model.operadores.RegistroOperador')
+				}
+			},
+
+			// Creates a child session that will spawn from the current session
+			// of this view.
+			//session: true
+		});
+        me.dialog.show();
+    },
+	onExpandUnitsClick: function(button, e, options){
+			this.createDialog(button.getWidgetRecord());
+    },
+    /*onAddSearch: function(button, e, options){
+        var me = this;
+        me.searchRegister = Ext.create('D7C.view.operadores.RegistroOperadorBuscar');
+        me.dialog.add(me.searchRegister);
+    },
+    onCancelSearch: function(button, e, options){
+        var me = this;
+        me.searchRegister = Ext.destroy(me.searchRegister);
+    },
+    onClearSearch: function(button, e, options){
+        this.lookupReference('comboSearch').clearValue();
+    },
+
+    onSaveSearch: function(button, e, options){
+        var me = this,
+            value = me.lookupReference('comboSearch').getValue(),
+            //store = me.getStore('actors'),
+            store = Ext.create('D7C.store.resoluciones.ResolucionAdministrativa'),
+			model = store.findRecord('adminresolutionid', value),
+            actorsGrid = this.lookupReference('searchGrid'); //me.lookupReference('searchGrid'),
+            actorsStore = actorsGrid.getStore();
+
+        if (model){
+            actorsStore.add(model);
+        }
+
+        me.onCancelSearch();
+    },
+    onCancelSearch: function(button, e, options){
+        var me = this;
+        me.searchRegister = Ext.destroy(me.searchRegister);
+    },*/
     onGridEditorCancelEdit: function (editor, ctx, eOpts) {
         if (this.newRecordId && ctx.record.get('operatorregisterid') === this.newRecordId && this.isNewRecord) {
             ctx.grid.getStore().remove(ctx.record);
@@ -105,7 +170,7 @@ Ext.define('D7C.view.operadores.RegistroOperadorController', {
 				id:'win-pdf',
 				items: [{
 						xtype: 'uxiframe',
-						src: 'data/pdf/propietaries_registerPdf.php'
+						src: 'data/pdf/recordoperatorPdf.php'
 					}]
 				}
 			);

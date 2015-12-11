@@ -6,14 +6,14 @@ Ext.define('D7C.model.operadores.Operador', {
         {name: 'syndicatename', type: 'string'},
         {name: 'operatorcode', type: 'string'},
 		{name: 'operatorstate', type: 'string'},
-		{name: 'operatormatrix', type: 'string'},
-		{name: 'last_update', type: 'date', dateFormat: 'Y-m-j H:i:s'}
+		{name: 'operatormatrix', type: 'string'}/*,
+		{name: 'last_update', type: 'date', dateFormat: 'Y-m-j H:i:s'}*/
     ],
     validators: {
         syndicatename: { type: 'presence', allowEmpty: false },
         operatorcode: { type: 'presence', allowEmpty: false },
 		operatorstate: { type: 'presence', allowEmpty: false },
-		operatormatrix: { type: 'presence', allowEmpty: false },
-		last_update: 'presence'
+		operatormatrix: { type: 'presence', allowEmpty: false }/*,
+		last_update: 'presence'*/
     }
 });

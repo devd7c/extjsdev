@@ -48,10 +48,17 @@ Ext.define('D7C.view.infracciones.InfraccionRegistroGrid',{
 			editor: {
 				xtype: 'combobox',
 				allowBlank: false,
+				forceSelection : true,
+				matchFieldWidth :true,
+				enableKeyEvents :true,
+				typeAhead: true,
+				hideLabel: true,
+				hideTrigger:true,
+				minChars        :1,
 				displayField: 'descriptioninfraction',
 				valueField: 'infractionid',
-				queryMode: 'local',
-				store: Ext.create('D7C.store.infracciones.Infraccion')
+				queryMode: 'remote',
+				store: Ext.create('D7C.store.infracciones.Infraccion'),
 			},
 			renderer: function(value, metaData, record ){
 				return record.data.descriptioninfraction;

@@ -55,4 +55,5 @@ html, body, #wrapper {
    vertical-align: middle;
    text-align: center;
 }
+#wrapper.wrapperoff .loading {display:none !important;}
 .wrapperoff .loading {display:none !important;}

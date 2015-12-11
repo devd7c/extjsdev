@@ -74,7 +74,8 @@ Ext.define('D7C.view.operadores.OperadorGrid',{
 				forceSelection: true,
 				store: [
 					'Libre',
-					'Federado'
+					'Cooperativa',
+					'Federado',
 				]
 			},
 			renderer: function(value, metaData, record ){
